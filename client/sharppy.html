@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SharpPy · зондирования 2011–сейчас · hen1ch</title>
+<style>
+  :root{--bg:#04070d;--panel:#0b121b;--line:rgba(127,216,230,.18);--fg:#e6f4f8;--muted:#8fa9bd;--acc:#4fe3c1;--warn:#ffb454;--mono:ui-monospace,Menlo,Consolas,monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(1000px 600px at 75% -10%,rgba(79,227,193,.1),transparent 60%),var(--bg);color:var(--fg);font:15px/1.55 "Segoe UI",system-ui,sans-serif}
+  a{color:var(--acc);text-decoration:none}a:hover{text-decoration:underline}
+  .wrap{max-width:1180px;margin:0 auto;padding:20px}
+  .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+  .back,.btn{border:1px solid var(--line);background:rgba(12,20,30,.6);color:var(--fg);border-radius:10px;padding:9px 13px}
+  .btn{cursor:pointer;font:inherit}
+  .btn:hover{border-color:var(--acc)}
+  .btn-primary{background:var(--acc);color:#03120f;border-color:var(--acc);font-weight:600}
+  .credit{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  .credit b{color:var(--warn)}
+  h1{font-size:30px;margin:0 0 4px}
+  .sub{color:var(--muted);margin:0 0 18px}
+  .panel{background:linear-gradient(180deg,var(--panel),#0e1722);border:1px solid var(--line);border-radius:16px;padding:16px}
+  .controls{display:grid;grid-template-columns:1.4fr .8fr auto;gap:10px;align-items:end}
+  @media(max-width:760px){.controls{grid-template-columns:1fr}}
+  label{display:grid;gap:5px;font-size:12px;color:var(--muted)}
+  select,input{background:#0a141d;color:var(--fg);border:1px solid var(--line);border-radius:9px;padding:9px 10px;font:inherit}
+  .layout{display:grid;grid-template-columns:300px 1fr;gap:16px;margin-top:16px}
+  @media(max-width:900px){.layout{grid-template-columns:1fr}}
+  .times{max-height:540px;overflow:auto;display:flex;flex-direction:column;gap:4px;margin-top:8px}
+  .time{padding:8px 10px;border:1px solid transparent;border-radius:8px;cursor:pointer;font-family:var(--mono);font-size:12.5px;color:#cfe3ec}
+  .time:hover{border-color:var(--line);background:rgba(79,227,193,.06)}
+  .time.is-active{border-color:var(--acc);background:rgba(79,227,193,.12)}
+  .empty{color:var(--muted);font-size:13px;padding:12px 0}
+  .profile-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline;margin-bottom:10px}
+  .profile-head h2{margin:0;font-size:19px}
+  .badge{font-size:11px;color:var(--warn);border:1px solid rgba(255,180,84,.35);padding:3px 8px;border-radius:999px}
+  canvas{width:100%;background:#060c13;border:1px solid var(--line);border-radius:12px;display:block}
+  .grid2{display:grid;grid-template-columns:1.6fr 1fr;gap:12px;margin-top:12px}
+  @media(max-width:900px){.grid2{grid-template-columns:1fr}}
+  .idx{display:grid;grid-template-columns:1fr auto;gap:6px 12px;font-size:13px}
+  .idx dt{color:var(--muted)}.idx dd{margin:0;font-family:var(--mono);text-align:right}
+  .note{margin-top:12px;padding:10px 12px;border-left:2px solid var(--warn);background:rgba(255,180,84,.06);border-radius:0 8px 8px 0;font-size:12.5px;color:#ecd9bd}
+  .files{margin-top:22px;font-size:12.5px;color:var(--muted)}
+  .files a{margin-right:12px}
+  footer{margin-top:24px;font-size:12px;color:#6f8899;text-align:center}
+  .err{color:#ff8f8f}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="back" href="index.html">← К радару</a>
+    <span class="credit">модификация <b>hen1ch</b> · SharpPy</span>
+  </div>
+
+  <h1>Зондирования · SharpPy</h1>
+  <p class="sub">Архив Росгидромета (IGRA, NOAA NCEI) с 2011 года по настоящее время. Выберите станцию и год — сайт найдёт доступные сроки и построит профиль.</p>
+
+  <div class="panel">
+    <div class="controls">
+      <label>Станция<select id="station"></select></label>
+      <label>Год<select id="year"></select></label>
+      <button class="btn btn-primary" id="find">Найти сроки</button>
+    </div>
+    <div class="layout">
+      <div>
+        <div class="empty" id="timesHint">Сроки появятся после поиска.</div>
+        <div class="times" id="times"></div>
+      </div>
+      <div>
+        <div class="profile-head">
+          <h2 id="profTitle">Профиль не выбран</h2>
+          <span class="badge" id="profSource">IGRA · Росгидромет</span>
+        </div>
+        <div class="grid2">
+          <canvas id="skew" width="720" height="560" aria-label="Skew-T"></canvas>
+          <div>
+            <canvas id="hodo" width="380" height="300" aria-label="Годограф"></canvas>
+            <dl class="idx" id="idx" style="margin-top:10px"></dl>
+            <a class="btn" id="snd" href="#" style="display:none;margin-top:10px">Скачать .snd</a>
+          </div>
+        </div>
+        <div class="note" id="note" hidden></div>
+      </div>
+    </div>
+  </div>
+
+  <p class="files">Файлы программы: <a href="sharppy/sharpy-hen1ch.zip" download>ZIP</a>
+    <a href="sharppy/files/wx_launcher.py" download>wx_launcher.py</a>
+    <a href="sharppy/files/sharppy_core.py" download>sharppy_core.py</a>
+    <a href="sharppy/files/sharppy_layout.py" download>sharppy_layout.py</a>
+    <a href="sharppy/files/stations_lookup.py" download>stations_lookup.py</a>
+    <a href="sharppy/files/i18n.py" download>i18n.py</a>
+  </p>
+  <footer>Источник данных: IGRA v2.2 (NOAA NCEI), наблюдения Росгидромета. Расчёты — MetPy. Модификация hen1ch, 2026.</footer>
+</div>
+
+<script src="config.js"></script>
+<script>
+(() => {
+  "use strict";
+  const $ = (id) => document.getElementById(id);
+  const API = (window.API_BASE || "").replace(/\/$/, "");
+  const stationSel = $("station"), yearSel = $("year");
+  let current = null;
+
+  const nowYear = new Date().getFullYear();
+  for (let y = nowYear; y >= 2011; y--) {
+    const o = document.createElement("option");
+    o.value = String(y); o.textContent = String(y);
+    yearSel.appendChild(o);
+  }
+
+  const params = new URLSearchParams(location.search);
+  const qStation = params.get("station");
+  const qYear = params.get("year");
+  const qTime = params.get("time");
+
+  fetch(API + "/api/sounding/stations").then(r => r.json()).then(items => {
+    stationSel.innerHTML = "";
+    items.forEach(s => {
+      const o = document.createElement("option");
+      o.value = s.wmo; o.textContent = s.name + " (" + s.wmo + ")";
+      stationSel.appendChild(o);
+    });
+    if (qStation && items.some(s => s.wmo === qStation)) stationSel.value = qStation;
+    if (qYear) yearSel.value = qYear;
+    if (qStation || qYear) $("find").click();
+    if (qTime) load(qStation || stationSel.value, qTime);
+  }).catch(() => {
+    stationSel.innerHTML = '<option value="24959">Якутск (24959)</option>';
+    if (qYear) yearSel.value = qYear;
+    if (qTime) load(qStation || "24959", qTime);
+  });
+
+  $("find").addEventListener("click", () => {
+    const st = stationSel.value, yr = yearSel.value;
+    $("timesHint").textContent = "Загружаю архив станции…";
+    $("times").innerHTML = "";
+    fetch(`${API}/api/sounding/times?station=${st}&year=${yr}`)
+      .then(r => r.json().then(j => ({ ok: r.ok, j })))
+      .then(({ ok, j }) => {
+        if (!ok) throw new Error(j.detail || "ошибка");
+        const list = j.times || [];
+        $("timesHint").textContent = list.length ? `Доступно сроков: ${list.length}` : "За этот год сроков нет.";
+        list.forEach(t => {
+          const d = document.createElement("div");
+          d.className = "time";
+          d.textContent = t.replace("T", " ").replace("Z", " UTC");
+          d.addEventListener("click", () => load(st, t, d));
+          $("times").appendChild(d);
+        });
+      })
+      .catch(e => { $("timesHint").innerHTML = '<span class="err">' + e.message + "</span>"; });
+  });
+
+  function load(st, time, node) {
+    document.querySelectorAll(".time.is-active").forEach(x => x.classList.remove("is-active"));
+    if (node) node.classList.add("is-active");
+    $("profTitle").textContent = "Загружаю…";
+    fetch(`${API}/api/sounding/profile?station=${st}&time=${encodeURIComponent(time)}`)
+      .then(r => r.json().then(j => ({ ok: r.ok, j })))
+      .then(({ ok, j }) => {
+        if (!ok) throw new Error(j.detail || "нет данных");
+        current = j;
+        $("profTitle").textContent = j.name + " · " + time.replace("T", " ").replace("Z", " UTC");
+        $("profSource").textContent = j.source;
+        drawSkew(j);
+        drawHodo(j);
+        showIndices(j);
+        $("snd").style.display = "inline-flex";
+        $("snd").href = `${API}/api/sounding/snd?station=${st}&time=${encodeURIComponent(time)}`;
+        try {
+          const u = new URL(location.href);
+          u.searchParams.set("station", st);
+          u.searchParams.set("time", time);
+          if (yearSel.value) u.searchParams.set("year", yearSel.value);
+          history.replaceState(null, "", u);
+        } catch (e) { /* file: */ }
+      })
+      .catch(e => { $("profTitle").textContent = "Ошибка"; alert(e.message); });
+  }
+
+  function showIndices(p) {
+    const i = p.indices || {};
+    const rows = [
+      ["CAPE", i.cape, "Дж/кг"], ["CIN", i.cin, "Дж/кг"],
+      ["LCL", i.lcl, "гПа"], ["LFC", i.lfc, "гПа"], ["EL", i.el, "гПа"],
+      ["LI", i.li, "°C"], ["PW", i.pw, "мм"],
+      ["Сдвиг 0–6", i.shear06, "м/с"], ["SRH 0–3", i.srh03, "м²/с²"],
+    ];
+    $("idx").innerHTML = rows.map(([k, v, u]) =>
+      `<dt>${k}</dt><dd>${v == null ? "—" : v + " " + u}</dd>`).join("");
+    const n = $("note");
+    if (i.note) { n.hidden = false; n.textContent = i.note; } else { n.hidden = true; }
+  }
+
+  function drawSkew(p) {
+    const cv = $("skew"), ctx = cv.getContext("2d");
+    const W = cv.width, H = cv.height, L = 52, R = 18, T = 16, B = 30;
+    ctx.clearRect(0, 0, W, H);
+    const P0 = 1050, P1 = 100, Tmin = -70, Tmax = 40, skew = 32;
+    const yOf = (pr) => T + (Math.log(P0) - Math.log(pr)) / (Math.log(P0) - Math.log(P1)) * (H - T - B);
+    const xOf = (t, pr) => L + ((t - Tmin) + skew * Math.log10(1000 / pr)) / (Tmax - Tmin) * (W - L - R);
+
+    ctx.strokeStyle = "rgba(127,168,190,.22)"; ctx.lineWidth = 1;
+    ctx.fillStyle = "rgba(160,190,210,.75)"; ctx.font = "10px ui-monospace";
+    for (let t = -80; t <= 40; t += 10) {
+      ctx.beginPath();
+      for (let pr = P0; pr >= P1; pr -= 10) {
+        const x = xOf(t, pr), y = yOf(pr);
+        pr === P0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    }
+    for (let pr = 1000; pr >= 100; pr -= 100) {
+      const y = yOf(pr);
+      ctx.beginPath(); ctx.moveTo(L, y); ctx.lineTo(W - R, y); ctx.stroke();
+      ctx.fillText(String(pr), 6, y + 3);
+    }
+
+    const levels = p.levels || [];
+    const line = (key, color) => {
+      ctx.strokeStyle = color; ctx.lineWidth = 2;
+      ctx.beginPath();
+      let started = false;
+      levels.forEach(r => {
+        const v = r[key];
+        if (v == null) { started = false; return; }
+        const x = xOf(v, r.p), y = yOf(r.p);
+        started ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+        started = true;
+      });
+      ctx.stroke();
+    };
+    line("t", "#ff5a52");
+    line("td", "#43d17a");
+
+    const i = p.indices || {};
+    [["lcl", "#39d0ff"], ["lfc", "#ffd166"], ["el", "#c77dff"]].forEach(([k, c]) => {
+      if (i[k] == null) return;
+      const y = yOf(i[k]);
+      ctx.strokeStyle = c; ctx.setLineDash([6, 4]); ctx.beginPath();
+      ctx.moveTo(L, y); ctx.lineTo(W - R, y); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = c; ctx.fillText(k.toUpperCase(), W - R - 34, y - 3);
+    });
+
+    // wind barbs along the right edge
+    ctx.strokeStyle = "#9fd8ff"; ctx.fillStyle = "#9fd8ff";
+    levels.forEach((r, idx) => {
+      if (r.ws == null || r.wd == null || idx % 2) return;
+      const y = yOf(r.p), x = W - 26;
+      const rad = r.wd * Math.PI / 180;
+      const len = 10 + Math.min(14, r.ws * 0.5);
+      const dx = Math.sin(rad) * len, dy = Math.cos(rad) * len;
+      ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x - dx, y + dy); ctx.stroke();
+    });
+
+    ctx.fillStyle = "#8fa9bd"; ctx.font = "11px ui-monospace";
+    ctx.fillText("T", W - 90, 18); ctx.fillStyle = "#ff5a52"; ctx.fillText("—", W - 78, 18);
+    ctx.fillStyle = "#8fa9bd"; ctx.fillText("Td", W - 60, 18); ctx.fillStyle = "#43d17a"; ctx.fillText("—", W - 46, 18);
+  }
+
+  function drawHodo(p) {
+    const cv = $("hodo"), ctx = cv.getContext("2d");
+    const W = cv.width, H = cv.height, cx = W / 2, cy = H / 2;
+    ctx.clearRect(0, 0, W, H);
+    const lim = 40, S = (Math.min(W, H) / 2 - 18) / lim;
+    ctx.strokeStyle = "rgba(127,168,190,.25)";
+    for (let r = 10; r <= lim; r += 10) {
+      ctx.beginPath(); ctx.arc(cx, cy, r * S, 0, Math.PI * 2); ctx.stroke();
+    }
+    ctx.strokeStyle = "rgba(160,200,220,.45)";
+    ctx.beginPath(); ctx.moveTo(cx - lim * S, cy); ctx.lineTo(cx + lim * S, cy); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx, cy - lim * S); ctx.lineTo(cx, cy + lim * S); ctx.stroke();
+
+    ctx.strokeStyle = "#7fd8e6"; ctx.lineWidth = 1.8; ctx.beginPath();
+    let started = false;
+    (p.levels || []).forEach(r => {
+      if (r.ws == null || r.wd == null) return;
+      const rad = r.wd * Math.PI / 180;
+      const u = -r.ws * Math.sin(rad), v = -r.ws * Math.cos(rad);
+      const x = cx + u * S, y = cy - v * S;
+      started ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+      started = true;
+    });
+    ctx.stroke();
+    ctx.fillStyle = "#8fa9bd"; ctx.font = "11px ui-monospace";
+    ctx.fillText("Годограф, м/с", 10, 16);
+  }
+})();
+</script>
+</body>
+</html>

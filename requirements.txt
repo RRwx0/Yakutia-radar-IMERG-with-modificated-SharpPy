@@ -1,0 +1,8 @@
+numpy>=2.0
+scipy>=1.12
+netCDF4>=1.7
+Pillow>=10.0
+fastapi>=0.110
+uvicorn>=0.29
+requests>=2.31
+metpy>=1.6
