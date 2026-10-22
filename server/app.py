@@ -216,6 +216,41 @@ def api_accum(lat: float, lon: float, frame: str | None = None, window: int = Qu
 app.mount("/tiles", StaticFiles(directory=str(TILES)), name="tiles")
 
 
+@app.get("/api/models")
+def models_list():
+    from radar.sources import models
+
+    return {
+        k: {"name": v[0], "status": v[1], "url": v[2]}
+        for k, v in models.describe().items()
+    }
+
+
+@app.get("/api/model_field")
+def model_field(model: str = "gfs"):
+    from radar.grid import Grid
+    from radar.sources import models
+
+    env = models.fetch(Grid(), model)
+    if env is None:
+        raise HTTPException(503, f"модель «{model}» сейчас недоступна")
+    field = env["field"]
+    finite = np.isfinite(field)
+    payload = {
+        "model": model,
+        "name": env["name"],
+        "init": env.get("valid") or env.get("init"),
+        "bounds": [[54.0, 104.0], [74.0, 166.0]],
+        "level": "surface",
+        "field": [round(float(v), 1) if np.isfinite(v) else None for v in field.ravel()],
+        "ny": int(field.shape[0]),
+        "nx": int(field.shape[1]),
+        "max_dbz": round(float(np.nanmax(field)), 1) if finite.any() else None,
+        "note": env.get("note"),
+    }
+    return payload
+
+
 @app.get("/api/sounding/stations")
 def sounding_stations(q: str = ""):
     from server import sounding as snd

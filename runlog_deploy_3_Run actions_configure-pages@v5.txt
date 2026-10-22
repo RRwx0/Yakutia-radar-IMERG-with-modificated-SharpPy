@@ -1,0 +1,7 @@
+﻿2026-10-22T12:37:02.2417501Z ##[group]Run actions/configure-pages@v5
+2026-10-22T12:37:02.2417736Z with:
+2026-10-22T12:37:02.2419098Z   token: ***
+2026-10-22T12:37:02.2419211Z   enablement: false
+2026-10-22T12:37:02.2419330Z ##[endgroup]
+2026-10-22T12:37:02.6603978Z ##[error]Get Pages site failed. Please verify that the repository has Pages enabled and configured to build using GitHub Actions, or consider exploring the `enablement` parameter for this action. Error: Not Found - https://docs.github.com/rest/pages/pages#get-a-apiname-pages-site
+2026-10-22T12:37:02.6609351Z ##[error]HttpError: Not Found - https://docs.github.com/rest/pages/pages#get-a-apiname-pages-site

@@ -173,7 +173,20 @@
         <span class="switch__ui"></span>
         <span class="switch__text"><strong>Координатная сетка</strong><em>через 10° / 5°</em></span>
       </label>
-      <label class="switch">
+            <label class="switch">
+        <input type="checkbox" id="modelToggle">
+        <span class="switch__ui"></span>
+        <span class="switch__text"><strong>Модельный радар</strong><em id="modelName">GFS · прогноз</em></span>
+      </label>
+      <label class="mode__row">Модель
+        <select id="modelSelect">
+          <option value="gfs">GFS (NOAA)</option>
+          <option value="ecmwf">ECMWF IFS</option>
+          <option value="icon">ICON (DWD)</option>
+          <option value="msm">MSM (Япония)</option>
+        </select>
+      </label>
+<label class="switch">
         <input type="checkbox" id="phaseToggle">
         <span class="switch__ui"></span>
         <span class="switch__text"><strong>Фаза осадков</strong><em>снег · смесь · дождь</em></span>
@@ -250,8 +263,7 @@
       </div>
     </aside>
 
-    <div class="hud" id="statsHud" aria-label="Параметры кадра">
-      <div class="hud__item"><span class="hud__label">макс. дБЗ</span><b id="hudMax">—</b></div>
+    
       <div class="hud__item"><span class="hud__label">площадь ≥30</span><b id="hudArea">—</b></div>
       <div class="hud__item"><span class="hud__label">эхо</span><b id="hudEcho">—</b></div>
       <div class="hud__item"><span class="hud__label">грозы</span><b id="hudStorms">—</b></div>

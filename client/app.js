@@ -177,13 +177,9 @@
 
   function updateHud(f) {
     const s = f.stats || {};
-    el("hudMax").textContent = s.max_dbz != null ? Math.round(s.max_dbz) + " дБЗ" : "—";
-    el("hudArea").textContent = s.area_30_km2 ? Math.round(s.area_30_km2 / 1000) + " тыс. км²" : "0";
-    el("hudEcho").textContent = s.echo_pct != null ? s.echo_pct.toFixed(1) + " %" : "—";
-    el("hudStorms").textContent = s.thunder_cells != null ? s.thunder_cells : "—";
-    el("hudSnow").textContent = s.snow_fraction != null ? Math.round(s.snow_fraction * 100) + " %" : "—";
-    const sev = s.severe;
-    el("hudSevere").textContent = sev ? sev.score + " · " + sev.level : "—";
+    if (el('hudMax')) el('hudMax').textContent = s.max_dbz != null ? Math.round(s.max_dbz) + ' дБЗ' : '—';
+    if (el('hudArea')) el('hudArea').textContent = s.area_30_km2 ? Math.round(s.area_30_km2 / 1000) + ' тыс. км²' : '0';
+    if (el('hudEcho')) el('hudEcho').textContent = s.echo_pct != null ? s.echo_pct.toFixed(1) + ' %' : '—';
   }
 
   function updateMeta() {
@@ -1045,6 +1041,88 @@
     if (e.target.checked) renderPhase();
     else if (phaseOverlay) map.removeLayer(phaseOverlay), (phaseOverlay = null);
   });
+
+  /* ---------- модельный радар (GFS/ECMWF/ICON/MSM) ---------- */
+  let modelOverlay = null;
+  let modelCache = {};
+  const modelSelect = el("modelSelect");
+  const MODEL_COLORS = [
+    [0.2, "#70d6b0", "rgba(112,214,176,0.28)"],
+    [1, "#4aa8e0", "rgba(74,168,224,0.32)"],
+    [2.5, "#2f6fd0", "rgba(47,111,208,0.36)"],
+    [5, "#1e9e3a", "rgba(30,158,58,0.40)"],
+    [10, "#9bd400", "rgba(155,212,0,0.45)"],
+    [20, "#ffd400", "rgba(255,212,0,0.50)"],
+    [35, "#ff8c1a", "rgba(255,140,26,0.55)"],
+    [50, "#ff2d2d", "rgba(255,45,45,0.60)"],
+    [65, "#c8007a", "rgba(200,0,122,0.62)"],
+    [80, "#e05ad8", "rgba(224,90,216,0.60)"]
+  ];
+  function modelDbzToRate(dbz) {
+    if (!Number.isFinite(dbz)) return 0;
+    return Math.max(0, Math.pow(Math.pow(10, dbz / 10) / 200, 1 / 1.6));
+  }
+  function drawModelOverlay(payload) {
+    if (!modelOverlay) {
+      modelOverlay = L.imageOverlay("", [[54, 104], [74, 166]], { opacity: 0.72, interactive: false, pane: "radarGlow" });
+    }
+    const ny = payload.ny, nx = payload.nx, f = payload.field;
+    const canvas = document.createElement("canvas");
+    canvas.width = nx;
+    canvas.height = ny;
+    const ctx = canvas.getContext("2d");
+    const img = ctx.createImageData(nx, ny);
+    for (let i = 0; i < f.length; i++) {
+      const v = f[i];
+      if (v == null) continue;
+      const rate = modelDbzToRate(v);
+      let rgba = null;
+      for (const [lim, rgb, fill] of MODEL_COLORS) {
+        if (rate >= lim) rgba = fill;
+      }
+      if (!rgba) continue;
+      const m = rgba.match(/rgba\((\d+),(\d+),(\d+),([0-9.]+)\)/);
+      if (!m) continue;
+      const o = i * 4;
+      img.data[o] = +m[1]; img.data[o + 1] = +m[2]; img.data[o + 2] = +m[3]; img.data[o + 3] = Math.round(+m[4] * 255);
+    }
+    ctx.putImageData(img, 0, 0);
+    modelOverlay.setUrl(canvas.toDataURL());
+    if (!modelOverlay._map) modelOverlay.addTo(map);
+  }
+  async function loadModel(model) {
+    const nm = el("modelName");
+    if (!nm) return;
+    nm.textContent = "загрузка " + model + "…";
+    if (modelCache[model]) {
+      nm.textContent = modelCache[model].name + " · " + (modelCache[model].init || modelCache[model].valid || "");
+      drawModelOverlay(modelCache[model]);
+      return;
+    }
+    try {
+      const r = await fetch(API + "/api/model_field?model=" + model);
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      const j = await r.json();
+      modelCache[model] = j;
+      nm.textContent = j.name + " · " + (j.init || j.valid || "");
+      if (j.note) nm.title = j.note;
+      drawModelOverlay(j);
+    } catch (e) {
+      nm.textContent = "модель недоступна";
+      console.error("model", e);
+    }
+  }
+  el("modelToggle").addEventListener("change", (e) => {
+    if (e.target.checked) {
+      loadModel(modelSelect.value);
+    } else if (modelOverlay) {
+      map.removeLayer(modelOverlay);
+    }
+  });
+  modelSelect.addEventListener("change", () => {
+    if (el("modelToggle").checked) loadModel(modelSelect.value);
+  });
+
 
   /* ---------- mobile sheet ---------- */
   const sheet = el("layersPanel");
