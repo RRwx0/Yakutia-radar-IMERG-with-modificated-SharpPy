@@ -1093,23 +1093,26 @@
   async function loadModel(model) {
     const nm = el("modelName");
     if (!nm) return;
-    nm.textContent = "загрузка " + model + "…";
     if (modelCache[model]) {
       nm.textContent = modelCache[model].name + " · " + (modelCache[model].init || modelCache[model].valid || "");
       drawModelOverlay(modelCache[model]);
       return;
     }
+    const base = (window.API_BASE || "").replace(/\/$/, "");
+    nm.textContent = "загрузка " + model + "…";
     try {
-      const r = await fetch(API + "/api/model_field?model=" + model);
+      const r = await fetch(base + "/api/model_field?model=" + encodeURIComponent(model), { cache: "no-store" });
       if (!r.ok) throw new Error("HTTP " + r.status);
+      const ct = r.headers.get("content-type") || "";
+      if (ct.indexOf("json") < 0) throw new Error("API недоступен (статика)");
       const j = await r.json();
+      if (!j || !j.field || !j.ny) throw new Error("пустой ответ");
       modelCache[model] = j;
-      nm.textContent = j.name + " · " + (j.init || j.valid || "");
-      if (j.note) nm.title = j.note;
+      nm.textContent = j.name + " · " + (j.init || j.valid || "") + (j.note ? " · " + j.note : "");
       drawModelOverlay(j);
     } catch (e) {
-      nm.textContent = "модель недоступна";
-      console.error("model", e);
+      nm.textContent = "модель недоступна: бэкенд не подключён";
+      console.error("model", model, e);
     }
   }
   el("modelToggle").addEventListener("change", (e) => {

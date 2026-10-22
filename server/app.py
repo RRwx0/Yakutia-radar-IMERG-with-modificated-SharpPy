@@ -226,6 +226,13 @@ def models_list():
     }
 
 
+@app.get("/api/models/status")
+def models_status():
+    from radar.sources import models
+
+    return models.available()
+
+
 @app.get("/api/model_field")
 def model_field(model: str = "gfs"):
     from radar.grid import Grid
@@ -234,6 +241,8 @@ def model_field(model: str = "gfs"):
     env = models.fetch(Grid(), model)
     if env is None:
         raise HTTPException(503, f"модель «{model}» сейчас недоступна")
+    if "error" in env:
+        raise HTTPException(503, env["error"])
     field = env["field"]
     finite = np.isfinite(field)
     payload = {

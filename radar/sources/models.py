@@ -101,7 +101,6 @@ def fetch_openmeteo(grid: Grid, key: str) -> dict | None:
     if key not in OPENMETEO_KEYS:
         return None
     model_code = OPENMETEO_KEYS[key]
-    now = datetime.now(timezone.utc)
     try:
         r = requests.get(
             "https://api.open-meteo.com/v1/forecast",
@@ -113,38 +112,26 @@ def fetch_openmeteo(grid: Grid, key: str) -> dict | None:
                 "forecast_days": 1,
                 "timezone": "UTC",
             },
-            timeout=25,
+            timeout=20,
         )
         r.raise_for_status()
         js = r.json()
         h = js["hourly"]
-        vals = h["precipitation"]
-        stamp = h["time"][0] if h["time"] else ""
-    except Exception:
-        return None
-    grid_lats, grid_lons = grid.lat2d, grid.lon2d
-    # Open-Meteo отдаёт точку, а не сетку: строим крупно-зернистое поле только
-    # если API вернёт сетку (в данном продукте — нет). Честный fallback.
-    field = np.full(grid.shape, np.nan, dtype=np.float32)
-    try:
-        rate = float(max(vals or [0.0]))
-        if rate > 0:
-            field = np.where(
-                (grid_lats > 54) & (grid_lats < 74) & (grid_lons > 104) & (grid_lons < 166),
-                rate,
-                np.nan,
-            )
-            field = _zr(np.nan_to_num(field, nan=0.0))
-            field[field < 5] = np.nan
-    except Exception:
-        return None
+        vals = [v for v in h.get("precipitation", []) if v is not None]
+        stamp = h["time"][0] if h.get("time") else ""
+        max_rate = max(vals) if vals else 0.0
+    except Exception as e:
+        # недоступность Open-Meteo — честный отказ, а не пустая карта
+        return {"error": f"Open-Meteo недоступен: {type(e).__name__}"}
+
+    field = _zr(np.full(grid.shape, max_rate, dtype=np.float32) if max_rate > 0 else np.full(grid.shape, np.nan, dtype=np.float32))
     return {
         "field": field,
         "init": stamp,
         "valid": stamp,
         "model": key,
         "name": MODELS[key][0],
-        "note": "Open-Meteo не отдаёт сетку осадков; поле — точечная оценка. Установите API-ключ для полной карты",
+        "note": "Open-Meteo отдаёт осадки по точке, а не сеткой: показано однородное поле максимума. Для полноценной карты нужен другой источник",
     }
 
 
@@ -152,6 +139,46 @@ def fetch(grid: Grid, key: str) -> dict | None:
     if key == "gfs":
         return fetch_gfs(grid)
     return fetch_openmeteo(grid, key)
+
+
+def available() -> dict[str, dict]:
+    """Статус моделей: gfs — прямой источник; остальные — через Open-Meteo."""
+    import requests as _rq
+
+    out = {k: {"name": v[0], "source": v[1], "ok": False, "reason": ""} for k, v in MODELS.items()}
+    # gfs: проверим, отвечает ли NOMADS
+    try:
+        r = _rq.get(
+            "https://nomads.ncep.noaa.gov/",
+            headers={"User-Agent": "Mozilla/5.0"},
+            timeout=15,
+        )
+        out["gfs"]["ok"] = r.status_code == 200
+        out["gfs"]["reason"] = "" if r.status_code == 200 else f"HTTP {r.status_code}"
+    except Exception as e:
+        out["gfs"]["ok"] = False
+        out["gfs"]["reason"] = type(e).__name__
+    # open-meteo: пробуем точкой
+    for key in ("ecmwf", "icon", "msm"):
+        try:
+            r = _rq.get(
+                "https://api.open-meteo.com/v1/forecast",
+                params={
+                    "latitude": 62.0,
+                    "longitude": 129.7,
+                    "hourly": "precipitation",
+                    "models": OPENMETEO_KEYS[key],
+                    "forecast_days": 1,
+                    "timezone": "UTC",
+                },
+                timeout=15,
+            )
+            out[key]["ok"] = r.status_code == 200
+            out[key]["reason"] = "" if r.status_code == 200 else f"HTTP {r.status_code}"
+        except Exception as e:
+            out[key]["ok"] = False
+            out[key]["reason"] = type(e).__name__
+    return out
 
 
 def describe() -> dict:
