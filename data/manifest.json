@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-10-18T02:01:38.640952Z",
-  "tile_version": 1792288898,
-  "generation_seconds": 42.5,
+  "generated_at": "2026-10-23T02:29:14.127543Z",
+  "tile_version": 1792722554,
+  "generation_seconds": 98.5,
   "region": {
     "name": "Республика Саха (Якутия)",
     "bounds": [
@@ -23,18 +23,18 @@
   "stations": [],
   "coverage_pct": 100.0,
   "phase": {
-    "snow_pct": 96.3,
-    "mixed_pct": 0.2,
-    "rain_pct": 3.6,
+    "snow_pct": 62.1,
+    "mixed_pct": 16.2,
+    "rain_pct": 21.6,
     "wetbulb_min": 0.0,
     "wetbulb_max": 1.0
   },
   "env": {
     "available": true,
-    "t2m_min": -27.2,
-    "t2m_max": 7.0,
-    "cape_max": 77.0,
-    "shear_max": 33.5
+    "t2m_min": -29.7,
+    "t2m_max": 6.9,
+    "cape_max": 73.0,
+    "shear_max": 28.1
   },
   "nowcast": {
     "method": "persistence",
@@ -42,39 +42,39 @@
     "steps": 4,
     "step_min": 30,
     "skill": {
-      "n": 16119,
-      "persistence_mae": 2.777,
-      "advection_mae": 7.265,
-      "improvement_pct": -161.613
+      "n": 27407,
+      "persistence_mae": 7.734,
+      "advection_mae": 12.015,
+      "improvement_pct": -55.355
     },
     "correction_weights": [
-      -0.671,
-      0.129,
-      0.094,
-      24.821
+      -0.729,
+      0.159,
+      0.032,
+      25.671
     ]
   },
   "focus": [
     [
       54.0,
-      116.86
+      151.3
     ],
     [
-      58.9,
-      130.86
+      61.03,
+      165.3
     ]
   ],
   "frames": [
     {
       "id": "obs_00",
       "kind": "obs",
-      "time": "2026-10-17T13:30:00Z",
+      "time": "2026-10-22T13:30:00Z",
       "lead_min": 0,
       "tile_url": "/tiles/obs_00/{z}/{x}/{y}.png",
       "stats": {
-        "max_dbz": 67.8,
-        "area_30_km2": 26722,
-        "echo_pct": 0.44,
+        "max_dbz": 69.3,
+        "area_30_km2": 291404,
+        "echo_pct": 4.36,
         "cells": 5,
         "thunder_cells": 5,
         "cell_types": {
@@ -85,171 +85,172 @@
           "mixed": 0
         },
         "top_cell": {
-          "lat": 54.87,
-          "lon": 155.72,
-          "max_dbz": 64.3,
-          "area_km2": 630,
+          "lat": 55.44,
+          "lon": 162.62,
+          "max_dbz": 52.0,
+          "area_km2": 84,
           "type": "thunder",
           "label": "гроза",
-          "confidence": 0.75
+          "confidence": 0.88
         },
-        "snow_fraction": 0.52,
-        "mixed_fraction": 0.06,
+        "snow_fraction": 0.64,
+        "mixed_fraction": 0.12,
         "severe": {
-          "score": 4.5,
+          "score": 3.0,
           "level": "средний",
-          "peak_dbz": 64.3,
-          "area_km2": 911,
+          "peak_dbz": 67.8,
+          "area_km2": 296,
           "growth_dbz": 0.0,
-          "cape": 1.0,
-          "shear": 15.0,
+          "cape": 3.0,
+          "shear": 5.6,
           "note": "индекс опасной грозы — прокси по отражаемости, площади, росту, CAPE и сдвигу"
         }
       },
       "cells": [
         {
-          "lat": 54.87,
-          "lon": 155.72,
-          "max_dbz": 64.3,
-          "area_km2": 630,
-          "pixels": 119,
+          "lat": 55.44,
+          "lon": 162.62,
+          "max_dbz": 52.0,
+          "area_km2": 84,
+          "pixels": 16,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
+          "confidence": 0.88,
+          "score": 7.0,
           "reasons": [
-            "пик 64 дБЗ",
-            "ядро ≥45: 471 км²",
-            "CAPE 1",
-            "сдвиг 15 м/с"
-          ],
-          "features": {
-            "peak_dbz": 64.3,
-            "mean_dbz": 50.9,
-            "area_km2": 630,
-            "core45_km2": 471,
-            "fill": 0.52,
-            "gradient": null,
-            "phase": 3,
-            "cape": 1.0,
-            "shear": 15.0
-          }
-        },
-        {
-          "lat": 55.14,
-          "lon": 155.96,
-          "max_dbz": 63.5,
-          "area_km2": 106,
-          "pixels": 20,
-          "type": "thunder",
-          "label": "гроза",
-          "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
-          "reasons": [
-            "пик 64 дБЗ",
-            "ядро ≥45: 84 км²",
-            "сдвиг 14 м/с",
-            "фаза: смешанные"
-          ],
-          "features": {
-            "peak_dbz": 63.5,
-            "mean_dbz": 54.6,
-            "area_km2": 106,
-            "core45_km2": 84,
-            "fill": 1.0,
-            "gradient": 13.88,
-            "phase": 2,
-            "cape": 0.0,
-            "shear": 13.8
-          }
-        },
-        {
-          "lat": 54.21,
-          "lon": 155.63,
-          "max_dbz": 61.8,
-          "area_km2": 911,
-          "pixels": 172,
-          "type": "thunder",
-          "label": "гроза",
-          "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
-          "reasons": [
-            "пик 62 дБЗ",
-            "ядро ≥45: 588 км²",
-            "CAPE 5",
-            "сдвиг 13 м/с"
-          ],
-          "features": {
-            "peak_dbz": 61.8,
-            "mean_dbz": 46.4,
-            "area_km2": 911,
-            "core45_km2": 588,
-            "fill": 0.56,
-            "gradient": null,
-            "phase": 3,
-            "cape": 5.0,
-            "shear": 13.1
-          }
-        },
-        {
-          "lat": 57.24,
-          "lon": 162.35,
-          "max_dbz": 59.4,
-          "area_km2": 413,
-          "pixels": 78,
-          "type": "thunder",
-          "label": "гроза",
-          "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
-          "reasons": [
-            "пик 59 дБЗ",
-            "ядро ≥45: 344 км²",
-            "CAPE 10",
+            "пик 52 дБЗ",
+            "ядро ≥45: 74 км²",
+            "CAPE 3",
             "сдвиг 6 м/с"
           ],
           "features": {
-            "peak_dbz": 59.4,
-            "mean_dbz": 48.6,
-            "area_km2": 413,
-            "core45_km2": 344,
-            "fill": 0.64,
-            "gradient": null,
+            "peak_dbz": 52.0,
+            "mean_dbz": 48.2,
+            "area_km2": 84,
+            "core45_km2": 74,
+            "fill": 1.0,
+            "gradient": 12.0,
             "phase": 3,
-            "cape": 10.0,
-            "shear": 5.8
+            "cape": 3.0,
+            "shear": 5.6
           }
         },
         {
-          "lat": 54.36,
-          "lon": 162.62,
+          "lat": 57.9,
+          "lon": 164.21,
           "max_dbz": 52.0,
-          "area_km2": 450,
-          "pixels": 85,
+          "area_km2": 190,
+          "pixels": 36,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.88,
+          "score": 7.0,
+          "reasons": [
+            "пик 52 дБЗ",
+            "ядро ≥45: 169 км²",
+            "CAPE 34",
+            "сдвиг 16 м/с"
+          ],
+          "features": {
+            "peak_dbz": 52.0,
+            "mean_dbz": 48.4,
+            "area_km2": 190,
+            "core45_km2": 169,
+            "fill": 0.57,
+            "gradient": null,
+            "phase": 3,
+            "cape": 34.0,
+            "shear": 16.2
+          }
+        },
+        {
+          "lat": 55.44,
+          "lon": 155.72,
+          "max_dbz": 50.9,
+          "area_km2": 84,
+          "pixels": 16,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.88,
+          "score": 7.0,
+          "reasons": [
+            "пик 51 дБЗ",
+            "ядро ≥45: 58 км²",
+            "CAPE 15",
+            "сдвиг 4 м/с"
+          ],
+          "features": {
+            "peak_dbz": 50.9,
+            "mean_dbz": 46.9,
+            "area_km2": 84,
+            "core45_km2": 58,
+            "fill": 1.0,
+            "gradient": 12.17,
+            "phase": 3,
+            "cape": 15.0,
+            "shear": 4.3
+          }
+        },
+        {
+          "lat": 57.96,
+          "lon": 165.92,
+          "max_dbz": 50.9,
+          "area_km2": 265,
+          "pixels": 50,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.88,
+          "score": 7.0,
+          "reasons": [
+            "пик 51 дБЗ",
+            "ядро ≥45: 127 км²",
+            "CAPE 29",
+            "сдвиг 19 м/с"
+          ],
+          "features": {
+            "peak_dbz": 50.9,
+            "mean_dbz": 44.0,
+            "area_km2": 265,
+            "core45_km2": 127,
+            "fill": 0.65,
+            "gradient": null,
+            "phase": 3,
+            "cape": 29.0,
+            "shear": 18.6
+          }
+        },
+        {
+          "lat": 61.32,
+          "lon": 163.4,
+          "max_dbz": 67.8,
+          "area_km2": 296,
+          "pixels": 56,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
           "confidence": 0.75,
           "score": 6.0,
           "reasons": [
-            "пик 52 дБЗ",
-            "ядро ≥45: 424 км²",
-            "CAPE 10",
-            "сдвиг 1 м/с"
+            "пик 68 дБЗ",
+            "ядро ≥45: 296 км²",
+            "CAPE 2",
+            "сдвиг 15 м/с",
+            "фаза: смешанные"
           ],
           "features": {
-            "peak_dbz": 52.0,
-            "mean_dbz": 49.2,
-            "area_km2": 450,
-            "core45_km2": 424,
-            "fill": 0.76,
+            "peak_dbz": 67.8,
+            "mean_dbz": 65.1,
+            "area_km2": 296,
+            "core45_km2": 296,
+            "fill": 1.0,
             "gradient": null,
-            "phase": 3,
-            "cape": 10.0,
-            "shear": 1.4
+            "phase": 2,
+            "cape": 2.0,
+            "shear": 15.2
           }
         }
       ],
@@ -263,13 +264,13 @@
     {
       "id": "obs_01",
       "kind": "obs",
-      "time": "2026-10-17T14:00:00Z",
+      "time": "2026-10-22T14:00:00Z",
       "lead_min": 0,
       "tile_url": "/tiles/obs_01/{z}/{x}/{y}.png",
       "stats": {
-        "max_dbz": 67.8,
-        "area_30_km2": 38403,
-        "echo_pct": 0.58,
+        "max_dbz": 69.3,
+        "area_30_km2": 309286,
+        "echo_pct": 4.56,
         "cells": 5,
         "thunder_cells": 5,
         "cell_types": {
@@ -280,177 +281,175 @@
           "mixed": 0
         },
         "top_cell": {
-          "lat": 54.81,
-          "lon": 155.72,
-          "max_dbz": 65.4,
-          "area_km2": 673,
+          "lat": 57.63,
+          "lon": 162.05,
+          "max_dbz": 54.7,
+          "area_km2": 53,
           "type": "thunder",
           "label": "гроза",
-          "confidence": 0.75
+          "confidence": 0.88
         },
-        "snow_fraction": 0.67,
-        "mixed_fraction": 0.05,
+        "snow_fraction": 0.68,
+        "mixed_fraction": 0.11,
         "severe": {
-          "score": 5.0,
-          "level": "высокий",
-          "peak_dbz": 65.4,
-          "area_km2": 673,
-          "growth_dbz": 1.1,
-          "cape": 1.0,
-          "shear": 15.1,
+          "score": 4.0,
+          "level": "средний",
+          "peak_dbz": 54.7,
+          "area_km2": 7123,
+          "growth_dbz": 0.0,
+          "cape": 0.0,
+          "shear": 16.1,
           "note": "индекс опасной грозы — прокси по отражаемости, площади, росту, CAPE и сдвигу"
         }
       },
       "cells": [
         {
-          "lat": 54.81,
-          "lon": 155.72,
-          "max_dbz": 65.4,
-          "area_km2": 673,
-          "pixels": 127,
+          "lat": 57.63,
+          "lon": 162.05,
+          "max_dbz": 54.7,
+          "area_km2": 53,
+          "pixels": 10,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
+          "confidence": 0.88,
+          "score": 7.0,
           "reasons": [
-            "пик 65 дБЗ",
-            "ядро ≥45: 514 км²",
-            "CAPE 1",
+            "пик 55 дБЗ",
+            "ядро ≥45: 53 км²",
+            "сдвиг 16 м/с"
+          ],
+          "features": {
+            "peak_dbz": 54.7,
+            "mean_dbz": 50.7,
+            "area_km2": 53,
+            "core45_km2": 53,
+            "fill": 1.0,
+            "gradient": null,
+            "phase": 3,
+            "cape": 0.0,
+            "shear": 16.1
+          },
+          "growth_dbz": null
+        },
+        {
+          "lat": 58.5,
+          "lon": 165.08,
+          "max_dbz": 52.0,
+          "area_km2": 7123,
+          "pixels": 1344,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.88,
+          "score": 7.0,
+          "reasons": [
+            "пик 52 дБЗ",
+            "ядро ≥45: 5633 км²",
+            "CAPE 3",
             "сдвиг 15 м/с"
           ],
           "features": {
-            "peak_dbz": 65.4,
-            "mean_dbz": 51.4,
-            "area_km2": 673,
-            "core45_km2": 514,
-            "fill": 0.44,
+            "peak_dbz": 52.0,
+            "mean_dbz": 48.5,
+            "area_km2": 7123,
+            "core45_km2": 5633,
+            "fill": 0.56,
             "gradient": null,
             "phase": 3,
-            "cape": 1.0,
-            "shear": 15.1
+            "cape": 3.0,
+            "shear": 15.0
           },
-          "growth_dbz": 1.1
+          "growth_dbz": null
         },
         {
-          "lat": 54.09,
-          "lon": 155.72,
+          "lat": 58.05,
+          "lon": 164.24,
           "max_dbz": 52.0,
-          "area_km2": 360,
-          "pixels": 68,
+          "area_km2": 95,
+          "pixels": 18,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
+          "confidence": 0.88,
+          "score": 7.0,
           "reasons": [
             "пик 52 дБЗ",
-            "ядро ≥45: 275 км²",
-            "CAPE 2",
-            "сдвиг 14 м/с"
+            "ядро ≥45: 79 км²",
+            "CAPE 32",
+            "сдвиг 16 м/с"
           ],
           "features": {
             "peak_dbz": 52.0,
-            "mean_dbz": 47.9,
-            "area_km2": 360,
-            "core45_km2": 275,
-            "fill": 0.62,
+            "mean_dbz": 48.6,
+            "area_km2": 95,
+            "core45_km2": 79,
+            "fill": 1.0,
             "gradient": null,
             "phase": 3,
-            "cape": 2.0,
-            "shear": 13.6
-          },
-          "growth_dbz": -9.8
-        },
-        {
-          "lat": 54.36,
-          "lon": 162.74,
-          "max_dbz": 52.0,
-          "area_km2": 482,
-          "pixels": 91,
-          "type": "thunder",
-          "label": "гроза",
-          "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
-          "reasons": [
-            "пик 52 дБЗ",
-            "ядро ≥45: 439 км²",
-            "CAPE 11",
-            "сдвиг 2 м/с"
-          ],
-          "features": {
-            "peak_dbz": 52.0,
-            "mean_dbz": 49.3,
-            "area_km2": 482,
-            "core45_km2": 439,
-            "fill": 0.81,
-            "gradient": null,
-            "phase": 3,
-            "cape": 11.0,
-            "shear": 1.6
+            "cape": 32.0,
+            "shear": 15.5
           },
           "growth_dbz": 0.0
         },
         {
-          "lat": 54.66,
-          "lon": 163.07,
-          "max_dbz": 52.0,
-          "area_km2": 508,
-          "pixels": 96,
+          "lat": 55.35,
+          "lon": 138.56,
+          "max_dbz": 50.9,
+          "area_km2": 159,
+          "pixels": 30,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
+          "confidence": 0.88,
+          "score": 7.0,
           "reasons": [
-            "пик 52 дБЗ",
-            "ядро ≥45: 381 км²",
-            "CAPE 20",
-            "сдвиг 4 м/с"
+            "пик 51 дБЗ",
+            "ядро ≥45: 159 км²",
+            "сдвиг 18 м/с"
           ],
           "features": {
-            "peak_dbz": 52.0,
-            "mean_dbz": 48.0,
-            "area_km2": 508,
-            "core45_km2": 381,
-            "fill": 0.64,
+            "peak_dbz": 50.9,
+            "mean_dbz": 49.6,
+            "area_km2": 159,
+            "core45_km2": 159,
+            "fill": 1.0,
             "gradient": null,
             "phase": 3,
-            "cape": 20.0,
-            "shear": 3.9
+            "cape": 0.0,
+            "shear": 17.5
           },
           "growth_dbz": null
         },
         {
-          "lat": 54.84,
-          "lon": 165.95,
-          "max_dbz": 52.0,
-          "area_km2": 100,
-          "pixels": 19,
+          "lat": 55.53,
+          "lon": 155.54,
+          "max_dbz": 50.9,
+          "area_km2": 106,
+          "pixels": 20,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
+          "confidence": 0.88,
+          "score": 7.0,
           "reasons": [
-            "пик 52 дБЗ",
-            "ядро ≥45: 100 км²",
-            "CAPE 9",
-            "сдвиг 4 м/с"
+            "пик 51 дБЗ",
+            "ядро ≥45: 79 км²",
+            "CAPE 37",
+            "сдвиг 2 м/с"
           ],
           "features": {
-            "peak_dbz": 52.0,
-            "mean_dbz": 50.0,
-            "area_km2": 100,
-            "core45_km2": 100,
-            "fill": 0.95,
-            "gradient": null,
+            "peak_dbz": 50.9,
+            "mean_dbz": 47.8,
+            "area_km2": 106,
+            "core45_km2": 79,
+            "fill": 1.0,
+            "gradient": 10.2,
             "phase": 3,
-            "cape": 9.0,
-            "shear": 3.7
+            "cape": 37.0,
+            "shear": 1.5
           },
-          "growth_dbz": null
+          "growth_dbz": 0.0
         }
       ],
       "zoom_tiles": {
@@ -463,13 +462,13 @@
     {
       "id": "obs_02",
       "kind": "obs",
-      "time": "2026-10-17T14:30:00Z",
+      "time": "2026-10-22T14:30:00Z",
       "lead_min": 0,
       "tile_url": "/tiles/obs_02/{z}/{x}/{y}.png",
       "stats": {
         "max_dbz": 69.3,
-        "area_30_km2": 42225,
-        "echo_pct": 0.64,
+        "area_30_km2": 279400,
+        "echo_pct": 4.14,
         "cells": 5,
         "thunder_cells": 5,
         "cell_types": {
@@ -480,175 +479,175 @@
           "mixed": 0
         },
         "top_cell": {
-          "lat": 54.72,
-          "lon": 155.78,
-          "max_dbz": 65.4,
-          "area_km2": 355,
+          "lat": 55.2,
+          "lon": 138.65,
+          "max_dbz": 50.9,
+          "area_km2": 111,
           "type": "thunder",
           "label": "гроза",
-          "confidence": 0.75
+          "confidence": 0.88
         },
-        "snow_fraction": 0.71,
-        "mixed_fraction": 0.05,
+        "snow_fraction": 0.63,
+        "mixed_fraction": 0.11,
         "severe": {
           "score": 5.0,
           "level": "высокий",
-          "peak_dbz": 65.4,
-          "area_km2": 763,
+          "peak_dbz": 67.8,
+          "area_km2": 1627,
           "growth_dbz": 0.0,
           "cape": 0.0,
-          "shear": 15.5,
+          "shear": 16.0,
           "note": "индекс опасной грозы — прокси по отражаемости, площади, росту, CAPE и сдвигу"
         }
       },
       "cells": [
         {
-          "lat": 54.72,
-          "lon": 155.78,
-          "max_dbz": 65.4,
-          "area_km2": 355,
-          "pixels": 67,
+          "lat": 55.2,
+          "lon": 138.65,
+          "max_dbz": 50.9,
+          "area_km2": 111,
+          "pixels": 21,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
+          "confidence": 0.88,
+          "score": 7.0,
           "reasons": [
-            "пик 65 дБЗ",
-            "ядро ≥45: 302 км²",
-            "сдвиг 16 м/с",
-            "фаза: смешанные"
+            "пик 51 дБЗ",
+            "ядро ≥45: 111 км²",
+            "сдвиг 16 м/с"
           ],
           "features": {
-            "peak_dbz": 65.4,
-            "mean_dbz": 55.8,
-            "area_km2": 355,
-            "core45_km2": 302,
-            "fill": 0.7,
+            "peak_dbz": 50.9,
+            "mean_dbz": 49.7,
+            "area_km2": 111,
+            "core45_km2": 111,
+            "fill": 1.0,
             "gradient": null,
-            "phase": 2,
+            "phase": 3,
             "cape": 0.0,
-            "shear": 15.5
+            "shear": 16.0
           },
           "growth_dbz": 0.0
         },
         {
-          "lat": 57.84,
-          "lon": 161.93,
-          "max_dbz": 59.2,
-          "area_km2": 196,
-          "pixels": 37,
+          "lat": 61.32,
+          "lon": 163.4,
+          "max_dbz": 67.8,
+          "area_km2": 296,
+          "pixels": 56,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
           "confidence": 0.75,
           "score": 6.0,
           "reasons": [
-            "пик 59 дБЗ",
+            "пик 68 дБЗ",
+            "ядро ≥45: 296 км²",
+            "CAPE 2",
+            "сдвиг 15 м/с",
+            "фаза: смешанные"
+          ],
+          "features": {
+            "peak_dbz": 67.8,
+            "mean_dbz": 65.1,
+            "area_km2": 296,
+            "core45_km2": 296,
+            "fill": 1.0,
+            "gradient": null,
+            "phase": 2,
+            "cape": 2.0,
+            "shear": 15.2
+          },
+          "growth_dbz": null
+        },
+        {
+          "lat": 55.53,
+          "lon": 137.24,
+          "max_dbz": 61.5,
+          "area_km2": 74,
+          "pixels": 14,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.75,
+          "score": 6.0,
+          "reasons": [
+            "пик 62 дБЗ",
             "ядро ≥45: 63 км²",
-            "CAPE 9",
-            "сдвиг 5 м/с"
+            "сдвиг 19 м/с",
+            "фаза: смешанные"
           ],
           "features": {
-            "peak_dbz": 59.2,
-            "mean_dbz": 44.9,
-            "area_km2": 196,
+            "peak_dbz": 61.5,
+            "mean_dbz": 54.3,
+            "area_km2": 74,
             "core45_km2": 63,
-            "fill": 0.84,
+            "fill": 0.88,
             "gradient": null,
-            "phase": 3,
-            "cape": 9.0,
-            "shear": 4.9
+            "phase": 2,
+            "cape": 0.0,
+            "shear": 19.4
           },
           "growth_dbz": null
         },
         {
-          "lat": 57.03,
-          "lon": 162.47,
-          "max_dbz": 52.2,
-          "area_km2": 238,
-          "pixels": 45,
+          "lat": 54.93,
+          "lon": 156.14,
+          "max_dbz": 60.7,
+          "area_km2": 227,
+          "pixels": 43,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
           "confidence": 0.75,
           "score": 6.0,
           "reasons": [
-            "пик 52 дБЗ",
+            "пик 61 дБЗ",
             "ядро ≥45: 174 км²",
-            "CAPE 3",
-            "сдвиг 7 м/с"
+            "CAPE 4",
+            "сдвиг 6 м/с"
           ],
           "features": {
-            "peak_dbz": 52.2,
-            "mean_dbz": 46.2,
-            "area_km2": 238,
+            "peak_dbz": 60.7,
+            "mean_dbz": 50.4,
+            "area_km2": 227,
             "core45_km2": 174,
-            "fill": 0.58,
+            "fill": 0.98,
             "gradient": null,
             "phase": 3,
-            "cape": 3.0,
-            "shear": 6.7
+            "cape": 4.0,
+            "shear": 6.2
           },
           "growth_dbz": null
         },
         {
-          "lat": 57.0,
-          "lon": 165.53,
-          "max_dbz": 52.0,
-          "area_km2": 270,
-          "pixels": 51,
+          "lat": 59.07,
+          "lon": 155.48,
+          "max_dbz": 60.7,
+          "area_km2": 1627,
+          "pixels": 307,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
           "confidence": 0.75,
           "score": 6.0,
           "reasons": [
-            "пик 52 дБЗ",
-            "ядро ≥45: 265 км²",
-            "CAPE 12",
-            "сдвиг 4 м/с"
+            "пик 61 дБЗ",
+            "ядро ≥45: 1627 км²",
+            "CAPE 42",
+            "сдвиг 9 м/с"
           ],
           "features": {
-            "peak_dbz": 52.0,
-            "mean_dbz": 49.5,
-            "area_km2": 270,
-            "core45_km2": 265,
-            "fill": 0.81,
+            "peak_dbz": 60.7,
+            "mean_dbz": 51.8,
+            "area_km2": 1627,
+            "core45_km2": 1627,
+            "fill": 0.77,
             "gradient": null,
             "phase": 3,
-            "cape": 12.0,
-            "shear": 4.1
-          },
-          "growth_dbz": null
-        },
-        {
-          "lat": 57.81,
-          "lon": 162.77,
-          "max_dbz": 52.0,
-          "area_km2": 763,
-          "pixels": 144,
-          "type": "thunder",
-          "label": "гроза",
-          "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
-          "reasons": [
-            "пик 52 дБЗ",
-            "ядро ≥45: 424 км²",
-            "CAPE 17",
-            "сдвиг 3 м/с"
-          ],
-          "features": {
-            "peak_dbz": 52.0,
-            "mean_dbz": 45.8,
-            "area_km2": 763,
-            "core45_km2": 424,
-            "fill": 0.55,
-            "gradient": null,
-            "phase": 3,
-            "cape": 17.0,
-            "shear": 3.0
+            "cape": 42.0,
+            "shear": 8.9
           },
           "growth_dbz": null
         }
@@ -663,13 +662,13 @@
     {
       "id": "obs_03",
       "kind": "obs",
-      "time": "2026-10-17T15:00:00Z",
+      "time": "2026-10-22T15:00:00Z",
       "lead_min": 0,
       "tile_url": "/tiles/obs_03/{z}/{x}/{y}.png",
       "stats": {
-        "max_dbz": 67.8,
-        "area_30_km2": 41647,
-        "echo_pct": 0.64,
+        "max_dbz": 69.3,
+        "area_30_km2": 312477,
+        "echo_pct": 4.72,
         "cells": 5,
         "thunder_cells": 5,
         "cell_types": {
@@ -680,62 +679,62 @@
           "mixed": 0
         },
         "top_cell": {
-          "lat": 57.75,
-          "lon": 161.96,
-          "max_dbz": 59.2,
-          "area_km2": 265,
+          "lat": 58.05,
+          "lon": 164.27,
+          "max_dbz": 52.0,
+          "area_km2": 148,
           "type": "thunder",
           "label": "гроза",
-          "confidence": 0.75
+          "confidence": 0.88
         },
-        "snow_fraction": 0.75,
-        "mixed_fraction": 0.03,
+        "snow_fraction": 0.6,
+        "mixed_fraction": 0.12,
         "severe": {
-          "score": 3.0,
-          "level": "средний",
-          "peak_dbz": 59.2,
-          "area_km2": 265,
-          "growth_dbz": 3.2,
-          "cape": 12.0,
-          "shear": 4.2,
+          "score": 5.0,
+          "level": "высокий",
+          "peak_dbz": 66.3,
+          "area_km2": 2655,
+          "growth_dbz": 0.0,
+          "cape": 32.0,
+          "shear": 15.5,
           "note": "индекс опасной грозы — прокси по отражаемости, площади, росту, CAPE и сдвигу"
         }
       },
       "cells": [
         {
-          "lat": 57.75,
-          "lon": 161.96,
-          "max_dbz": 59.2,
-          "area_km2": 265,
-          "pixels": 50,
+          "lat": 58.05,
+          "lon": 164.27,
+          "max_dbz": 52.0,
+          "area_km2": 148,
+          "pixels": 28,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
+          "confidence": 0.88,
+          "score": 7.0,
           "reasons": [
-            "пик 59 дБЗ",
-            "ядро ≥45: 180 км²",
-            "CAPE 12",
-            "сдвиг 4 м/с"
+            "пик 52 дБЗ",
+            "ядро ≥45: 127 км²",
+            "CAPE 32",
+            "сдвиг 16 м/с"
           ],
           "features": {
-            "peak_dbz": 59.2,
+            "peak_dbz": 52.0,
             "mean_dbz": 48.1,
-            "area_km2": 265,
-            "core45_km2": 180,
-            "fill": 0.65,
+            "area_km2": 148,
+            "core45_km2": 127,
+            "fill": 0.88,
             "gradient": null,
             "phase": 3,
-            "cape": 12.0,
-            "shear": 4.2
+            "cape": 32.0,
+            "shear": 15.5
           },
-          "growth_dbz": 0.0
+          "growth_dbz": null
         },
         {
-          "lat": 57.84,
-          "lon": 162.68,
-          "max_dbz": 55.2,
+          "lat": 61.32,
+          "lon": 162.74,
+          "max_dbz": 66.3,
           "area_km2": 127,
           "pixels": 24,
           "type": "thunder",
@@ -744,60 +743,60 @@
           "confidence": 0.75,
           "score": 6.0,
           "reasons": [
-            "пик 55 дБЗ",
-            "ядро ≥45: 111 км²",
-            "CAPE 18",
-            "сдвиг 3 м/с"
+            "пик 66 дБЗ",
+            "ядро ≥45: 127 км²",
+            "CAPE 17",
+            "сдвиг 20 м/с",
+            "фаза: смешанные"
           ],
           "features": {
-            "peak_dbz": 55.2,
-            "mean_dbz": 50.2,
+            "peak_dbz": 66.3,
+            "mean_dbz": 60.5,
             "area_km2": 127,
-            "core45_km2": 111,
+            "core45_km2": 127,
             "fill": 1.0,
             "gradient": null,
-            "phase": 3,
-            "cape": 18.0,
-            "shear": 3.1
+            "phase": 2,
+            "cape": 17.0,
+            "shear": 19.8
           },
-          "growth_dbz": 3.2
+          "growth_dbz": -1.5
         },
         {
-          "lat": 54.33,
-          "lon": 163.16,
-          "max_dbz": 52.0,
-          "area_km2": 63,
-          "pixels": 12,
+          "lat": 55.5,
+          "lon": 162.02,
+          "max_dbz": 65.1,
+          "area_km2": 699,
+          "pixels": 132,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
           "confidence": 0.75,
           "score": 6.0,
           "reasons": [
-            "пик 52 дБЗ",
-            "ядро ≥45: 63 км²",
-            "CAPE 8",
-            "сдвиг 3 м/с"
+            "пик 65 дБЗ",
+            "ядро ≥45: 514 км²",
+            "сдвиг 11 м/с"
           ],
           "features": {
-            "peak_dbz": 52.0,
-            "mean_dbz": 49.9,
-            "area_km2": 63,
-            "core45_km2": 63,
-            "fill": 1.0,
+            "peak_dbz": 65.1,
+            "mean_dbz": 48.5,
+            "area_km2": 699,
+            "core45_km2": 514,
+            "fill": 0.6,
             "gradient": null,
             "phase": 3,
-            "cape": 8.0,
-            "shear": 2.7
+            "cape": 0.0,
+            "shear": 11.4
           },
           "growth_dbz": null
         },
         {
-          "lat": 57.03,
-          "lon": 165.56,
+          "lat": 54.27,
+          "lon": 165.5,
           "max_dbz": 52.0,
-          "area_km2": 90,
-          "pixels": 17,
+          "area_km2": 2655,
+          "pixels": 501,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
@@ -805,50 +804,50 @@
           "score": 6.0,
           "reasons": [
             "пик 52 дБЗ",
-            "ядро ≥45: 90 км²",
-            "CAPE 17",
-            "сдвиг 4 м/с"
+            "ядро ≥45: 1473 км²",
+            "CAPE 20",
+            "сдвиг 5 м/с"
           ],
           "features": {
             "peak_dbz": 52.0,
-            "mean_dbz": 49.8,
-            "area_km2": 90,
-            "core45_km2": 90,
-            "fill": 0.94,
+            "mean_dbz": 46.1,
+            "area_km2": 2655,
+            "core45_km2": 1473,
+            "fill": 0.74,
             "gradient": null,
             "phase": 3,
-            "cape": 17.0,
-            "shear": 3.9
+            "cape": 20.0,
+            "shear": 4.8
           },
-          "growth_dbz": 0.0
+          "growth_dbz": null
         },
         {
-          "lat": 54.03,
-          "lon": 165.26,
-          "max_dbz": 50.9,
-          "area_km2": 106,
-          "pixels": 20,
+          "lat": 55.38,
+          "lon": 162.71,
+          "max_dbz": 52.0,
+          "area_km2": 583,
+          "pixels": 110,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
           "confidence": 0.75,
           "score": 6.0,
           "reasons": [
-            "пик 51 дБЗ",
-            "ядро ≥45: 79 км²",
-            "CAPE 23",
-            "сдвиг 2 м/с"
+            "пик 52 дБЗ",
+            "ядро ≥45: 392 км²",
+            "CAPE 5",
+            "сдвиг 6 м/с"
           ],
           "features": {
-            "peak_dbz": 50.9,
-            "mean_dbz": 46.9,
-            "area_km2": 106,
-            "core45_km2": 79,
-            "fill": 1.0,
+            "peak_dbz": 52.0,
+            "mean_dbz": 47.1,
+            "area_km2": 583,
+            "core45_km2": 392,
+            "fill": 0.75,
             "gradient": null,
             "phase": 3,
-            "cape": 23.0,
-            "shear": 1.5
+            "cape": 5.0,
+            "shear": 5.6
           },
           "growth_dbz": null
         }
@@ -863,13 +862,13 @@
     {
       "id": "obs_04",
       "kind": "obs",
-      "time": "2026-10-17T15:30:00Z",
+      "time": "2026-10-22T15:30:00Z",
       "lead_min": 0,
       "tile_url": "/tiles/obs_04/{z}/{x}/{y}.png",
       "stats": {
-        "max_dbz": 67.8,
-        "area_30_km2": 48685,
-        "echo_pct": 0.71,
+        "max_dbz": 69.3,
+        "area_30_km2": 309949,
+        "echo_pct": 4.67,
         "cells": 5,
         "thunder_cells": 5,
         "cell_types": {
@@ -880,34 +879,154 @@
           "mixed": 0
         },
         "top_cell": {
-          "lat": 54.54,
-          "lon": 162.86,
-          "max_dbz": 52.0,
-          "area_km2": 1166,
+          "lat": 54.33,
+          "lon": 155.72,
+          "max_dbz": 50.9,
+          "area_km2": 84,
           "type": "thunder",
           "label": "гроза",
-          "confidence": 0.75
+          "confidence": 0.88
         },
-        "snow_fraction": 0.81,
-        "mixed_fraction": 0.02,
+        "snow_fraction": 0.67,
+        "mixed_fraction": 0.09,
         "severe": {
-          "score": 3.0,
+          "score": 4.0,
           "level": "средний",
-          "peak_dbz": 52.0,
-          "area_km2": 2008,
+          "peak_dbz": 60.6,
+          "area_km2": 752,
           "growth_dbz": 0.0,
-          "cape": 19.0,
-          "shear": 2.9,
+          "cape": 56.0,
+          "shear": 2.5,
           "note": "индекс опасной грозы — прокси по отражаемости, площади, росту, CAPE и сдвигу"
         }
       },
       "cells": [
         {
-          "lat": 54.54,
-          "lon": 162.86,
+          "lat": 54.33,
+          "lon": 155.72,
+          "max_dbz": 50.9,
+          "area_km2": 84,
+          "pixels": 16,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.88,
+          "score": 7.0,
+          "reasons": [
+            "пик 51 дБЗ",
+            "ядро ≥45: 58 км²",
+            "CAPE 56",
+            "сдвиг 2 м/с"
+          ],
+          "features": {
+            "peak_dbz": 50.9,
+            "mean_dbz": 47.1,
+            "area_km2": 84,
+            "core45_km2": 58,
+            "fill": 1.0,
+            "gradient": 11.63,
+            "phase": 3,
+            "cape": 56.0,
+            "shear": 2.5
+          },
+          "growth_dbz": null
+        },
+        {
+          "lat": 59.58,
+          "lon": 165.68,
+          "max_dbz": 50.9,
+          "area_km2": 206,
+          "pixels": 39,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.88,
+          "score": 7.0,
+          "reasons": [
+            "пик 51 дБЗ",
+            "ядро ≥45: 180 км²",
+            "CAPE 41",
+            "сдвиг 15 м/с"
+          ],
+          "features": {
+            "peak_dbz": 50.9,
+            "mean_dbz": 48.2,
+            "area_km2": 206,
+            "core45_km2": 180,
+            "fill": 0.81,
+            "gradient": null,
+            "phase": 3,
+            "cape": 41.0,
+            "shear": 15.3
+          },
+          "growth_dbz": null
+        },
+        {
+          "lat": 59.85,
+          "lon": 165.14,
+          "max_dbz": 50.9,
+          "area_km2": 84,
+          "pixels": 16,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.88,
+          "score": 7.0,
+          "reasons": [
+            "пик 51 дБЗ",
+            "ядро ≥45: 58 км²",
+            "CAPE 37",
+            "сдвиг 14 м/с"
+          ],
+          "features": {
+            "peak_dbz": 50.9,
+            "mean_dbz": 47.0,
+            "area_km2": 84,
+            "core45_km2": 58,
+            "fill": 1.0,
+            "gradient": 11.87,
+            "phase": 3,
+            "cape": 37.0,
+            "shear": 14.3
+          },
+          "growth_dbz": null
+        },
+        {
+          "lat": 56.58,
+          "lon": 154.22,
+          "max_dbz": 60.6,
+          "area_km2": 752,
+          "pixels": 142,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.75,
+          "score": 6.0,
+          "reasons": [
+            "пик 61 дБЗ",
+            "ядро ≥45: 699 км²",
+            "CAPE 31",
+            "сдвиг 9 м/с"
+          ],
+          "features": {
+            "peak_dbz": 60.6,
+            "mean_dbz": 51.2,
+            "area_km2": 752,
+            "core45_km2": 699,
+            "fill": 0.93,
+            "gradient": null,
+            "phase": 3,
+            "cape": 31.0,
+            "shear": 8.8
+          },
+          "growth_dbz": null
+        },
+        {
+          "lat": 54.63,
+          "lon": 165.83,
           "max_dbz": 52.0,
-          "area_km2": 1166,
-          "pixels": 220,
+          "area_km2": 710,
+          "pixels": 134,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
@@ -915,142 +1034,22 @@
           "score": 6.0,
           "reasons": [
             "пик 52 дБЗ",
-            "ядро ≥45: 927 км²",
-            "CAPE 19",
-            "сдвиг 3 м/с"
+            "ядро ≥45: 498 км²",
+            "CAPE 40",
+            "сдвиг 7 м/с"
           ],
           "features": {
             "peak_dbz": 52.0,
-            "mean_dbz": 48.5,
-            "area_km2": 1166,
-            "core45_km2": 927,
-            "fill": 0.56,
+            "mean_dbz": 46.1,
+            "area_km2": 710,
+            "core45_km2": 498,
+            "fill": 0.64,
             "gradient": null,
             "phase": 3,
-            "cape": 19.0,
-            "shear": 2.9
+            "cape": 40.0,
+            "shear": 7.0
           },
           "growth_dbz": 0.0
-        },
-        {
-          "lat": 54.99,
-          "lon": 165.8,
-          "max_dbz": 52.0,
-          "area_km2": 545,
-          "pixels": 103,
-          "type": "thunder",
-          "label": "гроза",
-          "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
-          "reasons": [
-            "пик 52 дБЗ",
-            "ядро ≥45: 514 км²",
-            "CAPE 17",
-            "сдвиг 4 м/с"
-          ],
-          "features": {
-            "peak_dbz": 52.0,
-            "mean_dbz": 50.5,
-            "area_km2": 545,
-            "core45_km2": 514,
-            "fill": 0.98,
-            "gradient": null,
-            "phase": 3,
-            "cape": 17.0,
-            "shear": 3.9
-          },
-          "growth_dbz": null
-        },
-        {
-          "lat": 56.46,
-          "lon": 163.61,
-          "max_dbz": 52.0,
-          "area_km2": 2008,
-          "pixels": 379,
-          "type": "thunder",
-          "label": "гроза",
-          "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
-          "reasons": [
-            "пик 52 дБЗ",
-            "ядро ≥45: 1796 км²",
-            "CAPE 20",
-            "сдвиг 4 м/с"
-          ],
-          "features": {
-            "peak_dbz": 52.0,
-            "mean_dbz": 49.9,
-            "area_km2": 2008,
-            "core45_km2": 1796,
-            "fill": 0.56,
-            "gradient": null,
-            "phase": 3,
-            "cape": 20.0,
-            "shear": 3.9
-          },
-          "growth_dbz": null
-        },
-        {
-          "lat": 56.67,
-          "lon": 163.01,
-          "max_dbz": 52.0,
-          "area_km2": 201,
-          "pixels": 38,
-          "type": "thunder",
-          "label": "гроза",
-          "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
-          "reasons": [
-            "пик 52 дБЗ",
-            "ядро ≥45: 148 км²",
-            "CAPE 21",
-            "сдвиг 4 м/с"
-          ],
-          "features": {
-            "peak_dbz": 52.0,
-            "mean_dbz": 47.6,
-            "area_km2": 201,
-            "core45_km2": 148,
-            "fill": 0.68,
-            "gradient": null,
-            "phase": 3,
-            "cape": 21.0,
-            "shear": 4.0
-          },
-          "growth_dbz": null
-        },
-        {
-          "lat": 57.54,
-          "lon": 162.53,
-          "max_dbz": 51.7,
-          "area_km2": 212,
-          "pixels": 40,
-          "type": "thunder",
-          "label": "гроза",
-          "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
-          "reasons": [
-            "пик 52 дБЗ",
-            "ядро ≥45: 190 км²",
-            "CAPE 16",
-            "сдвиг 5 м/с"
-          ],
-          "features": {
-            "peak_dbz": 51.7,
-            "mean_dbz": 49.8,
-            "area_km2": 212,
-            "core45_km2": 190,
-            "fill": 1.0,
-            "gradient": null,
-            "phase": 3,
-            "cape": 16.0,
-            "shear": 5.4
-          },
-          "growth_dbz": -3.5
         }
       ],
       "zoom_tiles": {
@@ -1063,13 +1062,13 @@
     {
       "id": "obs_05",
       "kind": "obs",
-      "time": "2026-10-17T16:00:00Z",
+      "time": "2026-10-22T16:00:00Z",
       "lead_min": 0,
       "tile_url": "/tiles/obs_05/{z}/{x}/{y}.png",
       "stats": {
-        "max_dbz": 67.8,
-        "area_30_km2": 46889,
-        "echo_pct": 0.68,
+        "max_dbz": 69.3,
+        "area_30_km2": 305878,
+        "echo_pct": 4.56,
         "cells": 5,
         "thunder_cells": 5,
         "cell_types": {
@@ -1080,124 +1079,124 @@
           "mixed": 0
         },
         "top_cell": {
-          "lat": 54.39,
-          "lon": 155.81,
-          "max_dbz": 63.4,
-          "area_km2": 333,
+          "lat": 60.63,
+          "lon": 161.66,
+          "max_dbz": 53.5,
+          "area_km2": 233,
           "type": "thunder",
           "label": "гроза",
-          "confidence": 0.75
+          "confidence": 0.88
         },
-        "snow_fraction": 0.83,
-        "mixed_fraction": 0.02,
+        "snow_fraction": 0.72,
+        "mixed_fraction": 0.08,
         "severe": {
-          "score": 5.5,
+          "score": 5.0,
           "level": "высокий",
-          "peak_dbz": 63.4,
-          "area_km2": 1134,
-          "growth_dbz": 8.0,
-          "cape": 0.0,
-          "shear": 14.7,
+          "peak_dbz": 61.3,
+          "area_km2": 1383,
+          "growth_dbz": 0.0,
+          "cape": 45.0,
+          "shear": 21.7,
           "note": "индекс опасной грозы — прокси по отражаемости, площади, росту, CAPE и сдвигу"
         }
       },
       "cells": [
         {
-          "lat": 54.39,
-          "lon": 155.81,
-          "max_dbz": 63.4,
-          "area_km2": 333,
-          "pixels": 63,
-          "type": "thunder",
-          "label": "гроза",
-          "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
-          "reasons": [
-            "пик 63 дБЗ",
-            "ядро ≥45: 333 км²",
-            "сдвиг 15 м/с"
-          ],
-          "features": {
-            "peak_dbz": 63.4,
-            "mean_dbz": 53.8,
-            "area_km2": 333,
-            "core45_km2": 333,
-            "fill": 0.64,
-            "gradient": null,
-            "phase": 3,
-            "cape": 0.0,
-            "shear": 14.7
-          },
-          "growth_dbz": null
-        },
-        {
-          "lat": 56.31,
-          "lon": 163.34,
-          "max_dbz": 60.0,
-          "area_km2": 1134,
-          "pixels": 214,
+          "lat": 60.63,
+          "lon": 161.66,
+          "max_dbz": 53.5,
+          "area_km2": 233,
+          "pixels": 44,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
           "confidence": 0.88,
           "score": 7.0,
           "reasons": [
-            "пик 60 дБЗ",
-            "ядро ≥45: 545 км²",
-            "CAPE 4",
-            "сдвиг 7 м/с",
-            "рост +8 дБЗ"
+            "пик 54 дБЗ",
+            "ядро ≥45: 227 км²",
+            "CAPE 45",
+            "сдвиг 22 м/с"
           ],
           "features": {
-            "peak_dbz": 60.0,
-            "mean_dbz": 45.3,
-            "area_km2": 1134,
-            "core45_km2": 545,
-            "fill": 0.61,
+            "peak_dbz": 53.5,
+            "mean_dbz": 49.9,
+            "area_km2": 233,
+            "core45_km2": 227,
+            "fill": 1.0,
             "gradient": null,
             "phase": 3,
-            "cape": 4.0,
-            "shear": 7.3
+            "cape": 45.0,
+            "shear": 21.7
           },
-          "growth_dbz": 8.0
+          "growth_dbz": null
         },
         {
-          "lat": 57.87,
-          "lon": 162.77,
-          "max_dbz": 55.2,
-          "area_km2": 212,
-          "pixels": 40,
+          "lat": 56.07,
+          "lon": 162.92,
+          "max_dbz": 61.3,
+          "area_km2": 810,
+          "pixels": 153,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
           "confidence": 0.75,
           "score": 6.0,
           "reasons": [
-            "пик 55 дБЗ",
-            "ядро ≥45: 196 км²",
-            "CAPE 18",
-            "сдвиг 3 м/с"
+            "пик 61 дБЗ",
+            "ядро ≥45: 757 км²",
+            "CAPE 7",
+            "сдвиг 8 м/с"
           ],
           "features": {
-            "peak_dbz": 55.2,
-            "mean_dbz": 50.0,
-            "area_km2": 212,
-            "core45_km2": 196,
-            "fill": 0.71,
+            "peak_dbz": 61.3,
+            "mean_dbz": 50.5,
+            "area_km2": 810,
+            "core45_km2": 757,
+            "fill": 0.65,
             "gradient": null,
             "phase": 3,
-            "cape": 18.0,
-            "shear": 2.8
+            "cape": 7.0,
+            "shear": 7.9
           },
-          "growth_dbz": 3.5
+          "growth_dbz": null
         },
         {
-          "lat": 54.48,
-          "lon": 164.54,
+          "lat": 56.1,
+          "lon": 154.31,
+          "max_dbz": 57.7,
+          "area_km2": 1383,
+          "pixels": 261,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.75,
+          "score": 6.0,
+          "reasons": [
+            "пик 58 дБЗ",
+            "ядро ≥45: 1192 км²",
+            "CAPE 34",
+            "сдвиг 7 м/с"
+          ],
+          "features": {
+            "peak_dbz": 57.7,
+            "mean_dbz": 49.4,
+            "area_km2": 1383,
+            "core45_km2": 1192,
+            "fill": 0.56,
+            "gradient": null,
+            "phase": 3,
+            "cape": 34.0,
+            "shear": 7.1
+          },
+          "growth_dbz": -2.9
+        },
+        {
+          "lat": 54.27,
+          "lon": 165.92,
           "max_dbz": 52.0,
-          "area_km2": 508,
-          "pixels": 96,
+          "area_km2": 402,
+          "pixels": 76,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
@@ -1205,50 +1204,50 @@
           "score": 6.0,
           "reasons": [
             "пик 52 дБЗ",
-            "ядро ≥45: 471 км²",
-            "CAPE 41",
-            "сдвиг 3 м/с"
+            "ядро ≥45: 227 км²",
+            "CAPE 32",
+            "сдвиг 7 м/с"
           ],
           "features": {
             "peak_dbz": 52.0,
-            "mean_dbz": 50.0,
-            "area_km2": 508,
-            "core45_km2": 471,
-            "fill": 0.6,
+            "mean_dbz": 46.3,
+            "area_km2": 402,
+            "core45_km2": 227,
+            "fill": 0.84,
             "gradient": null,
             "phase": 3,
-            "cape": 41.0,
-            "shear": 2.8
+            "cape": 32.0,
+            "shear": 6.7
           },
-          "growth_dbz": null
+          "growth_dbz": 0.0
         },
         {
-          "lat": 54.03,
-          "lon": 164.15,
-          "max_dbz": 50.9,
-          "area_km2": 201,
-          "pixels": 38,
+          "lat": 58.65,
+          "lon": 165.74,
+          "max_dbz": 52.0,
+          "area_km2": 1330,
+          "pixels": 251,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
           "confidence": 0.75,
           "score": 6.0,
           "reasons": [
-            "пик 51 дБЗ",
-            "ядро ≥45: 185 км²",
-            "CAPE 62",
-            "сдвиг 3 м/с"
+            "пик 52 дБЗ",
+            "ядро ≥45: 885 км²",
+            "CAPE 8",
+            "сдвиг 12 м/с"
           ],
           "features": {
-            "peak_dbz": 50.9,
-            "mean_dbz": 50.1,
-            "area_km2": 201,
-            "core45_km2": 185,
-            "fill": 0.86,
+            "peak_dbz": 52.0,
+            "mean_dbz": 46.9,
+            "area_km2": 1330,
+            "core45_km2": 885,
+            "fill": 0.6,
             "gradient": null,
             "phase": 3,
-            "cape": 62.0,
-            "shear": 2.6
+            "cape": 8.0,
+            "shear": 12.2
           },
           "growth_dbz": null
         }
@@ -1263,13 +1262,13 @@
     {
       "id": "obs_06",
       "kind": "obs",
-      "time": "2026-10-17T16:30:00Z",
+      "time": "2026-10-22T16:30:00Z",
       "lead_min": 0,
       "tile_url": "/tiles/obs_06/{z}/{x}/{y}.png",
       "stats": {
-        "max_dbz": 67.8,
-        "area_30_km2": 70977,
-        "echo_pct": 1.03,
+        "max_dbz": 69.3,
+        "area_30_km2": 330046,
+        "echo_pct": 4.88,
         "cells": 5,
         "thunder_cells": 5,
         "cell_types": {
@@ -1280,177 +1279,179 @@
           "mixed": 0
         },
         "top_cell": {
-          "lat": 54.18,
-          "lon": 156.11,
-          "max_dbz": 64.0,
-          "area_km2": 243,
+          "lat": 59.85,
+          "lon": 160.25,
+          "max_dbz": 61.9,
+          "area_km2": 1399,
           "type": "thunder",
           "label": "гроза",
-          "confidence": 0.75
+          "confidence": 0.88
         },
-        "snow_fraction": 0.89,
-        "mixed_fraction": 0.02,
+        "snow_fraction": 0.75,
+        "mixed_fraction": 0.07,
         "severe": {
-          "score": 5.0,
+          "score": 6.0,
           "level": "высокий",
-          "peak_dbz": 64.0,
-          "area_km2": 1144,
-          "growth_dbz": 0.6,
-          "cape": 0.0,
-          "shear": 17.2,
+          "peak_dbz": 62.3,
+          "area_km2": 1399,
+          "growth_dbz": 8.8,
+          "cape": 37.0,
+          "shear": 15.6,
           "note": "индекс опасной грозы — прокси по отражаемости, площади, росту, CAPE и сдвигу"
         }
       },
       "cells": [
         {
-          "lat": 54.18,
-          "lon": 156.11,
-          "max_dbz": 64.0,
-          "area_km2": 243,
-          "pixels": 46,
+          "lat": 59.85,
+          "lon": 160.25,
+          "max_dbz": 61.9,
+          "area_km2": 1399,
+          "pixels": 264,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
+          "confidence": 0.88,
+          "score": 7.0,
           "reasons": [
-            "пик 64 дБЗ",
-            "ядро ≥45: 238 км²",
-            "сдвиг 17 м/с",
-            "фаза: смешанные"
+            "пик 62 дБЗ",
+            "ядро ≥45: 1388 км²",
+            "CAPE 37",
+            "сдвиг 16 м/с"
           ],
           "features": {
-            "peak_dbz": 64.0,
-            "mean_dbz": 59.9,
-            "area_km2": 243,
-            "core45_km2": 238,
-            "fill": 0.6,
-            "gradient": null,
-            "phase": 2,
-            "cape": 0.0,
-            "shear": 17.2
-          },
-          "growth_dbz": 0.6
-        },
-        {
-          "lat": 56.34,
-          "lon": 162.83,
-          "max_dbz": 58.1,
-          "area_km2": 355,
-          "pixels": 67,
-          "type": "thunder",
-          "label": "гроза",
-          "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
-          "reasons": [
-            "пик 58 дБЗ",
-            "ядро ≥45: 333 км²",
-            "CAPE 3",
-            "сдвиг 7 м/с"
-          ],
-          "features": {
-            "peak_dbz": 58.1,
-            "mean_dbz": 50.1,
-            "area_km2": 355,
-            "core45_km2": 333,
+            "peak_dbz": 61.9,
+            "mean_dbz": 51.8,
+            "area_km2": 1399,
+            "core45_km2": 1388,
             "fill": 0.68,
             "gradient": null,
             "phase": 3,
-            "cape": 3.0,
-            "shear": 6.6
-          },
-          "growth_dbz": -1.9
-        },
-        {
-          "lat": 54.66,
-          "lon": 164.96,
-          "max_dbz": 52.0,
-          "area_km2": 869,
-          "pixels": 164,
-          "type": "thunder",
-          "label": "гроза",
-          "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
-          "reasons": [
-            "пик 52 дБЗ",
-            "ядро ≥45: 800 км²",
-            "CAPE 47",
-            "сдвиг 4 м/с"
-          ],
-          "features": {
-            "peak_dbz": 52.0,
-            "mean_dbz": 49.2,
-            "area_km2": 869,
-            "core45_km2": 800,
-            "fill": 0.69,
-            "gradient": null,
-            "phase": 3,
-            "cape": 47.0,
-            "shear": 3.6
-          },
-          "growth_dbz": 0.0
-        },
-        {
-          "lat": 54.9,
-          "lon": 165.71,
-          "max_dbz": 52.0,
-          "area_km2": 471,
-          "pixels": 89,
-          "type": "thunder",
-          "label": "гроза",
-          "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
-          "reasons": [
-            "пик 52 дБЗ",
-            "ядро ≥45: 466 км²",
-            "CAPE 22",
-            "сдвиг 4 м/с"
-          ],
-          "features": {
-            "peak_dbz": 52.0,
-            "mean_dbz": 50.8,
-            "area_km2": 471,
-            "core45_km2": 466,
-            "fill": 0.64,
-            "gradient": null,
-            "phase": 3,
-            "cape": 22.0,
-            "shear": 3.6
+            "cape": 37.0,
+            "shear": 15.6
           },
           "growth_dbz": null
         },
         {
-          "lat": 56.37,
-          "lon": 163.37,
-          "max_dbz": 52.0,
-          "area_km2": 1144,
-          "pixels": 216,
+          "lat": 56.13,
+          "lon": 155.63,
+          "max_dbz": 50.9,
+          "area_km2": 84,
+          "pixels": 16,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
+          "confidence": 0.88,
+          "score": 7.0,
           "reasons": [
-            "пик 52 дБЗ",
-            "ядро ≥45: 683 км²",
-            "CAPE 7",
-            "сдвиг 7 м/с"
+            "пик 51 дБЗ",
+            "ядро ≥45: 63 км²",
+            "CAPE 48",
+            "сдвиг 2 м/с"
           ],
           "features": {
-            "peak_dbz": 52.0,
-            "mean_dbz": 45.9,
-            "area_km2": 1144,
-            "core45_km2": 683,
-            "fill": 0.61,
-            "gradient": null,
+            "peak_dbz": 50.9,
+            "mean_dbz": 46.5,
+            "area_km2": 84,
+            "core45_km2": 63,
+            "fill": 1.0,
+            "gradient": 11.72,
             "phase": 3,
-            "cape": 7.0,
-            "shear": 6.7
+            "cape": 48.0,
+            "shear": 2.1
           },
           "growth_dbz": null
+        },
+        {
+          "lat": 57.48,
+          "lon": 165.86,
+          "max_dbz": 50.9,
+          "area_km2": 524,
+          "pixels": 99,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.88,
+          "score": 7.0,
+          "reasons": [
+            "пик 51 дБЗ",
+            "ядро ≥45: 514 км²",
+            "CAPE 4",
+            "сдвиг 20 м/с"
+          ],
+          "features": {
+            "peak_dbz": 50.9,
+            "mean_dbz": 50.4,
+            "area_km2": 524,
+            "core45_km2": 514,
+            "fill": 0.82,
+            "gradient": null,
+            "phase": 3,
+            "cape": 4.0,
+            "shear": 20.0
+          },
+          "growth_dbz": null
+        },
+        {
+          "lat": 59.85,
+          "lon": 163.94,
+          "max_dbz": 50.9,
+          "area_km2": 84,
+          "pixels": 16,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.88,
+          "score": 7.0,
+          "reasons": [
+            "пик 51 дБЗ",
+            "ядро ≥45: 58 км²",
+            "CAPE 25",
+            "сдвиг 15 м/с"
+          ],
+          "features": {
+            "peak_dbz": 50.9,
+            "mean_dbz": 47.2,
+            "area_km2": 84,
+            "core45_km2": 58,
+            "fill": 1.0,
+            "gradient": 11.76,
+            "phase": 3,
+            "cape": 25.0,
+            "shear": 14.8
+          },
+          "growth_dbz": null
+        },
+        {
+          "lat": 60.87,
+          "lon": 162.08,
+          "max_dbz": 62.3,
+          "area_km2": 424,
+          "pixels": 80,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.88,
+          "score": 7.0,
+          "reasons": [
+            "пик 62 дБЗ",
+            "ядро ≥45: 424 км²",
+            "CAPE 37",
+            "сдвиг 21 м/с",
+            "рост +9 дБЗ",
+            "фаза: смешанные"
+          ],
+          "features": {
+            "peak_dbz": 62.3,
+            "mean_dbz": 57.4,
+            "area_km2": 424,
+            "core45_km2": 424,
+            "fill": 0.82,
+            "gradient": null,
+            "phase": 2,
+            "cape": 37.0,
+            "shear": 21.0
+          },
+          "growth_dbz": 8.8
         }
       ],
       "zoom_tiles": {
@@ -1463,13 +1464,13 @@
     {
       "id": "obs_07",
       "kind": "obs",
-      "time": "2026-10-17T17:00:00Z",
+      "time": "2026-10-22T17:00:00Z",
       "lead_min": 0,
       "tile_url": "/tiles/obs_07/{z}/{x}/{y}.png",
       "stats": {
-        "max_dbz": 67.8,
-        "area_30_km2": 103095,
-        "echo_pct": 1.45,
+        "max_dbz": 69.3,
+        "area_30_km2": 321964,
+        "echo_pct": 4.74,
         "cells": 5,
         "thunder_cells": 5,
         "cell_types": {
@@ -1480,177 +1481,179 @@
           "mixed": 0
         },
         "top_cell": {
-          "lat": 54.93,
-          "lon": 165.8,
-          "max_dbz": 52.0,
-          "area_km2": 519,
+          "lat": 59.73,
+          "lon": 160.1,
+          "max_dbz": 50.9,
+          "area_km2": 169,
           "type": "thunder",
           "label": "гроза",
-          "confidence": 0.75
+          "confidence": 0.88
         },
-        "snow_fraction": 0.91,
-        "mixed_fraction": 0.01,
+        "snow_fraction": 0.76,
+        "mixed_fraction": 0.07,
         "severe": {
-          "score": 3.0,
-          "level": "средний",
-          "peak_dbz": 52.0,
-          "area_km2": 996,
+          "score": 5.0,
+          "level": "высокий",
+          "peak_dbz": 62.3,
+          "area_km2": 678,
           "growth_dbz": 0.0,
-          "cape": 17.0,
-          "shear": 3.8,
+          "cape": 34.0,
+          "shear": 15.3,
           "note": "индекс опасной грозы — прокси по отражаемости, площади, росту, CAPE и сдвигу"
         }
       },
       "cells": [
         {
-          "lat": 54.93,
-          "lon": 165.8,
-          "max_dbz": 52.0,
-          "area_km2": 519,
-          "pixels": 98,
+          "lat": 59.73,
+          "lon": 160.1,
+          "max_dbz": 50.9,
+          "area_km2": 169,
+          "pixels": 32,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
+          "confidence": 0.88,
+          "score": 7.0,
           "reasons": [
-            "пик 52 дБЗ",
-            "ядро ≥45: 371 км²",
-            "CAPE 17",
-            "сдвиг 4 м/с"
-          ],
-          "features": {
-            "peak_dbz": 52.0,
-            "mean_dbz": 47.8,
-            "area_km2": 519,
-            "core45_km2": 371,
-            "fill": 0.65,
-            "gradient": null,
-            "phase": 3,
-            "cape": 17.0,
-            "shear": 3.8
-          },
-          "growth_dbz": 0.0
-        },
-        {
-          "lat": 56.25,
-          "lon": 163.37,
-          "max_dbz": 52.0,
-          "area_km2": 996,
-          "pixels": 188,
-          "type": "thunder",
-          "label": "гроза",
-          "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
-          "reasons": [
-            "пик 52 дБЗ",
-            "ядро ≥45: 593 км²",
-            "CAPE 2",
-            "сдвиг 8 м/с"
-          ],
-          "features": {
-            "peak_dbz": 52.0,
-            "mean_dbz": 46.2,
-            "area_km2": 996,
-            "core45_km2": 593,
-            "fill": 0.67,
-            "gradient": null,
-            "phase": 3,
-            "cape": 2.0,
-            "shear": 7.7
-          },
-          "growth_dbz": 0.0
-        },
-        {
-          "lat": 56.16,
-          "lon": 164.78,
-          "max_dbz": 52.0,
-          "area_km2": 302,
-          "pixels": 57,
-          "type": "thunder",
-          "label": "гроза",
-          "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
-          "reasons": [
-            "пик 52 дБЗ",
-            "ядро ≥45: 111 км²",
+            "пик 51 дБЗ",
+            "ядро ≥45: 169 км²",
             "CAPE 34",
-            "сдвиг 4 м/с"
+            "сдвиг 15 м/с"
           ],
           "features": {
-            "peak_dbz": 52.0,
-            "mean_dbz": 43.4,
-            "area_km2": 302,
-            "core45_km2": 111,
-            "fill": 0.63,
+            "peak_dbz": 50.9,
+            "mean_dbz": 49.9,
+            "area_km2": 169,
+            "core45_km2": 169,
+            "fill": 1.0,
             "gradient": null,
             "phase": 3,
             "cape": 34.0,
-            "shear": 3.7
+            "shear": 15.3
+          },
+          "growth_dbz": -11.0
+        },
+        {
+          "lat": 59.85,
+          "lon": 163.94,
+          "max_dbz": 50.9,
+          "area_km2": 84,
+          "pixels": 16,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.88,
+          "score": 7.0,
+          "reasons": [
+            "пик 51 дБЗ",
+            "ядро ≥45: 58 км²",
+            "CAPE 25",
+            "сдвиг 15 м/с"
+          ],
+          "features": {
+            "peak_dbz": 50.9,
+            "mean_dbz": 47.2,
+            "area_km2": 84,
+            "core45_km2": 58,
+            "fill": 1.0,
+            "gradient": 11.76,
+            "phase": 3,
+            "cape": 25.0,
+            "shear": 14.8
+          },
+          "growth_dbz": 0.0
+        },
+        {
+          "lat": 60.87,
+          "lon": 162.08,
+          "max_dbz": 62.3,
+          "area_km2": 424,
+          "pixels": 80,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.75,
+          "score": 6.0,
+          "reasons": [
+            "пик 62 дБЗ",
+            "ядро ≥45: 424 км²",
+            "CAPE 37",
+            "сдвиг 21 м/с",
+            "фаза: смешанные"
+          ],
+          "features": {
+            "peak_dbz": 62.3,
+            "mean_dbz": 57.4,
+            "area_km2": 424,
+            "core45_km2": 424,
+            "fill": 0.82,
+            "gradient": null,
+            "phase": 2,
+            "cape": 37.0,
+            "shear": 21.0
+          },
+          "growth_dbz": 0.0
+        },
+        {
+          "lat": 59.82,
+          "lon": 160.4,
+          "max_dbz": 61.9,
+          "area_km2": 678,
+          "pixels": 128,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.75,
+          "score": 6.0,
+          "reasons": [
+            "пик 62 дБЗ",
+            "ядро ≥45: 667 км²",
+            "CAPE 34",
+            "сдвиг 16 м/с",
+            "фаза: смешанные"
+          ],
+          "features": {
+            "peak_dbz": 61.9,
+            "mean_dbz": 53.1,
+            "area_km2": 678,
+            "core45_km2": 667,
+            "fill": 0.63,
+            "gradient": null,
+            "phase": 2,
+            "cape": 34.0,
+            "shear": 15.5
           },
           "growth_dbz": null
         },
         {
-          "lat": 54.3,
-          "lon": 155.66,
-          "max_dbz": 50.9,
-          "area_km2": 111,
-          "pixels": 21,
+          "lat": 57.54,
+          "lon": 157.37,
+          "max_dbz": 57.3,
+          "area_km2": 63,
+          "pixels": 12,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
           "confidence": 0.75,
           "score": 6.0,
           "reasons": [
-            "пик 51 дБЗ",
-            "ядро ≥45: 111 км²",
-            "CAPE 4",
-            "сдвиг 13 м/с"
+            "пик 57 дБЗ",
+            "ядро ≥45: 63 км²",
+            "CAPE 8",
+            "сдвиг 5 м/с"
           ],
           "features": {
-            "peak_dbz": 50.9,
-            "mean_dbz": 49.4,
-            "area_km2": 111,
-            "core45_km2": 111,
+            "peak_dbz": 57.3,
+            "mean_dbz": 51.9,
+            "area_km2": 63,
+            "core45_km2": 63,
             "fill": 1.0,
             "gradient": null,
             "phase": 3,
-            "cape": 4.0,
-            "shear": 13.3
+            "cape": 8.0,
+            "shear": 4.6
           },
-          "growth_dbz": -13.1
-        },
-        {
-          "lat": 54.39,
-          "lon": 164.39,
-          "max_dbz": 50.9,
-          "area_km2": 392,
-          "pixels": 74,
-          "type": "thunder",
-          "label": "гроза",
-          "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
-          "reasons": [
-            "пик 51 дБЗ",
-            "ядро ≥45: 392 км²",
-            "CAPE 41",
-            "сдвиг 2 м/с"
-          ],
-          "features": {
-            "peak_dbz": 50.9,
-            "mean_dbz": 50.1,
-            "area_km2": 392,
-            "core45_km2": 392,
-            "fill": 0.7,
-            "gradient": null,
-            "phase": 3,
-            "cape": 41.0,
-            "shear": 2.4
-          },
-          "growth_dbz": -1.1
+          "growth_dbz": null
         }
       ],
       "zoom_tiles": {
@@ -1663,13 +1666,13 @@
     {
       "id": "obs_08",
       "kind": "obs",
-      "time": "2026-10-17T17:30:00Z",
+      "time": "2026-10-22T17:30:00Z",
       "lead_min": 0,
       "tile_url": "/tiles/obs_08/{z}/{x}/{y}.png",
       "stats": {
-        "max_dbz": 67.8,
-        "area_30_km2": 83660,
-        "echo_pct": 1.19,
+        "max_dbz": 69.3,
+        "area_30_km2": 219695,
+        "echo_pct": 3.32,
         "cells": 5,
         "thunder_cells": 5,
         "cell_types": {
@@ -1680,176 +1683,175 @@
           "mixed": 0
         },
         "top_cell": {
-          "lat": 54.45,
-          "lon": 156.14,
-          "max_dbz": 65.8,
-          "area_km2": 249,
+          "lat": 56.85,
+          "lon": 164.03,
+          "max_dbz": 52.0,
+          "area_km2": 63,
           "type": "thunder",
           "label": "гроза",
           "confidence": 0.88
         },
-        "snow_fraction": 0.9,
-        "mixed_fraction": 0.01,
+        "snow_fraction": 0.7,
+        "mixed_fraction": 0.09,
         "severe": {
-          "score": 6.0,
-          "level": "высокий",
-          "peak_dbz": 65.8,
-          "area_km2": 1245,
-          "growth_dbz": 14.9,
-          "cape": 0.0,
-          "shear": 15.3,
+          "score": 3.0,
+          "level": "средний",
+          "peak_dbz": 52.0,
+          "area_km2": 286,
+          "growth_dbz": 0.0,
+          "cape": 12.0,
+          "shear": 16.4,
           "note": "индекс опасной грозы — прокси по отражаемости, площади, росту, CAPE и сдвигу"
         }
       },
       "cells": [
         {
-          "lat": 54.45,
-          "lon": 156.14,
-          "max_dbz": 65.8,
-          "area_km2": 249,
-          "pixels": 47,
+          "lat": 56.85,
+          "lon": 164.03,
+          "max_dbz": 52.0,
+          "area_km2": 63,
+          "pixels": 12,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
           "confidence": 0.88,
           "score": 7.0,
           "reasons": [
-            "пик 66 дБЗ",
-            "ядро ≥45: 249 км²",
-            "сдвиг 15 м/с",
-            "рост +15 дБЗ",
-            "фаза: смешанные"
+            "пик 52 дБЗ",
+            "ядро ≥45: 63 км²",
+            "CAPE 12",
+            "сдвиг 16 м/с"
           ],
           "features": {
-            "peak_dbz": 65.8,
-            "mean_dbz": 63.4,
-            "area_km2": 249,
-            "core45_km2": 249,
-            "fill": 0.59,
+            "peak_dbz": 52.0,
+            "mean_dbz": 49.4,
+            "area_km2": 63,
+            "core45_km2": 63,
+            "fill": 1.0,
             "gradient": null,
-            "phase": 2,
-            "cape": 0.0,
-            "shear": 15.3
+            "phase": 3,
+            "cape": 12.0,
+            "shear": 16.4
           },
-          "growth_dbz": 14.9
+          "growth_dbz": null
         },
         {
-          "lat": 54.6,
+          "lat": 57.12,
+          "lon": 162.71,
+          "max_dbz": 50.9,
+          "area_km2": 127,
+          "pixels": 24,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.88,
+          "score": 7.0,
+          "reasons": [
+            "пик 51 дБЗ",
+            "ядро ≥45: 84 км²",
+            "CAPE 2",
+            "сдвиг 18 м/с"
+          ],
+          "features": {
+            "peak_dbz": 50.9,
+            "mean_dbz": 47.5,
+            "area_km2": 127,
+            "core45_km2": 84,
+            "fill": 0.96,
+            "gradient": null,
+            "phase": 3,
+            "cape": 2.0,
+            "shear": 18.2
+          },
+          "growth_dbz": null
+        },
+        {
+          "lat": 57.18,
           "lon": 165.11,
-          "max_dbz": 52.0,
-          "area_km2": 1245,
-          "pixels": 235,
+          "max_dbz": 50.9,
+          "area_km2": 286,
+          "pixels": 54,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
+          "confidence": 0.88,
+          "score": 7.0,
           "reasons": [
-            "пик 52 дБЗ",
-            "ядро ≥45: 1144 км²",
-            "CAPE 53",
-            "сдвиг 4 м/с"
+            "пик 51 дБЗ",
+            "ядро ≥45: 243 км²",
+            "CAPE 47",
+            "сдвиг 17 м/с"
           ],
           "features": {
-            "peak_dbz": 52.0,
-            "mean_dbz": 49.5,
-            "area_km2": 1245,
-            "core45_km2": 1144,
-            "fill": 0.62,
+            "peak_dbz": 50.9,
+            "mean_dbz": 48.4,
+            "area_km2": 286,
+            "core45_km2": 243,
+            "fill": 0.96,
             "gradient": null,
             "phase": 3,
-            "cape": 53.0,
-            "shear": 3.6
+            "cape": 47.0,
+            "shear": 17.2
           },
-          "growth_dbz": 1.1
+          "growth_dbz": null
         },
         {
-          "lat": 54.93,
-          "lon": 165.86,
-          "max_dbz": 52.0,
-          "area_km2": 376,
-          "pixels": 71,
+          "lat": 57.84,
+          "lon": 164.06,
+          "max_dbz": 50.9,
+          "area_km2": 143,
+          "pixels": 27,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
+          "confidence": 0.88,
+          "score": 7.0,
           "reasons": [
-            "пик 52 дБЗ",
-            "ядро ≥45: 291 км²",
-            "CAPE 14",
-            "сдвиг 4 м/с"
+            "пик 51 дБЗ",
+            "ядро ≥45: 143 км²",
+            "CAPE 33",
+            "сдвиг 16 м/с"
           ],
           "features": {
-            "peak_dbz": 52.0,
-            "mean_dbz": 48.2,
-            "area_km2": 376,
-            "core45_km2": 291,
-            "fill": 0.59,
+            "peak_dbz": 50.9,
+            "mean_dbz": 50.3,
+            "area_km2": 143,
+            "core45_km2": 143,
+            "fill": 1.0,
             "gradient": null,
             "phase": 3,
-            "cape": 14.0,
-            "shear": 3.9
+            "cape": 33.0,
+            "shear": 16.4
           },
-          "growth_dbz": 0.0
+          "growth_dbz": null
         },
         {
-          "lat": 56.19,
-          "lon": 164.78,
-          "max_dbz": 52.0,
-          "area_km2": 583,
-          "pixels": 110,
+          "lat": 57.93,
+          "lon": 163.79,
+          "max_dbz": 50.9,
+          "area_km2": 169,
+          "pixels": 32,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
+          "confidence": 0.88,
+          "score": 7.0,
           "reasons": [
-            "пик 52 дБЗ",
-            "ядро ≥45: 503 км²",
-            "CAPE 34",
-            "сдвиг 4 м/с"
+            "пик 51 дБЗ",
+            "ядро ≥45: 169 км²",
+            "CAPE 29",
+            "сдвиг 16 м/с"
           ],
           "features": {
-            "peak_dbz": 52.0,
+            "peak_dbz": 50.9,
             "mean_dbz": 49.8,
-            "area_km2": 583,
-            "core45_km2": 503,
-            "fill": 0.79,
+            "area_km2": 169,
+            "core45_km2": 169,
+            "fill": 1.0,
             "gradient": null,
             "phase": 3,
-            "cape": 34.0,
-            "shear": 3.6
-          },
-          "growth_dbz": 0.0
-        },
-        {
-          "lat": 57.48,
-          "lon": 162.68,
-          "max_dbz": 52.0,
-          "area_km2": 291,
-          "pixels": 55,
-          "type": "thunder",
-          "label": "гроза",
-          "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
-          "reasons": [
-            "пик 52 дБЗ",
-            "ядро ≥45: 95 км²",
-            "CAPE 13",
-            "сдвиг 4 м/с"
-          ],
-          "features": {
-            "peak_dbz": 52.0,
-            "mean_dbz": 43.9,
-            "area_km2": 291,
-            "core45_km2": 95,
-            "fill": 0.86,
-            "gradient": null,
-            "phase": 3,
-            "cape": 13.0,
-            "shear": 4.1
+            "cape": 29.0,
+            "shear": 15.7
           },
           "growth_dbz": null
         }
@@ -1864,13 +1866,13 @@
     {
       "id": "obs_09",
       "kind": "obs",
-      "time": "2026-10-17T18:00:00Z",
+      "time": "2026-10-22T18:00:00Z",
       "lead_min": 0,
       "tile_url": "/tiles/obs_09/{z}/{x}/{y}.png",
       "stats": {
-        "max_dbz": 67.8,
-        "area_30_km2": 86639,
-        "echo_pct": 1.23,
+        "max_dbz": 69.3,
+        "area_30_km2": 214559,
+        "echo_pct": 3.21,
         "cells": 5,
         "thunder_cells": 5,
         "cell_types": {
@@ -1881,175 +1883,175 @@
           "mixed": 0
         },
         "top_cell": {
-          "lat": 54.36,
-          "lon": 156.14,
-          "max_dbz": 65.5,
-          "area_km2": 259,
+          "lat": 57.3,
+          "lon": 165.11,
+          "max_dbz": 50.9,
+          "area_km2": 254,
           "type": "thunder",
           "label": "гроза",
-          "confidence": 0.75
+          "confidence": 0.88
         },
-        "snow_fraction": 0.91,
-        "mixed_fraction": 0.01,
+        "snow_fraction": 0.72,
+        "mixed_fraction": 0.08,
         "severe": {
-          "score": 5.0,
-          "level": "высокий",
-          "peak_dbz": 65.5,
-          "area_km2": 1420,
+          "score": 4.0,
+          "level": "средний",
+          "peak_dbz": 63.3,
+          "area_km2": 371,
           "growth_dbz": 0.0,
-          "cape": 0.0,
-          "shear": 15.9,
+          "cape": 48.0,
+          "shear": 18.9,
           "note": "индекс опасной грозы — прокси по отражаемости, площади, росту, CAPE и сдвигу"
         }
       },
       "cells": [
         {
-          "lat": 54.36,
-          "lon": 156.14,
-          "max_dbz": 65.5,
-          "area_km2": 259,
-          "pixels": 49,
+          "lat": 57.3,
+          "lon": 165.11,
+          "max_dbz": 50.9,
+          "area_km2": 254,
+          "pixels": 48,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
+          "confidence": 0.88,
+          "score": 7.0,
           "reasons": [
-            "пик 66 дБЗ",
-            "ядро ≥45: 259 км²",
-            "сдвиг 16 м/с",
-            "фаза: смешанные"
+            "пик 51 дБЗ",
+            "ядро ≥45: 217 км²",
+            "CAPE 48",
+            "сдвиг 19 м/с"
           ],
           "features": {
-            "peak_dbz": 65.5,
-            "mean_dbz": 62.9,
-            "area_km2": 259,
-            "core45_km2": 259,
-            "fill": 0.7,
+            "peak_dbz": 50.9,
+            "mean_dbz": 48.5,
+            "area_km2": 254,
+            "core45_km2": 217,
+            "fill": 0.98,
             "gradient": null,
-            "phase": 2,
-            "cape": 0.0,
-            "shear": 15.9
+            "phase": 3,
+            "cape": 48.0,
+            "shear": 18.9
           },
-          "growth_dbz": -0.3
+          "growth_dbz": 0.0
         },
         {
-          "lat": 54.06,
-          "lon": 156.05,
-          "max_dbz": 64.3,
-          "area_km2": 63,
-          "pixels": 12,
+          "lat": 57.84,
+          "lon": 164.06,
+          "max_dbz": 50.9,
+          "area_km2": 143,
+          "pixels": 27,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.88,
+          "score": 7.0,
+          "reasons": [
+            "пик 51 дБЗ",
+            "ядро ≥45: 143 км²",
+            "CAPE 33",
+            "сдвиг 16 м/с"
+          ],
+          "features": {
+            "peak_dbz": 50.9,
+            "mean_dbz": 50.3,
+            "area_km2": 143,
+            "core45_km2": 143,
+            "fill": 1.0,
+            "gradient": null,
+            "phase": 3,
+            "cape": 33.0,
+            "shear": 16.4
+          },
+          "growth_dbz": 0.0
+        },
+        {
+          "lat": 57.93,
+          "lon": 163.79,
+          "max_dbz": 50.9,
+          "area_km2": 169,
+          "pixels": 32,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.88,
+          "score": 7.0,
+          "reasons": [
+            "пик 51 дБЗ",
+            "ядро ≥45: 169 км²",
+            "CAPE 29",
+            "сдвиг 16 м/с"
+          ],
+          "features": {
+            "peak_dbz": 50.9,
+            "mean_dbz": 49.8,
+            "area_km2": 169,
+            "core45_km2": 169,
+            "fill": 1.0,
+            "gradient": null,
+            "phase": 3,
+            "cape": 29.0,
+            "shear": 15.7
+          },
+          "growth_dbz": 0.0
+        },
+        {
+          "lat": 59.1,
+          "lon": 164.15,
+          "max_dbz": 63.3,
+          "area_km2": 206,
+          "pixels": 39,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
           "confidence": 0.75,
           "score": 6.0,
           "reasons": [
-            "пик 64 дБЗ",
-            "ядро ≥45: 63 км²",
-            "сдвиг 18 м/с",
-            "фаза: смешанные"
+            "пик 63 дБЗ",
+            "ядро ≥45: 79 км²",
+            "CAPE 16",
+            "сдвиг 12 м/с"
           ],
           "features": {
-            "peak_dbz": 64.3,
-            "mean_dbz": 59.1,
-            "area_km2": 63,
-            "core45_km2": 63,
-            "fill": 1.0,
+            "peak_dbz": 63.3,
+            "mean_dbz": 45.3,
+            "area_km2": 206,
+            "core45_km2": 79,
+            "fill": 0.7,
             "gradient": null,
-            "phase": 2,
-            "cape": 0.0,
-            "shear": 18.1
+            "phase": 3,
+            "cape": 16.0,
+            "shear": 11.5
           },
           "growth_dbz": null
         },
         {
-          "lat": 54.57,
-          "lon": 165.2,
-          "max_dbz": 52.0,
-          "area_km2": 1420,
-          "pixels": 268,
+          "lat": 58.44,
+          "lon": 154.55,
+          "max_dbz": 57.0,
+          "area_km2": 371,
+          "pixels": 70,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
           "confidence": 0.75,
           "score": 6.0,
           "reasons": [
-            "пик 52 дБЗ",
-            "ядро ≥45: 1351 км²",
-            "CAPE 55",
-            "сдвиг 4 м/с"
-          ],
-          "features": {
-            "peak_dbz": 52.0,
-            "mean_dbz": 49.7,
-            "area_km2": 1420,
-            "core45_km2": 1351,
-            "fill": 0.61,
-            "gradient": null,
-            "phase": 3,
-            "cape": 55.0,
-            "shear": 3.7
-          },
-          "growth_dbz": 0.0
-        },
-        {
-          "lat": 54.96,
-          "lon": 165.92,
-          "max_dbz": 52.0,
-          "area_km2": 249,
-          "pixels": 47,
-          "type": "thunder",
-          "label": "гроза",
-          "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
-          "reasons": [
-            "пик 52 дБЗ",
-            "ядро ≥45: 227 км²",
-            "CAPE 11",
-            "сдвиг 4 м/с"
-          ],
-          "features": {
-            "peak_dbz": 52.0,
-            "mean_dbz": 49.6,
-            "area_km2": 249,
-            "core45_km2": 227,
-            "fill": 0.59,
-            "gradient": null,
-            "phase": 3,
-            "cape": 11.0,
-            "shear": 4.2
-          },
-          "growth_dbz": 0.0
-        },
-        {
-          "lat": 56.19,
-          "lon": 163.4,
-          "max_dbz": 52.0,
-          "area_km2": 614,
-          "pixels": 116,
-          "type": "thunder",
-          "label": "гроза",
-          "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
-          "reasons": [
-            "пик 52 дБЗ",
-            "ядро ≥45: 402 км²",
-            "CAPE 2",
+            "пик 57 дБЗ",
+            "ядро ≥45: 365 км²",
+            "CAPE 43",
             "сдвиг 7 м/с"
           ],
           "features": {
-            "peak_dbz": 52.0,
-            "mean_dbz": 46.8,
-            "area_km2": 614,
-            "core45_km2": 402,
-            "fill": 0.62,
+            "peak_dbz": 57.0,
+            "mean_dbz": 50.6,
+            "area_km2": 371,
+            "core45_km2": 365,
+            "fill": 0.58,
             "gradient": null,
             "phase": 3,
-            "cape": 2.0,
-            "shear": 6.9
+            "cape": 43.0,
+            "shear": 7.1
           },
           "growth_dbz": null
         }
@@ -2064,13 +2066,13 @@
     {
       "id": "obs_10",
       "kind": "obs",
-      "time": "2026-10-17T18:30:00Z",
+      "time": "2026-10-22T18:30:00Z",
       "lead_min": 0,
       "tile_url": "/tiles/obs_10/{z}/{x}/{y}.png",
       "stats": {
-        "max_dbz": 67.8,
-        "area_30_km2": 99867,
-        "echo_pct": 1.38,
+        "max_dbz": 69.3,
+        "area_30_km2": 176744,
+        "echo_pct": 2.69,
         "cells": 5,
         "thunder_cells": 5,
         "cell_types": {
@@ -2081,177 +2083,177 @@
           "mixed": 0
         },
         "top_cell": {
-          "lat": 54.06,
-          "lon": 163.88,
+          "lat": 57.72,
+          "lon": 165.02,
           "max_dbz": 52.0,
-          "area_km2": 169,
+          "area_km2": 577,
           "type": "thunder",
           "label": "гроза",
-          "confidence": 0.75
+          "confidence": 0.88
         },
-        "snow_fraction": 0.96,
-        "mixed_fraction": 0.0,
+        "snow_fraction": 0.69,
+        "mixed_fraction": 0.09,
         "severe": {
-          "score": 3.0,
+          "score": 4.0,
           "level": "средний",
           "peak_dbz": 52.0,
-          "area_km2": 689,
-          "growth_dbz": 0.0,
-          "cape": 48.0,
-          "shear": 3.0,
+          "area_km2": 832,
+          "growth_dbz": 1.1,
+          "cape": 33.0,
+          "shear": 19.3,
           "note": "индекс опасной грозы — прокси по отражаемости, площади, росту, CAPE и сдвигу"
         }
       },
       "cells": [
         {
-          "lat": 54.06,
-          "lon": 163.88,
+          "lat": 57.72,
+          "lon": 165.02,
           "max_dbz": 52.0,
-          "area_km2": 169,
-          "pixels": 32,
+          "area_km2": 577,
+          "pixels": 109,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
+          "confidence": 0.88,
+          "score": 7.0,
           "reasons": [
             "пик 52 дБЗ",
-            "ядро ≥45: 127 км²",
-            "CAPE 48",
-            "сдвиг 3 м/с"
+            "ядро ≥45: 530 км²",
+            "CAPE 33",
+            "сдвиг 19 м/с"
           ],
           "features": {
             "peak_dbz": 52.0,
-            "mean_dbz": 48.1,
-            "area_km2": 169,
-            "core45_km2": 127,
-            "fill": 1.0,
+            "mean_dbz": 48.9,
+            "area_km2": 577,
+            "core45_km2": 530,
+            "fill": 0.58,
             "gradient": null,
             "phase": 3,
-            "cape": 48.0,
-            "shear": 3.0
+            "cape": 33.0,
+            "shear": 19.3
+          },
+          "growth_dbz": 1.1
+        },
+        {
+          "lat": 57.78,
+          "lon": 165.65,
+          "max_dbz": 52.0,
+          "area_km2": 832,
+          "pixels": 157,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.88,
+          "score": 7.0,
+          "reasons": [
+            "пик 52 дБЗ",
+            "ядро ≥45: 678 км²",
+            "CAPE 21",
+            "сдвиг 20 м/с"
+          ],
+          "features": {
+            "peak_dbz": 52.0,
+            "mean_dbz": 48.6,
+            "area_km2": 832,
+            "core45_km2": 678,
+            "fill": 0.68,
+            "gradient": null,
+            "phase": 3,
+            "cape": 21.0,
+            "shear": 19.7
           },
           "growth_dbz": null
         },
         {
-          "lat": 54.3,
-          "lon": 164.18,
-          "max_dbz": 52.0,
-          "area_km2": 397,
-          "pixels": 75,
-          "type": "thunder",
-          "label": "гроза",
-          "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
-          "reasons": [
-            "пик 52 дБЗ",
-            "ядро ≥45: 355 км²",
-            "CAPE 36",
-            "сдвиг 2 м/с"
-          ],
-          "features": {
-            "peak_dbz": 52.0,
-            "mean_dbz": 49.0,
-            "area_km2": 397,
-            "core45_km2": 355,
-            "fill": 0.67,
-            "gradient": null,
-            "phase": 3,
-            "cape": 36.0,
-            "shear": 2.3
-          },
-          "growth_dbz": null
-        },
-        {
-          "lat": 55.32,
-          "lon": 164.27,
-          "max_dbz": 52.0,
-          "area_km2": 689,
-          "pixels": 130,
-          "type": "thunder",
-          "label": "гроза",
-          "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
-          "reasons": [
-            "пик 52 дБЗ",
-            "ядро ≥45: 519 км²",
-            "CAPE 18",
-            "сдвиг 6 м/с"
-          ],
-          "features": {
-            "peak_dbz": 52.0,
-            "mean_dbz": 47.5,
-            "area_km2": 689,
-            "core45_km2": 519,
-            "fill": 0.71,
-            "gradient": null,
-            "phase": 3,
-            "cape": 18.0,
-            "shear": 5.6
-          },
-          "growth_dbz": null
-        },
-        {
-          "lat": 54.33,
-          "lon": 165.68,
+          "lat": 57.09,
+          "lon": 162.68,
           "max_dbz": 50.9,
-          "area_km2": 164,
-          "pixels": 31,
+          "area_km2": 254,
+          "pixels": 48,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
+          "confidence": 0.88,
+          "score": 7.0,
           "reasons": [
             "пик 51 дБЗ",
-            "ядро ≥45: 159 км²",
-            "CAPE 22",
-            "сдвиг 1 м/с"
+            "ядро ≥45: 222 км²",
+            "CAPE 1",
+            "сдвиг 18 м/с"
           ],
           "features": {
             "peak_dbz": 50.9,
-            "mean_dbz": 49.1,
-            "area_km2": 164,
-            "core45_km2": 159,
-            "fill": 0.97,
+            "mean_dbz": 50.0,
+            "area_km2": 254,
+            "core45_km2": 222,
+            "fill": 0.98,
             "gradient": null,
             "phase": 3,
-            "cape": 22.0,
-            "shear": 0.7
+            "cape": 1.0,
+            "shear": 18.1
           },
-          "growth_dbz": -1.1
+          "growth_dbz": null
         },
         {
-          "lat": 55.05,
-          "lon": 164.51,
+          "lat": 57.27,
+          "lon": 165.14,
           "max_dbz": 50.9,
-          "area_km2": 111,
-          "pixels": 21,
+          "area_km2": 328,
+          "pixels": 62,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
+          "confidence": 0.88,
+          "score": 7.0,
           "reasons": [
             "пик 51 дБЗ",
-            "ядро ≥45: 111 км²",
-            "CAPE 20",
-            "сдвиг 4 м/с"
+            "ядро ≥45: 227 км²",
+            "CAPE 46",
+            "сдвиг 18 м/с"
           ],
           "features": {
             "peak_dbz": 50.9,
-            "mean_dbz": 50.8,
-            "area_km2": 111,
-            "core45_km2": 111,
+            "mean_dbz": 46.4,
+            "area_km2": 328,
+            "core45_km2": 227,
+            "fill": 0.81,
+            "gradient": null,
+            "phase": 3,
+            "cape": 46.0,
+            "shear": 18.5
+          },
+          "growth_dbz": null
+        },
+        {
+          "lat": 57.84,
+          "lon": 164.06,
+          "max_dbz": 50.9,
+          "area_km2": 143,
+          "pixels": 27,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.88,
+          "score": 7.0,
+          "reasons": [
+            "пик 51 дБЗ",
+            "ядро ≥45: 143 км²",
+            "CAPE 33",
+            "сдвиг 16 м/с"
+          ],
+          "features": {
+            "peak_dbz": 50.9,
+            "mean_dbz": 50.3,
+            "area_km2": 143,
+            "core45_km2": 143,
             "fill": 1.0,
             "gradient": null,
             "phase": 3,
-            "cape": 20.0,
-            "shear": 4.1
+            "cape": 33.0,
+            "shear": 16.4
           },
-          "growth_dbz": null
+          "growth_dbz": 0.0
         }
       ],
       "zoom_tiles": {
@@ -2264,13 +2266,13 @@
     {
       "id": "obs_11",
       "kind": "obs",
-      "time": "2026-10-17T19:00:00Z",
+      "time": "2026-10-22T19:00:00Z",
       "lead_min": 0,
       "tile_url": "/tiles/obs_11/{z}/{x}/{y}.png",
       "stats": {
-        "max_dbz": 67.8,
-        "area_30_km2": 108862,
-        "echo_pct": 1.5,
+        "max_dbz": 69.3,
+        "area_30_km2": 264989,
+        "echo_pct": 4.16,
         "cells": 5,
         "thunder_cells": 5,
         "cell_types": {
@@ -2281,175 +2283,176 @@
           "mixed": 0
         },
         "top_cell": {
-          "lat": 54.06,
-          "lon": 163.85,
-          "max_dbz": 52.0,
-          "area_km2": 132,
+          "lat": 59.91,
+          "lon": 161.0,
+          "max_dbz": 67.6,
+          "area_km2": 508,
           "type": "thunder",
           "label": "гроза",
-          "confidence": 0.75
+          "confidence": 0.88
         },
-        "snow_fraction": 0.96,
-        "mixed_fraction": 0.0,
+        "snow_fraction": 0.62,
+        "mixed_fraction": 0.16,
         "severe": {
-          "score": 3.0,
-          "level": "средний",
-          "peak_dbz": 52.0,
-          "area_km2": 689,
+          "score": 5.0,
+          "level": "высокий",
+          "peak_dbz": 67.6,
+          "area_km2": 609,
           "growth_dbz": 0.0,
-          "cape": 46.0,
-          "shear": 3.0,
+          "cape": 20.0,
+          "shear": 15.1,
           "note": "индекс опасной грозы — прокси по отражаемости, площади, росту, CAPE и сдвигу"
         }
       },
       "cells": [
         {
-          "lat": 54.06,
-          "lon": 163.85,
-          "max_dbz": 52.0,
-          "area_km2": 132,
-          "pixels": 25,
+          "lat": 59.91,
+          "lon": 161.0,
+          "max_dbz": 67.6,
+          "area_km2": 508,
+          "pixels": 96,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
+          "confidence": 0.88,
+          "score": 7.0,
+          "reasons": [
+            "пик 68 дБЗ",
+            "ядро ≥45: 450 км²",
+            "CAPE 20",
+            "сдвиг 15 м/с",
+            "фаза: смешанные"
+          ],
+          "features": {
+            "peak_dbz": 67.6,
+            "mean_dbz": 58.3,
+            "area_km2": 508,
+            "core45_km2": 450,
+            "fill": 0.67,
+            "gradient": 10.49,
+            "phase": 2,
+            "cape": 20.0,
+            "shear": 15.1
+          },
+          "growth_dbz": null
+        },
+        {
+          "lat": 57.78,
+          "lon": 165.71,
+          "max_dbz": 52.0,
+          "area_km2": 609,
+          "pixels": 115,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.88,
+          "score": 7.0,
           "reasons": [
             "пик 52 дБЗ",
-            "ядро ≥45: 79 км²",
-            "CAPE 46",
-            "сдвиг 3 м/с"
+            "ядро ≥45: 503 км²",
+            "CAPE 20",
+            "сдвиг 20 м/с"
           ],
           "features": {
             "peak_dbz": 52.0,
-            "mean_dbz": 46.1,
-            "area_km2": 132,
-            "core45_km2": 79,
-            "fill": 1.0,
+            "mean_dbz": 48.1,
+            "area_km2": 609,
+            "core45_km2": 503,
+            "fill": 0.8,
             "gradient": null,
             "phase": 3,
-            "cape": 46.0,
-            "shear": 3.0
+            "cape": 20.0,
+            "shear": 19.8
           },
           "growth_dbz": 0.0
         },
         {
-          "lat": 54.06,
-          "lon": 164.03,
-          "max_dbz": 52.0,
+          "lat": 56.85,
+          "lon": 163.85,
+          "max_dbz": 50.9,
           "area_km2": 79,
           "pixels": 15,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
+          "confidence": 0.88,
+          "score": 7.0,
           "reasons": [
-            "пик 52 дБЗ",
-            "ядро ≥45: 63 км²",
-            "CAPE 57",
-            "сдвиг 3 м/с"
+            "пик 51 дБЗ",
+            "ядро ≥45: 79 км²",
+            "CAPE 10",
+            "сдвиг 17 м/с"
           ],
           "features": {
-            "peak_dbz": 52.0,
-            "mean_dbz": 47.2,
+            "peak_dbz": 50.9,
+            "mean_dbz": 49.6,
             "area_km2": 79,
-            "core45_km2": 63,
-            "fill": 0.94,
+            "core45_km2": 79,
+            "fill": 1.0,
             "gradient": null,
             "phase": 3,
-            "cape": 57.0,
-            "shear": 2.8
-          },
-          "growth_dbz": 0.0
-        },
-        {
-          "lat": 54.3,
-          "lon": 164.3,
-          "max_dbz": 52.0,
-          "area_km2": 371,
-          "pixels": 70,
-          "type": "thunder",
-          "label": "гроза",
-          "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
-          "reasons": [
-            "пик 52 дБЗ",
-            "ядро ≥45: 328 км²",
-            "CAPE 44",
-            "сдвиг 2 м/с"
-          ],
-          "features": {
-            "peak_dbz": 52.0,
-            "mean_dbz": 48.9,
-            "area_km2": 371,
-            "core45_km2": 328,
-            "fill": 0.62,
-            "gradient": null,
-            "phase": 3,
-            "cape": 44.0,
-            "shear": 2.1
+            "cape": 10.0,
+            "shear": 17.2
           },
           "growth_dbz": null
         },
         {
-          "lat": 55.32,
-          "lon": 164.27,
-          "max_dbz": 52.0,
-          "area_km2": 689,
-          "pixels": 130,
-          "type": "thunder",
-          "label": "гроза",
-          "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
-          "reasons": [
-            "пик 52 дБЗ",
-            "ядро ≥45: 519 км²",
-            "CAPE 18",
-            "сдвиг 6 м/с"
-          ],
-          "features": {
-            "peak_dbz": 52.0,
-            "mean_dbz": 47.5,
-            "area_km2": 689,
-            "core45_km2": 519,
-            "fill": 0.71,
-            "gradient": null,
-            "phase": 3,
-            "cape": 18.0,
-            "shear": 5.6
-          },
-          "growth_dbz": 0.0
-        },
-        {
-          "lat": 54.33,
-          "lon": 165.77,
+          "lat": 56.97,
+          "lon": 164.0,
           "max_dbz": 50.9,
           "area_km2": 169,
           "pixels": 32,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
+          "confidence": 0.88,
+          "score": 7.0,
           "reasons": [
             "пик 51 дБЗ",
-            "ядро ≥45: 159 км²",
-            "CAPE 22",
-            "сдвиг 1 м/с"
+            "ядро ≥45: 169 км²",
+            "CAPE 12",
+            "сдвиг 19 м/с"
           ],
           "features": {
             "peak_dbz": 50.9,
-            "mean_dbz": 48.9,
+            "mean_dbz": 49.7,
             "area_km2": 169,
-            "core45_km2": 159,
-            "fill": 1.0,
+            "core45_km2": 169,
+            "fill": 0.76,
             "gradient": null,
             "phase": 3,
-            "cape": 22.0,
-            "shear": 0.6
+            "cape": 12.0,
+            "shear": 19.0
+          },
+          "growth_dbz": null
+        },
+        {
+          "lat": 57.24,
+          "lon": 165.44,
+          "max_dbz": 50.9,
+          "area_km2": 63,
+          "pixels": 12,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.88,
+          "score": 7.0,
+          "reasons": [
+            "пик 51 дБЗ",
+            "ядро ≥45: 63 км²",
+            "CAPE 10",
+            "сдвиг 18 м/с"
+          ],
+          "features": {
+            "peak_dbz": 50.9,
+            "mean_dbz": 48.0,
+            "area_km2": 63,
+            "core45_km2": 63,
+            "fill": 0.75,
+            "gradient": null,
+            "phase": 3,
+            "cape": 10.0,
+            "shear": 17.7
           },
           "growth_dbz": 0.0
         }
@@ -2464,143 +2467,113 @@
     {
       "id": "fc_00",
       "kind": "nowcast",
-      "time": "2026-10-17T19:30:00Z",
+      "time": "2026-10-22T19:30:00Z",
       "lead_min": 30,
       "tile_url": "/tiles/fc_00/{z}/{x}/{y}.png",
       "stats": {
         "max_dbz": 64.1,
-        "area_30_km2": 110017,
-        "echo_pct": 1.5,
+        "area_30_km2": 304500,
+        "echo_pct": 4.16,
         "cells": 5,
         "thunder_cells": 4,
         "cell_types": {
           "thunder": 4,
-          "shower": 0,
+          "shower": 1,
           "rain": 0,
-          "snow": 1,
+          "snow": 0,
           "mixed": 0
         },
         "top_cell": {
-          "lat": 59.25,
-          "lon": 165.53,
-          "max_dbz": 53.4,
-          "area_km2": 598,
+          "lat": 57.81,
+          "lon": 165.56,
+          "max_dbz": 47.3,
+          "area_km2": 1484,
           "type": "thunder",
           "label": "гроза",
-          "confidence": 0.75
+          "confidence": 0.88
         },
-        "snow_fraction": 0.96,
-        "mixed_fraction": 0.0,
+        "snow_fraction": 0.62,
+        "mixed_fraction": 0.16,
         "severe": {
-          "score": 4.0,
-          "level": "средний",
-          "peak_dbz": 62.9,
-          "area_km2": 1897,
+          "score": 5.0,
+          "level": "высокий",
+          "peak_dbz": 63.5,
+          "area_km2": 33527,
           "growth_dbz": 0.0,
-          "cape": 10.0,
-          "shear": 5.4,
+          "cape": 23.0,
+          "shear": 19.5,
           "note": "индекс опасной грозы — прокси по отражаемости, площади, росту, CAPE и сдвигу"
         },
         "prob30_max": 1.0,
-        "prob30_area_km2": 110017
+        "prob30_area_km2": 304500
       },
       "cells": [
         {
-          "lat": 59.25,
-          "lon": 165.53,
-          "max_dbz": 53.4,
-          "area_km2": 598,
-          "pixels": 113,
+          "lat": 57.81,
+          "lon": 165.56,
+          "max_dbz": 47.3,
+          "area_km2": 1484,
+          "pixels": 280,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.88,
+          "score": 7.0,
+          "reasons": [
+            "пик 47 дБЗ",
+            "ядро ≥45: 545 км²",
+            "CAPE 23",
+            "сдвиг 20 м/с"
+          ],
+          "features": {
+            "peak_dbz": 47.3,
+            "mean_dbz": 42.5,
+            "area_km2": 1484,
+            "core45_km2": 545,
+            "fill": 0.59,
+            "gradient": 7.74,
+            "phase": 3,
+            "cape": 23.0,
+            "shear": 19.5
+          },
+          "growth_dbz": -4.7
+        },
+        {
+          "lat": 58.53,
+          "lon": 163.61,
+          "max_dbz": 63.4,
+          "area_km2": 33527,
+          "pixels": 6326,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
           "confidence": 0.75,
           "score": 6.0,
           "reasons": [
-            "пик 53 дБЗ",
-            "ядро ≥45: 498 км²",
-            "CAPE 10",
-            "сдвиг 5 м/с"
+            "пик 63 дБЗ",
+            "ядро ≥45: 18454 км²",
+            "CAPE 5",
+            "сдвиг 11 м/с"
           ],
           "features": {
-            "peak_dbz": 53.4,
-            "mean_dbz": 46.8,
-            "area_km2": 598,
-            "core45_km2": 498,
-            "fill": 0.54,
-            "gradient": 12.2,
+            "peak_dbz": 63.4,
+            "mean_dbz": 45.6,
+            "area_km2": 33527,
+            "core45_km2": 18454,
+            "fill": 0.4,
+            "gradient": 3.68,
             "phase": 3,
-            "cape": 10.0,
-            "shear": 5.4
+            "cape": 5.0,
+            "shear": 11.1
           },
           "growth_dbz": null
         },
         {
-          "lat": 55.32,
-          "lon": 164.27,
-          "max_dbz": 48.4,
-          "area_km2": 726,
-          "pixels": 137,
-          "type": "thunder",
-          "label": "гроза",
-          "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
-          "reasons": [
-            "пик 48 дБЗ",
-            "ядро ≥45: 408 км²",
-            "CAPE 18",
-            "сдвиг 6 м/с"
-          ],
-          "features": {
-            "peak_dbz": 48.4,
-            "mean_dbz": 44.9,
-            "area_km2": 726,
-            "core45_km2": 408,
-            "fill": 0.7,
-            "gradient": 8.61,
-            "phase": 3,
-            "cape": 18.0,
-            "shear": 5.6
-          },
-          "growth_dbz": -3.6
-        },
-        {
-          "lat": 56.55,
-          "lon": 165.68,
-          "max_dbz": 47.7,
-          "area_km2": 190,
-          "pixels": 36,
-          "type": "thunder",
-          "label": "гроза",
-          "color": "#ff2d55",
-          "confidence": 0.75,
-          "score": 6.0,
-          "reasons": [
-            "пик 48 дБЗ",
-            "ядро ≥45: 95 км²",
-            "CAPE 27",
-            "сдвиг 2 м/с"
-          ],
-          "features": {
-            "peak_dbz": 47.7,
-            "mean_dbz": 44.7,
-            "area_km2": 190,
-            "core45_km2": 95,
-            "fill": 0.9,
-            "gradient": 14.25,
-            "phase": 3,
-            "cape": 27.0,
-            "shear": 1.8
-          },
-          "growth_dbz": null
-        },
-        {
-          "lat": 54.36,
-          "lon": 165.8,
-          "max_dbz": 46.8,
-          "area_km2": 212,
-          "pixels": 40,
+          "lat": 55.08,
+          "lon": 165.29,
+          "max_dbz": 47.1,
+          "area_km2": 948,
+          "pixels": 179,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
@@ -2608,50 +2581,81 @@
           "score": 6.0,
           "reasons": [
             "пик 47 дБЗ",
-            "ядро ≥45: 63 км²",
-            "CAPE 22",
-            "сдвиг 0 м/с"
+            "ядро ≥45: 296 км²",
+            "CAPE 43",
+            "сдвиг 8 м/с"
           ],
           "features": {
-            "peak_dbz": 46.8,
-            "mean_dbz": 42.9,
-            "area_km2": 212,
-            "core45_km2": 63,
-            "fill": 0.74,
-            "gradient": 13.17,
+            "peak_dbz": 47.1,
+            "mean_dbz": 42.1,
+            "area_km2": 948,
+            "core45_km2": 296,
+            "fill": 0.62,
+            "gradient": 7.68,
             "phase": 3,
-            "cape": 22.0,
-            "shear": 0.5
+            "cape": 43.0,
+            "shear": 7.5
           },
-          "growth_dbz": -4.1
+          "growth_dbz": null
         },
         {
-          "lat": 69.21,
-          "lon": 144.32,
-          "max_dbz": 62.9,
-          "area_km2": 1897,
-          "pixels": 358,
-          "type": "snow",
-          "label": "снег",
-          "color": "#a8dcff",
-          "confidence": 1.0,
-          "score": 5.0,
+          "lat": 56.97,
+          "lon": 164.0,
+          "max_dbz": 46.7,
+          "area_km2": 180,
+          "pixels": 34,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.75,
+          "score": 6.0,
           "reasons": [
-            "пик 63 дБЗ",
-            "ядро ≥45: 1897 км²",
-            "сдвиг 18 м/с",
-            "фаза: снег"
+            "пик 47 дБЗ",
+            "ядро ≥45: 42 км²",
+            "CAPE 12",
+            "сдвиг 19 м/с"
           ],
           "features": {
-            "peak_dbz": 62.9,
-            "mean_dbz": 61.6,
-            "area_km2": 1897,
-            "core45_km2": 1897,
-            "fill": 0.68,
-            "gradient": 7.61,
-            "phase": 1,
-            "cape": 0.0,
-            "shear": 18.1
+            "peak_dbz": 46.7,
+            "mean_dbz": 43.5,
+            "area_km2": 180,
+            "core45_km2": 42,
+            "fill": 0.71,
+            "gradient": 13.63,
+            "phase": 3,
+            "cape": 12.0,
+            "shear": 19.0
+          },
+          "growth_dbz": -4.2
+        },
+        {
+          "lat": 57.3,
+          "lon": 154.04,
+          "max_dbz": 63.5,
+          "area_km2": 18184,
+          "pixels": 3431,
+          "type": "shower",
+          "label": "ливень",
+          "color": "#ff9810",
+          "confidence": 0.62,
+          "score": 5.0,
+          "reasons": [
+            "пик 64 дБЗ",
+            "ядро ≥45: 13546 км²",
+            "CAPE 26",
+            "сдвиг 10 м/с",
+            "фаза: смешанные"
+          ],
+          "features": {
+            "peak_dbz": 63.5,
+            "mean_dbz": 48.6,
+            "area_km2": 18184,
+            "core45_km2": 13546,
+            "fill": 0.45,
+            "gradient": 4.97,
+            "phase": 2,
+            "cape": 26.0,
+            "shear": 9.7
           },
           "growth_dbz": null
         }
@@ -2666,196 +2670,195 @@
     {
       "id": "fc_01",
       "kind": "nowcast",
-      "time": "2026-10-17T20:00:00Z",
+      "time": "2026-10-22T20:00:00Z",
       "lead_min": 60,
       "tile_url": "/tiles/fc_01/{z}/{x}/{y}.png",
       "stats": {
-        "max_dbz": 62.2,
-        "area_30_km2": 110017,
-        "echo_pct": 1.5,
+        "max_dbz": 61.6,
+        "area_30_km2": 304500,
+        "echo_pct": 4.16,
         "cells": 5,
-        "thunder_cells": 1,
+        "thunder_cells": 4,
         "cell_types": {
-          "thunder": 1,
+          "thunder": 4,
           "shower": 0,
           "rain": 0,
-          "snow": 4,
+          "snow": 1,
           "mixed": 0
         },
         "top_cell": {
-          "lat": 59.25,
-          "lon": 165.53,
-          "max_dbz": 51.0,
-          "area_km2": 598,
+          "lat": 57.81,
+          "lon": 165.59,
+          "max_dbz": 45.6,
+          "area_km2": 1605,
           "type": "thunder",
           "label": "гроза",
-          "confidence": 0.75
+          "confidence": 0.88
         },
-        "snow_fraction": 0.96,
-        "mixed_fraction": 0.0,
+        "snow_fraction": 0.62,
+        "mixed_fraction": 0.16,
         "severe": {
-          "score": 4.0,
-          "level": "средний",
-          "peak_dbz": 61.7,
-          "area_km2": 3471,
+          "score": 5.0,
+          "level": "высокий",
+          "peak_dbz": 61.3,
+          "area_km2": 35001,
           "growth_dbz": 0.0,
-          "cape": 10.0,
-          "shear": 5.4,
+          "cape": 22.0,
+          "shear": 19.5,
           "note": "индекс опасной грозы — прокси по отражаемости, площади, росту, CAPE и сдвигу"
         },
         "prob30_max": 1.0,
-        "prob30_area_km2": 110017
+        "prob30_area_km2": 304500
       },
       "cells": [
         {
-          "lat": 59.25,
-          "lon": 165.53,
-          "max_dbz": 51.0,
-          "area_km2": 598,
-          "pixels": 113,
+          "lat": 57.81,
+          "lon": 165.59,
+          "max_dbz": 45.6,
+          "area_km2": 1605,
+          "pixels": 303,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.88,
+          "score": 7.0,
+          "reasons": [
+            "пик 46 дБЗ",
+            "ядро ≥45: 143 км²",
+            "CAPE 22",
+            "сдвиг 20 м/с"
+          ],
+          "features": {
+            "peak_dbz": 45.6,
+            "mean_dbz": 42.2,
+            "area_km2": 1605,
+            "core45_km2": 143,
+            "fill": 0.64,
+            "gradient": 7.53,
+            "phase": 3,
+            "cape": 22.0,
+            "shear": 19.5
+          },
+          "growth_dbz": -1.7
+        },
+        {
+          "lat": 57.3,
+          "lon": 154.04,
+          "max_dbz": 61.3,
+          "area_km2": 18571,
+          "pixels": 3504,
           "type": "thunder",
           "label": "гроза",
           "color": "#ff2d55",
           "confidence": 0.75,
           "score": 6.0,
           "reasons": [
-            "пик 51 дБЗ",
-            "ядро ≥45: 233 км²",
-            "CAPE 10",
-            "сдвиг 5 м/с"
+            "пик 61 дБЗ",
+            "ядро ≥45: 11946 км²",
+            "CAPE 26",
+            "сдвиг 10 м/с"
           ],
           "features": {
-            "peak_dbz": 51.0,
-            "mean_dbz": 44.8,
-            "area_km2": 598,
-            "core45_km2": 233,
-            "fill": 0.54,
-            "gradient": 11.69,
+            "peak_dbz": 61.3,
+            "mean_dbz": 48.8,
+            "area_km2": 18571,
+            "core45_km2": 11946,
+            "fill": 0.46,
+            "gradient": 4.08,
             "phase": 3,
-            "cape": 10.0,
-            "shear": 5.4
+            "cape": 26.0,
+            "shear": 9.7
           },
-          "growth_dbz": -2.4
+          "growth_dbz": -2.2
         },
         {
-          "lat": 69.21,
-          "lon": 144.32,
-          "max_dbz": 61.7,
-          "area_km2": 1897,
-          "pixels": 358,
+          "lat": 58.53,
+          "lon": 163.61,
+          "max_dbz": 61.3,
+          "area_km2": 35001,
+          "pixels": 6604,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.75,
+          "score": 6.0,
+          "reasons": [
+            "пик 61 дБЗ",
+            "ядро ≥45: 15412 км²",
+            "CAPE 5",
+            "сдвиг 11 м/с"
+          ],
+          "features": {
+            "peak_dbz": 61.3,
+            "mean_dbz": 45.7,
+            "area_km2": 35001,
+            "core45_km2": 15412,
+            "fill": 0.42,
+            "gradient": 3.26,
+            "phase": 3,
+            "cape": 5.0,
+            "shear": 11.1
+          },
+          "growth_dbz": -2.1
+        },
+        {
+          "lat": 55.08,
+          "lon": 165.29,
+          "max_dbz": 45.4,
+          "area_km2": 1017,
+          "pixels": 192,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.75,
+          "score": 6.0,
+          "reasons": [
+            "пик 45 дБЗ",
+            "ядро ≥45: 63 км²",
+            "CAPE 43",
+            "сдвиг 8 м/с"
+          ],
+          "features": {
+            "peak_dbz": 45.4,
+            "mean_dbz": 42.0,
+            "area_km2": 1017,
+            "core45_km2": 63,
+            "fill": 0.66,
+            "gradient": 7.59,
+            "phase": 3,
+            "cape": 43.0,
+            "shear": 7.5
+          },
+          "growth_dbz": -1.7
+        },
+        {
+          "lat": 55.29,
+          "lon": 159.83,
+          "max_dbz": 60.4,
+          "area_km2": 238,
+          "pixels": 45,
           "type": "snow",
           "label": "снег",
           "color": "#a8dcff",
           "confidence": 1.0,
           "score": 5.0,
           "reasons": [
-            "пик 62 дБЗ",
-            "ядро ≥45: 1897 км²",
+            "пик 60 дБЗ",
+            "ядро ≥45: 238 км²",
+            "CAPE 1",
             "сдвиг 18 м/с",
             "фаза: снег"
           ],
           "features": {
-            "peak_dbz": 61.7,
-            "mean_dbz": 60.0,
-            "area_km2": 1897,
-            "core45_km2": 1897,
-            "fill": 0.68,
-            "gradient": 7.48,
+            "peak_dbz": 60.4,
+            "mean_dbz": 56.3,
+            "area_km2": 238,
+            "core45_km2": 238,
+            "fill": 0.75,
+            "gradient": 17.18,
             "phase": 1,
-            "cape": 0.0,
+            "cape": 1.0,
             "shear": 18.1
-          },
-          "growth_dbz": -1.2
-        },
-        {
-          "lat": 72.15,
-          "lon": 162.56,
-          "max_dbz": 61.7,
-          "area_km2": 3471,
-          "pixels": 655,
-          "type": "snow",
-          "label": "снег",
-          "color": "#a8dcff",
-          "confidence": 1.0,
-          "score": 5.0,
-          "reasons": [
-            "пик 62 дБЗ",
-            "ядро ≥45: 3471 км²",
-            "CAPE 5",
-            "сдвиг 26 м/с",
-            "фаза: снег"
-          ],
-          "features": {
-            "peak_dbz": 61.7,
-            "mean_dbz": 60.2,
-            "area_km2": 3471,
-            "core45_km2": 3471,
-            "fill": 0.59,
-            "gradient": 6.98,
-            "phase": 1,
-            "cape": 5.0,
-            "shear": 25.7
-          },
-          "growth_dbz": null
-        },
-        {
-          "lat": 73.8,
-          "lon": 140.75,
-          "max_dbz": 61.5,
-          "area_km2": 286,
-          "pixels": 54,
-          "type": "snow",
-          "label": "снег",
-          "color": "#a8dcff",
-          "confidence": 1.0,
-          "score": 5.0,
-          "reasons": [
-            "пик 62 дБЗ",
-            "ядро ≥45: 286 км²",
-            "CAPE 9",
-            "сдвиг 17 м/с",
-            "фаза: снег"
-          ],
-          "features": {
-            "peak_dbz": 61.5,
-            "mean_dbz": 58.2,
-            "area_km2": 286,
-            "core45_km2": 286,
-            "fill": 0.86,
-            "gradient": 15.34,
-            "phase": 1,
-            "cape": 9.0,
-            "shear": 17.4
-          },
-          "growth_dbz": null
-        },
-        {
-          "lat": 69.63,
-          "lon": 140.6,
-          "max_dbz": 59.3,
-          "area_km2": 148,
-          "pixels": 28,
-          "type": "snow",
-          "label": "снег",
-          "color": "#a8dcff",
-          "confidence": 1.0,
-          "score": 5.0,
-          "reasons": [
-            "пик 59 дБЗ",
-            "ядро ≥45: 148 км²",
-            "сдвиг 20 м/с",
-            "фаза: снег"
-          ],
-          "features": {
-            "peak_dbz": 59.3,
-            "mean_dbz": 57.2,
-            "area_km2": 148,
-            "core45_km2": 148,
-            "fill": 1.0,
-            "gradient": 19.31,
-            "phase": 1,
-            "cape": 0.0,
-            "shear": 19.9
           },
           "growth_dbz": null
         }
@@ -2870,145 +2873,144 @@
     {
       "id": "fc_02",
       "kind": "nowcast",
-      "time": "2026-10-17T20:30:00Z",
+      "time": "2026-10-22T20:30:00Z",
       "lead_min": 90,
       "tile_url": "/tiles/fc_02/{z}/{x}/{y}.png",
       "stats": {
-        "max_dbz": 61.1,
-        "area_30_km2": 110017,
-        "echo_pct": 1.5,
+        "max_dbz": 60.4,
+        "area_30_km2": 304500,
+        "echo_pct": 4.16,
         "cells": 5,
-        "thunder_cells": 0,
+        "thunder_cells": 2,
         "cell_types": {
-          "thunder": 0,
+          "thunder": 2,
           "shower": 0,
           "rain": 0,
-          "snow": 5,
+          "snow": 3,
           "mixed": 0
         },
         "top_cell": {
-          "lat": 69.21,
-          "lon": 144.32,
-          "max_dbz": 60.9,
-          "area_km2": 1897,
-          "type": "snow",
-          "label": "снег",
-          "confidence": 1.0
+          "lat": 58.53,
+          "lon": 163.61,
+          "max_dbz": 60.2,
+          "area_km2": 35001,
+          "type": "thunder",
+          "label": "гроза",
+          "confidence": 0.75
         },
-        "snow_fraction": 0.96,
-        "mixed_fraction": 0.0,
+        "snow_fraction": 0.62,
+        "mixed_fraction": 0.16,
         "severe": {
-          "score": 5.0,
-          "level": "высокий",
-          "peak_dbz": 60.9,
-          "area_km2": 3471,
+          "score": 4.5,
+          "level": "средний",
+          "peak_dbz": 60.2,
+          "area_km2": 35001,
           "growth_dbz": 0.0,
-          "cape": 0.0,
-          "shear": 18.1,
+          "cape": 5.0,
+          "shear": 11.1,
           "note": "индекс опасной грозы — прокси по отражаемости, площади, росту, CAPE и сдвигу"
         },
         "prob30_max": 1.0,
-        "prob30_area_km2": 110017
+        "prob30_area_km2": 304500
       },
       "cells": [
         {
-          "lat": 69.21,
-          "lon": 144.32,
-          "max_dbz": 60.9,
-          "area_km2": 1897,
-          "pixels": 358,
+          "lat": 58.53,
+          "lon": 163.61,
+          "max_dbz": 60.2,
+          "area_km2": 35001,
+          "pixels": 6604,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.75,
+          "score": 6.0,
+          "reasons": [
+            "пик 60 дБЗ",
+            "ядро ≥45: 6688 км²",
+            "CAPE 5",
+            "сдвиг 11 м/с"
+          ],
+          "features": {
+            "peak_dbz": 60.2,
+            "mean_dbz": 45.8,
+            "area_km2": 35001,
+            "core45_km2": 6688,
+            "fill": 0.42,
+            "gradient": 3.02,
+            "phase": 3,
+            "cape": 5.0,
+            "shear": 11.1
+          },
+          "growth_dbz": -1.1
+        },
+        {
+          "lat": 57.3,
+          "lon": 154.04,
+          "max_dbz": 60.1,
+          "area_km2": 18571,
+          "pixels": 3504,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.75,
+          "score": 6.0,
+          "reasons": [
+            "пик 60 дБЗ",
+            "ядро ≥45: 9078 км²",
+            "CAPE 26",
+            "сдвиг 10 м/с"
+          ],
+          "features": {
+            "peak_dbz": 60.1,
+            "mean_dbz": 48.9,
+            "area_km2": 18571,
+            "core45_km2": 9078,
+            "fill": 0.46,
+            "gradient": 3.79,
+            "phase": 3,
+            "cape": 26.0,
+            "shear": 9.7
+          },
+          "growth_dbz": -1.2
+        },
+        {
+          "lat": 55.29,
+          "lon": 159.83,
+          "max_dbz": 59.4,
+          "area_km2": 238,
+          "pixels": 45,
           "type": "snow",
           "label": "снег",
           "color": "#a8dcff",
           "confidence": 1.0,
           "score": 5.0,
           "reasons": [
-            "пик 61 дБЗ",
-            "ядро ≥45: 1897 км²",
+            "пик 59 дБЗ",
+            "ядро ≥45: 238 км²",
+            "CAPE 1",
             "сдвиг 18 м/с",
             "фаза: снег"
           ],
           "features": {
-            "peak_dbz": 60.9,
-            "mean_dbz": 59.1,
-            "area_km2": 1897,
-            "core45_km2": 1897,
-            "fill": 0.68,
-            "gradient": 7.38,
+            "peak_dbz": 59.4,
+            "mean_dbz": 55.2,
+            "area_km2": 238,
+            "core45_km2": 238,
+            "fill": 0.75,
+            "gradient": 16.85,
             "phase": 1,
-            "cape": 0.0,
+            "cape": 1.0,
             "shear": 18.1
           },
-          "growth_dbz": -0.8
+          "growth_dbz": -1.0
         },
         {
-          "lat": 72.15,
-          "lon": 162.56,
-          "max_dbz": 60.9,
-          "area_km2": 3471,
-          "pixels": 655,
-          "type": "snow",
-          "label": "снег",
-          "color": "#a8dcff",
-          "confidence": 1.0,
-          "score": 5.0,
-          "reasons": [
-            "пик 61 дБЗ",
-            "ядро ≥45: 3471 км²",
-            "CAPE 5",
-            "сдвиг 26 м/с",
-            "фаза: снег"
-          ],
-          "features": {
-            "peak_dbz": 60.9,
-            "mean_dbz": 59.3,
-            "area_km2": 3471,
-            "core45_km2": 3471,
-            "fill": 0.59,
-            "gradient": 6.88,
-            "phase": 1,
-            "cape": 5.0,
-            "shear": 25.7
-          },
-          "growth_dbz": -0.8
-        },
-        {
-          "lat": 73.8,
-          "lon": 140.75,
-          "max_dbz": 60.6,
-          "area_km2": 286,
-          "pixels": 54,
-          "type": "snow",
-          "label": "снег",
-          "color": "#a8dcff",
-          "confidence": 1.0,
-          "score": 5.0,
-          "reasons": [
-            "пик 61 дБЗ",
-            "ядро ≥45: 286 км²",
-            "CAPE 9",
-            "сдвиг 17 м/с",
-            "фаза: снег"
-          ],
-          "features": {
-            "peak_dbz": 60.6,
-            "mean_dbz": 57.2,
-            "area_km2": 286,
-            "core45_km2": 286,
-            "fill": 0.86,
-            "gradient": 15.09,
-            "phase": 1,
-            "cape": 9.0,
-            "shear": 17.4
-          },
-          "growth_dbz": -0.9
-        },
-        {
-          "lat": 69.63,
-          "lon": 140.6,
-          "max_dbz": 58.3,
-          "area_km2": 148,
-          "pixels": 28,
+          "lat": 54.9,
+          "lon": 159.98,
+          "max_dbz": 58.5,
+          "area_km2": 371,
+          "pixels": 70,
           "type": "snow",
           "label": "снег",
           "color": "#a8dcff",
@@ -3016,51 +3018,50 @@
           "score": 5.0,
           "reasons": [
             "пик 58 дБЗ",
-            "ядро ≥45: 148 км²",
-            "сдвиг 20 м/с",
+            "ядро ≥45: 371 км²",
+            "сдвиг 15 м/с",
             "фаза: снег"
           ],
           "features": {
-            "peak_dbz": 58.3,
-            "mean_dbz": 56.2,
-            "area_km2": 148,
-            "core45_km2": 148,
-            "fill": 1.0,
-            "gradient": 18.93,
+            "peak_dbz": 58.5,
+            "mean_dbz": 55.1,
+            "area_km2": 371,
+            "core45_km2": 371,
+            "fill": 0.67,
+            "gradient": 16.71,
             "phase": 1,
             "cape": 0.0,
-            "shear": 19.9
+            "shear": 15.4
           },
-          "growth_dbz": -1.0
+          "growth_dbz": null
         },
         {
-          "lat": 72.75,
-          "lon": 162.38,
-          "max_dbz": 56.2,
-          "area_km2": 222,
-          "pixels": 42,
+          "lat": 55.44,
+          "lon": 115.61,
+          "max_dbz": 58.4,
+          "area_km2": 339,
+          "pixels": 64,
           "type": "snow",
           "label": "снег",
           "color": "#a8dcff",
           "confidence": 1.0,
           "score": 5.0,
           "reasons": [
-            "пик 56 дБЗ",
-            "ядро ≥45: 222 км²",
-            "CAPE 1",
-            "сдвиг 28 м/с",
+            "пик 58 дБЗ",
+            "ядро ≥45: 339 км²",
+            "сдвиг 16 м/с",
             "фаза: снег"
           ],
           "features": {
-            "peak_dbz": 56.2,
-            "mean_dbz": 55.7,
-            "area_km2": 222,
-            "core45_km2": 222,
-            "fill": 1.0,
-            "gradient": 19.46,
+            "peak_dbz": 58.4,
+            "mean_dbz": 55.3,
+            "area_km2": 339,
+            "core45_km2": 339,
+            "fill": 0.58,
+            "gradient": 15.88,
             "phase": 1,
-            "cape": 1.0,
-            "shear": 28.0
+            "cape": 0.0,
+            "shear": 16.2
           },
           "growth_dbz": null
         }
@@ -3075,145 +3076,144 @@
     {
       "id": "fc_03",
       "kind": "nowcast",
-      "time": "2026-10-17T21:00:00Z",
+      "time": "2026-10-22T21:00:00Z",
       "lead_min": 120,
       "tile_url": "/tiles/fc_03/{z}/{x}/{y}.png",
       "stats": {
-        "max_dbz": 60.4,
-        "area_30_km2": 110017,
-        "echo_pct": 1.5,
+        "max_dbz": 59.6,
+        "area_30_km2": 304500,
+        "echo_pct": 4.16,
         "cells": 5,
-        "thunder_cells": 0,
+        "thunder_cells": 1,
         "cell_types": {
-          "thunder": 0,
-          "shower": 0,
+          "thunder": 1,
+          "shower": 1,
           "rain": 0,
-          "snow": 5,
+          "snow": 3,
           "mixed": 0
         },
         "top_cell": {
-          "lat": 69.21,
-          "lon": 144.32,
-          "max_dbz": 60.3,
-          "area_km2": 1897,
-          "type": "snow",
-          "label": "снег",
-          "confidence": 1.0
+          "lat": 57.3,
+          "lon": 154.04,
+          "max_dbz": 59.4,
+          "area_km2": 18571,
+          "type": "thunder",
+          "label": "гроза",
+          "confidence": 0.75
         },
-        "snow_fraction": 0.96,
-        "mixed_fraction": 0.0,
+        "snow_fraction": 0.62,
+        "mixed_fraction": 0.16,
         "severe": {
-          "score": 5.0,
-          "level": "высокий",
-          "peak_dbz": 60.3,
-          "area_km2": 3471,
+          "score": 4.5,
+          "level": "средний",
+          "peak_dbz": 59.5,
+          "area_km2": 35001,
           "growth_dbz": -0.6,
-          "cape": 0.0,
-          "shear": 18.1,
+          "cape": 26.0,
+          "shear": 9.7,
           "note": "индекс опасной грозы — прокси по отражаемости, площади, росту, CAPE и сдвигу"
         },
         "prob30_max": 1.0,
-        "prob30_area_km2": 110017
+        "prob30_area_km2": 304500
       },
       "cells": [
         {
-          "lat": 69.21,
-          "lon": 144.32,
-          "max_dbz": 60.3,
-          "area_km2": 1897,
-          "pixels": 358,
-          "type": "snow",
-          "label": "снег",
-          "color": "#a8dcff",
-          "confidence": 1.0,
-          "score": 5.0,
+          "lat": 57.3,
+          "lon": 154.04,
+          "max_dbz": 59.4,
+          "area_km2": 18571,
+          "pixels": 3504,
+          "type": "thunder",
+          "label": "гроза",
+          "color": "#ff2d55",
+          "confidence": 0.75,
+          "score": 6.0,
           "reasons": [
-            "пик 60 дБЗ",
-            "ядро ≥45: 1897 км²",
-            "сдвиг 18 м/с",
-            "фаза: снег"
+            "пик 59 дБЗ",
+            "ядро ≥45: 9052 км²",
+            "CAPE 26",
+            "сдвиг 10 м/с"
           ],
           "features": {
-            "peak_dbz": 60.3,
-            "mean_dbz": 58.5,
-            "area_km2": 1897,
-            "core45_km2": 1897,
-            "fill": 0.68,
-            "gradient": 7.3,
-            "phase": 1,
-            "cape": 0.0,
-            "shear": 18.1
-          },
-          "growth_dbz": -0.6
-        },
-        {
-          "lat": 72.15,
-          "lon": 162.56,
-          "max_dbz": 60.3,
-          "area_km2": 3471,
-          "pixels": 655,
-          "type": "snow",
-          "label": "снег",
-          "color": "#a8dcff",
-          "confidence": 1.0,
-          "score": 5.0,
-          "reasons": [
-            "пик 60 дБЗ",
-            "ядро ≥45: 3471 км²",
-            "CAPE 5",
-            "сдвиг 26 м/с",
-            "фаза: снег"
-          ],
-          "features": {
-            "peak_dbz": 60.3,
-            "mean_dbz": 58.7,
-            "area_km2": 3471,
-            "core45_km2": 3471,
-            "fill": 0.59,
-            "gradient": 6.8,
-            "phase": 1,
-            "cape": 5.0,
-            "shear": 25.7
-          },
-          "growth_dbz": -0.6
-        },
-        {
-          "lat": 73.8,
-          "lon": 140.75,
-          "max_dbz": 59.9,
-          "area_km2": 286,
-          "pixels": 54,
-          "type": "snow",
-          "label": "снег",
-          "color": "#a8dcff",
-          "confidence": 1.0,
-          "score": 5.0,
-          "reasons": [
-            "пик 60 дБЗ",
-            "ядро ≥45: 286 км²",
-            "CAPE 9",
-            "сдвиг 17 м/с",
-            "фаза: снег"
-          ],
-          "features": {
-            "peak_dbz": 59.9,
-            "mean_dbz": 56.6,
-            "area_km2": 286,
-            "core45_km2": 286,
-            "fill": 0.86,
-            "gradient": 14.91,
-            "phase": 1,
-            "cape": 9.0,
-            "shear": 17.4
+            "peak_dbz": 59.4,
+            "mean_dbz": 48.7,
+            "area_km2": 18571,
+            "core45_km2": 9052,
+            "fill": 0.46,
+            "gradient": 3.7,
+            "phase": 3,
+            "cape": 26.0,
+            "shear": 9.7
           },
           "growth_dbz": -0.7
         },
         {
-          "lat": 69.63,
-          "lon": 140.6,
-          "max_dbz": 57.6,
-          "area_km2": 148,
-          "pixels": 28,
+          "lat": 58.53,
+          "lon": 163.61,
+          "max_dbz": 59.5,
+          "area_km2": 35001,
+          "pixels": 6604,
+          "type": "shower",
+          "label": "ливень",
+          "color": "#ff9810",
+          "confidence": 0.62,
+          "score": 5.0,
+          "reasons": [
+            "пик 60 дБЗ",
+            "ядро ≥45: 6699 км²",
+            "CAPE 5",
+            "сдвиг 11 м/с"
+          ],
+          "features": {
+            "peak_dbz": 59.5,
+            "mean_dbz": 45.6,
+            "area_km2": 35001,
+            "core45_km2": 6699,
+            "fill": 0.42,
+            "gradient": 2.93,
+            "phase": 3,
+            "cape": 5.0,
+            "shear": 11.1
+          },
+          "growth_dbz": -0.7
+        },
+        {
+          "lat": 55.29,
+          "lon": 159.83,
+          "max_dbz": 58.7,
+          "area_km2": 238,
+          "pixels": 45,
+          "type": "snow",
+          "label": "снег",
+          "color": "#a8dcff",
+          "confidence": 1.0,
+          "score": 5.0,
+          "reasons": [
+            "пик 59 дБЗ",
+            "ядро ≥45: 238 км²",
+            "CAPE 1",
+            "сдвиг 18 м/с",
+            "фаза: снег"
+          ],
+          "features": {
+            "peak_dbz": 58.7,
+            "mean_dbz": 54.6,
+            "area_km2": 238,
+            "core45_km2": 238,
+            "fill": 0.75,
+            "gradient": 16.64,
+            "phase": 1,
+            "cape": 1.0,
+            "shear": 18.1
+          },
+          "growth_dbz": -0.7
+        },
+        {
+          "lat": 54.9,
+          "lon": 159.98,
+          "max_dbz": 57.9,
+          "area_km2": 371,
+          "pixels": 70,
           "type": "snow",
           "label": "снег",
           "color": "#a8dcff",
@@ -3221,51 +3221,50 @@
           "score": 5.0,
           "reasons": [
             "пик 58 дБЗ",
-            "ядро ≥45: 148 км²",
-            "сдвиг 20 м/с",
+            "ядро ≥45: 371 км²",
+            "сдвиг 15 м/с",
             "фаза: снег"
           ],
           "features": {
-            "peak_dbz": 57.6,
-            "mean_dbz": 55.5,
-            "area_km2": 148,
-            "core45_km2": 148,
-            "fill": 1.0,
-            "gradient": 18.69,
+            "peak_dbz": 57.9,
+            "mean_dbz": 54.6,
+            "area_km2": 371,
+            "core45_km2": 371,
+            "fill": 0.67,
+            "gradient": 16.52,
             "phase": 1,
             "cape": 0.0,
-            "shear": 19.9
+            "shear": 15.4
           },
-          "growth_dbz": -0.7
+          "growth_dbz": -0.6
         },
         {
-          "lat": 72.75,
-          "lon": 162.38,
-          "max_dbz": 55.6,
-          "area_km2": 222,
-          "pixels": 42,
+          "lat": 55.44,
+          "lon": 115.61,
+          "max_dbz": 57.8,
+          "area_km2": 339,
+          "pixels": 64,
           "type": "snow",
           "label": "снег",
           "color": "#a8dcff",
           "confidence": 1.0,
           "score": 5.0,
           "reasons": [
-            "пик 56 дБЗ",
-            "ядро ≥45: 222 км²",
-            "CAPE 1",
-            "сдвиг 28 м/с",
+            "пик 58 дБЗ",
+            "ядро ≥45: 339 км²",
+            "сдвиг 16 м/с",
             "фаза: снег"
           ],
           "features": {
-            "peak_dbz": 55.6,
-            "mean_dbz": 55.0,
-            "area_km2": 222,
-            "core45_km2": 222,
-            "fill": 1.0,
-            "gradient": 19.21,
+            "peak_dbz": 57.8,
+            "mean_dbz": 54.8,
+            "area_km2": 339,
+            "core45_km2": 339,
+            "fill": 0.58,
+            "gradient": 15.69,
             "phase": 1,
-            "cape": 1.0,
-            "shear": 28.0
+            "cape": 0.0,
+            "shear": 16.2
           },
           "growth_dbz": -0.6
         }
@@ -3314,5 +3313,5 @@
       "color": "#c9a8ff"
     }
   },
-  "echo_coverage_pct": 0.96
+  "echo_coverage_pct": 4.17
 }
