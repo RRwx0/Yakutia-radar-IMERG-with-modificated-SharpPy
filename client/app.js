@@ -1112,7 +1112,14 @@
       nm.textContent = j.name + " · " + (j.init || j.valid || "") + (j.note ? " · " + j.note : "");
       drawModelOverlay(j);
     } catch (e) {
-      nm.textContent = "модель недоступна: бэкенд не подключён";
+      const st = (window.RADAR_STATIC && window.RADAR_STATIC.model && window.RADAR_STATIC.model.model === model) ? window.RADAR_STATIC.model : null;
+      if (st) {
+        modelCache[model] = st;
+        nm.textContent = st.name + " · " + (st.valid || st.init || "") + " · встроенные данные";
+        drawModelOverlay(st);
+      } else {
+        nm.textContent = "модель недоступна: бэкенд не подключён";
+      }
       console.error("model", model, e);
     }
   }
@@ -1136,15 +1143,24 @@
     try {
       const r = await fetch(base + "/api/warnings", { cache: "no-store" });
       if (!r.ok) throw new Error("HTTP " + r.status);
+      const ct = r.headers.get("content-type") || "";
+      if (ct.indexOf("json") < 0) throw new Error("API недоступен (статика)");
       const j = await r.json();
       warnZones = j.zones || [];
       renderWarnings();
     } catch (e) {
-      renderWarningsError();
+      const st = window.RADAR_STATIC && window.RADAR_STATIC.warnings;
+      if (st && st.available && st.zones && st.zones.length) {
+        warnZones = st.zones;
+        renderWarnings(false);
+        console.log("warnings: встроенные данные");
+      } else {
+        renderWarningsError();
+      }
       console.error("warnings", e);
     }
   }
-  function renderWarnings() {
+  function renderWarnings(fromStatic) {
     if (!warnLayer) {
       warnLayer = L.layerGroup();
       warnLayer.addTo(map);
@@ -1174,7 +1190,7 @@
       })();
       list.appendChild(item);
     });
-    el("warnMeta").textContent = "обновлено " + (el("frameTime").textContent || "") + " · GFS";
+    el("warnMeta").textContent = "обновлено " + (el("frameTime").textContent || "") + " · GFS" + (fromStatic ? " · встроенные данные" : "");
   }
   function renderWarningsError() {
     const list = el("warnList");
