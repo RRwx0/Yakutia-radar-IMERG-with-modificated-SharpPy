@@ -178,6 +178,11 @@
         <span class="switch__ui"></span>
         <span class="switch__text"><strong>Модельный радар</strong><em id="modelName">GFS · прогноз</em></span>
       </label>
+      <label class="switch">
+        <input type="checkbox" id="warnToggle">
+        <span class="switch__ui"></span>
+        <span class="switch__text"><strong>Предупреждения</strong><em>зоны риска по GFS</em></span>
+      </label>
       <label class="mode__row">Модель
         <select id="modelSelect">
           <option value="gfs">GFS (NOAA)</option>
@@ -284,6 +289,14 @@
 
     <div class="chips" id="chips" aria-label="Быстрый переход к городам"></div>
 
+    <div class="warn-panel" id="warnPanel" hidden>
+      <div class="warn-panel__head">
+        <strong>Предупреждения</strong>
+        <button class="icon-btn" id="warnClose" aria-label="Закрыть">×</button>
+      </div>
+      <div id="warnList" class="warn-list"></div>
+      <p class="warn-panel__meta" id="warnMeta"></p>
+    </div>
     <div class="timeline" id="timeline">
       <button class="play" id="play" aria-label="Воспроизвести" aria-pressed="false">
         <svg viewBox="0 0 24 24" class="play__icon" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
