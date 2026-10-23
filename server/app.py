@@ -217,23 +217,6 @@ def api_accum(lat: float, lon: float, frame: str | None = None, window: int = Qu
 app.mount("/tiles", StaticFiles(directory=str(TILES)), name="tiles")
 
 
-@app.get("/api/warnings")
-def warnings_api():
-    from radar.warnings import warnings
-
-    return warnings()
-
-
-@app.get("/api/models")
-def models_list():
-    from radar.sources import models
-
-    return {
-        k: {"name": v[0], "status": v[1], "url": v[2]}
-        for k, v in models.describe().items()
-    }
-
-
 @app.get("/api/models/status")
 def models_status():
     from radar.sources import models

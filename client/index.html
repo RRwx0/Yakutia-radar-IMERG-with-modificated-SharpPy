@@ -83,6 +83,19 @@
   </div>
 
   <div class="mode">
+    <div class="mode__top"><strong>Спутник Himawari-9</strong><span class="tag tag--on">GIBS</span></div>
+    <p>Геостационарный спутник Himawari-9 (JMA), инфракрасный канал 10,4 мкм: облачность и температура верхней границы, снимок обновляется каждые 10 минут. Днём хорошо видна конвекция, ночью — тёплые ядра кучево-дождевых облаков.</p>
+    <label class="switch">
+      <input type="checkbox" id="himToggle">
+      <span class="switch__ui"></span>
+      <span class="switch__text"><strong>Спутник</strong><em>Himawari-9 · ИК 10,4 мкм</em></span>
+    </label>
+    <div class="mode__row"><span>Снимок</span><strong id="himStat">—</strong></div>
+    <div class="mode__row"><span>Обновление</span><strong id="himCountdown">—</strong></div>
+    <button class="ghost-btn ghost-btn--sm" id="himNow" type="button">Обновить сейчас</button>
+  </div>
+
+  <div class="mode">
     <div class="mode__top"><strong>Direct-to-sensor</strong><span class="tag tag--on">GIBS</span></div>
     <p>Сырые тайлы IMERG прямо с NASA GIBS — без Z–R, фазы и сглаживания. Это то, что отдаёт источник.</p>
     <label class="switch">
@@ -177,11 +190,6 @@
         <input type="checkbox" id="modelToggle">
         <span class="switch__ui"></span>
         <span class="switch__text"><strong>Модельный радар</strong><em id="modelName">GFS · прогноз</em></span>
-      </label>
-      <label class="switch">
-        <input type="checkbox" id="warnToggle">
-        <span class="switch__ui"></span>
-        <span class="switch__text"><strong>Предупреждения</strong><em>зоны риска по GFS</em></span>
       </label>
       <label class="mode__row">Модель
         <select id="modelSelect">
@@ -289,14 +297,6 @@
 
     <div class="chips" id="chips" aria-label="Быстрый переход к городам"></div>
 
-    <div class="warn-panel" id="warnPanel" hidden>
-      <div class="warn-panel__head">
-        <strong>Предупреждения</strong>
-        <button class="icon-btn" id="warnClose" aria-label="Закрыть">×</button>
-      </div>
-      <div id="warnList" class="warn-list"></div>
-      <p class="warn-panel__meta" id="warnMeta"></p>
-    </div>
     <div class="timeline" id="timeline">
       <button class="play" id="play" aria-label="Воспроизвести" aria-pressed="false">
         <svg viewBox="0 0 24 24" class="play__icon" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>

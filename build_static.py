@@ -5,22 +5,11 @@ import numpy as np
 
 from radar.grid import Grid
 from radar.sources import models
-from radar.warnings import warnings
 
 root = Path("client")
 data_js = root / "data.js"
 
-static = {"warnings": {"available": False, "zones": []}}
-
-try:
-    w = warnings()
-    if w and w.get("available"):
-        static["warnings"] = w
-        print("warnings", w.get("count"))
-    else:
-        print("warnings unavailable")
-except Exception as e:
-    print("warnings err", type(e).__name__, e)
+static = {}
 
 try:
     m = models.fetch(Grid(), "gfs")

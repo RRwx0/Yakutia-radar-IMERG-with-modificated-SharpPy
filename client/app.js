@@ -109,6 +109,46 @@
     }
   });
 
+  /* ---------- спутник Himawari-9 (ИК 10,4 мкм, GIBS, «default» = свежий кадр) ---------- */
+  const HIM_LAYER = "Himawari_AHI_Band13_Clean_Infrared";
+  const himUrl = "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/" + HIM_LAYER + "/default/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png";
+  const him = L.tileLayer(himUrl, {
+    pane: "gibs", opacity: 0.8, maxZoom: 6, minZoom: 3,
+    attribution: "Himawari-9 · JMA, NASA GIBS"
+  });
+  let himTimer = null;
+  function himNow() {
+    if (!him._map) return;
+    him.setUrl(himUrl + "?v=" + Date.now());
+    him.redraw();
+    el("himStat").textContent = fmtTime(new Date()) + " · запрошен свежий кадр";
+    scheduleHim();
+  }
+  function scheduleHim() {
+    if (himTimer) clearTimeout(himTimer);
+    const now = new Date();
+    const next = new Date(Math.ceil(now.getTime() / 600000) * 600000);
+    const ms = Math.max(30000, next.getTime() - now.getTime());
+    el("himCountdown").textContent = "через " + Math.ceil(ms / 1000) + " с";
+    himTimer = setTimeout(() => {
+      if (him._map) himNow();
+    }, ms);
+  }
+  el("himToggle").addEventListener("change", (e) => {
+    if (e.target.checked) {
+      him.addTo(map);
+      himNow();
+    } else {
+      map.removeLayer(him);
+      if (himTimer) clearTimeout(himTimer), himTimer = null;
+      el("himStat").textContent = "—";
+      el("himCountdown").textContent = "—";
+    }
+  });
+  el("himNow").addEventListener("click", () => {
+    if (him._map) himNow();
+  });
+
   const home = M.focus || [[56, 108], [74, 158]];
   map.fitBounds(home, { paddingTopLeft: [320, 30], paddingBottomRight: [350, 150], maxZoom: 6 });
 
@@ -1133,84 +1173,6 @@
   modelSelect.addEventListener("change", () => {
     if (el("modelToggle").checked) loadModel(modelSelect.value);
   });
-
-  /* ---------- предупреждения (зоны риска по GFS) ---------- */
-  let warnLayer = null;
-  let warnZones = [];
-  const KIND_ORDER = { severe: 0, watch: 1, mention: 2 };
-  async function loadWarnings() {
-    const base = (window.API_BASE || "").replace(/\/$/, "");
-    try {
-      const r = await fetch(base + "/api/warnings", { cache: "no-store" });
-      if (!r.ok) throw new Error("HTTP " + r.status);
-      const ct = r.headers.get("content-type") || "";
-      if (ct.indexOf("json") < 0) throw new Error("API недоступен (статика)");
-      const j = await r.json();
-      warnZones = j.zones || [];
-      renderWarnings();
-    } catch (e) {
-      const st = window.RADAR_STATIC && window.RADAR_STATIC.warnings;
-      if (st && st.available && st.zones && st.zones.length) {
-        warnZones = st.zones;
-        renderWarnings(false);
-        console.log("warnings: встроенные данные");
-      } else {
-        renderWarningsError();
-      }
-      console.error("warnings", e);
-    }
-  }
-  function renderWarnings(fromStatic) {
-    if (!warnLayer) {
-      warnLayer = L.layerGroup();
-      warnLayer.addTo(map);
-    }
-    warnLayer.clearLayers();
-    const list = el("warnList");
-    if (!list) return;
-    list.innerHTML = "";
-    if (!warnZones.length) {
-      el("warnMeta").textContent = "Активных предупреждений нет";
-      return;
-    }
-    warnZones.slice().sort((a, b) => (KIND_ORDER[a.kind] - KIND_ORDER[b.kind]) || (b.cape - a.cape)).forEach((z) => {
-      const b = z.bounds || [[z.lat - 0.5, z.lon - 0.5], [z.lat + 0.5, z.lon + 0.5]];
-      L.rectangle(b, {
-        color: z.color, weight: 1.6, fillColor: z.color, fillOpacity: 0.16,
-        interactive: true
-      }).bindTooltip(z.label + " · CAPE " + z.cape + " · сдвиг " + z.shear + " м/с").addTo(warnLayer);
-      const item = document.createElement("div");
-      item.className = "warn-item warn-item--" + z.kind;
-      item.innerHTML = '<i style="background:' + z.color + '"></i><span>' + z.label + "</span>";
-      (() => {
-        const zz = z;
-        item.addEventListener("click", () => {
-          map.flyTo([zz.lat, zz.lon], 6, { duration: 0.6 });
-        });
-      })();
-      list.appendChild(item);
-    });
-    el("warnMeta").textContent = "обновлено " + (el("frameTime").textContent || "") + " · GFS" + (fromStatic ? " · встроенные данные" : "");
-  }
-  function renderWarningsError() {
-    const list = el("warnList");
-    if (list) list.innerHTML = '<span class="warn-item">бэкенд не подключён</span>';
-  }
-  el("warnToggle").addEventListener("change", (e) => {
-    if (e.target.checked) {
-      el("warnPanel").hidden = false;
-      loadWarnings();
-    } else if (warnLayer) {
-      el("warnPanel").hidden = true;
-      map.removeLayer(warnLayer);
-    }
-  });
-  el("warnClose").addEventListener("click", () => {
-    el("warnToggle").checked = false;
-    if (warnLayer) map.removeLayer(warnLayer);
-    el("warnPanel").hidden = true;
-  });
-  loadWarnings();
 
 
   /* ---------- mobile sheet ---------- */
