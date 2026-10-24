@@ -28,8 +28,10 @@
   @media(max-width:900px){.layout{grid-template-columns:1fr}}
   .times{max-height:540px;overflow:auto;display:flex;flex-direction:column;gap:4px;margin-top:8px}
   .time{padding:8px 10px;border:1px solid transparent;border-radius:8px;cursor:pointer;font-family:var(--mono);font-size:12.5px;color:#cfe3ec}
-  .time:hover{border-color:var(--line);background:rgba(79,227,193,.06)}
-  .time.is-active{border-color:var(--acc);background:rgba(79,227,193,.12)}
+.time:hover{border-color:var(--line);background:rgba(79,227,193,.06)}
+.time.is-active{border-color:var(--acc);background:rgba(79,227,193,.12)}
+.time--data{color:#9fe0c8}
+.time--data::after{content:"●";font-size:8px;vertical-align:2px;margin-left:6px;color:var(--acc)}
   .empty{color:var(--muted);font-size:13px;padding:12px 0}
   .profile-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline;margin-bottom:10px}
   .profile-head h2{margin:0;font-size:19px}
@@ -162,9 +164,12 @@
     const fromStatic = () => {
       const s = window.RADAR_SND;
       if (!s) return null;
-      let rec = s.recent || [];
-      if (st) rec = rec.filter((r) => r.wmo === st);
-      let list = rec.map((r) => r.time);
+      let list = null;
+      if (s.times_index && s.times_index[st]) list = s.times_index[st];
+      else if (s.recent) {
+        list = s.recent.filter((r) => r.wmo === st).map((r) => r.time);
+      }
+      if (!list) return null;
       if (yr) list = list.filter((t) => t.startsWith(String(yr)));
       return list.length ? list : null;
     };
@@ -175,11 +180,12 @@
           Object.keys((window.RADAR_SND || {}).city_stations || {}).map((c) => c + " (" + (window.RADAR_SND.city_stations[c]) + ")").join(", ") + "</span>";
         return;
       }
-      $("timesHint").textContent = list.length ? `Доступно сроков: ${list.length}` : "За этот год сроков нет.";
+      const inStatic = (t) => { const s = window.RADAR_SND; return !!(s && s.recent && s.recent.some((r) => r.wmo === st && r.time === t)); };
+      $("timesHint").textContent = list.length ? `Доступно сроков: ${list.length}. Точный профиль: API или последние ${(window.RADAR_SND.recent || []).length} наблюдения в статике.` : "За этот год сроков нет.";
       list.forEach((t) => {
         const d = document.createElement("div");
-        d.className = "time";
-        d.textContent = t.replace("T", " ").replace("Z", " UTC");
+        d.className = "time" + (inStatic(t) ? " time--data" : "");
+        d.textContent = t.replace("T", " ").replace("Z", " UTC") + (inStatic(t) ? " · профиль" : "");
         d.addEventListener("click", () => load(st, t, d));
         $("times").appendChild(d);
       });
@@ -204,7 +210,14 @@
     };
     tryApi().then((j) => {
       if (!j) j = fromStatic();
-      if (!j) { $("profTitle").textContent = "Нет данных для этого срока (в статике доступны пока 2 профиля Якутска)."; return; }
+      if (!j) {
+        $("profTitle").textContent = "Нет профиля для этого срока";
+        const s = window.RADAR_SND;
+        const n = (s && s.recent) ? s.recent.filter((r) => r.wmo === st).length : 0;
+        $("note").hidden = false;
+        $("note").textContent = "В статике сохранены профили только последних сроков (" + n + " для этой станции) и данные с сервера. Полный архив доступен при запущенном сервере." ;
+        return;
+      }
       current = j;
       $("profTitle").textContent = j.name + " · " + time.replace("T", " ").replace("Z", " UTC");
       $("profSource").textContent = j.source || "Росгидромет · IGRA";

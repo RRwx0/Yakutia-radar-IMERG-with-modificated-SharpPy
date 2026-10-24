@@ -173,8 +173,8 @@ def probe(
 
 @app.get("/api/archive")
 def api_archive(date: str = Query(..., min_length=10, max_length=10), hour: int = Query(12, ge=0, le=23)):
-    if date < "2025-01-01":
-        raise HTTPException(400, "archive starts 2025-01-01")
+    if date < "2020-01-01":
+        raise HTTPException(400, "archive starts 2020-01-01")
     today = np.datetime64("today").astype(str)
     if date > today:
         raise HTTPException(400, "date is in the future")

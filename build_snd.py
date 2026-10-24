@@ -11,6 +11,7 @@ CITY_STATIONS = {
 }
 
 RECENT_N = 12
+TIME_INDEX_N = 400  # максимум сроков на станцию во встроенном индексе
 
 
 def valid_profiles(wmo, times_list, limit):
@@ -32,6 +33,7 @@ stations = [{"wmo": k, "name": v[0], "lat": v[1], "lon": v[2]} for k, v in snd.S
 latest = {}
 recent = []
 meta = {}
+times_idx = {}
 
 for city, wmo in CITY_STATIONS.items():
     zpath = snd._zip_path(wmo)
@@ -65,12 +67,16 @@ for city, wmo in CITY_STATIONS.items():
     # последние N валидных профилей
     for iso, p in reversed(valid_profiles(wmo, t, RECENT_N)):
         recent.append({"wmo": wmo, "time": iso, "profile": p})
-    print("   recent profiles:", len(recent))
+    # полный индекс сроков (до TIME_INDEX_N записей), с прореживанием для древних лет
+    step = max(1, len(t) // TIME_INDEX_N)
+    times_idx[wmo] = t[::step]
+    print("   recent profiles:", len(recent), "| index:", len(times_idx[wmo]))
 
 out = {
     "stations": stations,
     "latest": latest,
     "recent": recent,
+    "times_index": times_idx,
     "city_stations": CITY_STATIONS,
     "meta": meta,
     "note": "Данные зондирований Росгидромета через архивы IGRA v2.2 (NOAA NCEI). Для Олёкминска, Хандыги и Тикси свежие данные отсутствуют.",

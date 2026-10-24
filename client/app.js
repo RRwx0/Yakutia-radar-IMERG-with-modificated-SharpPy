@@ -72,6 +72,10 @@
     getTileUrl(coords) {
       const frame = FRAMES[state.index];
       if (!frame) return "";
+      if (frame.gibs) {
+        return "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/IMERG_Precipitation_Rate_30min/default/" +
+          frame.gibs + "/GoogleMapsCompatible_Level6/" + coords.z + "/" + coords.y + "/" + coords.x + ".png";
+      }
       return "tiles/" + frame.id + "/" + coords.z + "/" + coords.x + "/" + coords.y + ".png?v=" + (M.tile_version || "");
     }
   });
@@ -746,11 +750,40 @@
         applyManifest(manifest, "archive");
         archStatus.textContent = "Встроенные данные: " + date + ", " + String(hour).padStart(2, "0") + ":00.";
         setArchiveOpen(false);
+      } else if (date >= "2020-01-01") {
+        // статика: лента сырых тайлов GIBS за 6 часов до выбранного момента
+        const end = new Date(date + "T" + String(hour).padStart(2, "0") + ":00:00Z");
+        const frames = [];
+        for (let i = 11; i >= 0; i--) {
+          const t = new Date(end.getTime() - i * 30 * 60000);
+          const iso = t.toISOString().replace(/\.\d{3}Z$/, "Z");
+          frames.push({
+            id: "g" + (11 - i),
+            kind: "obs",
+            time: t.toISOString(),
+            lead_min: 0,
+            gibs: iso,
+            stats: {}
+          });
+        }
+        const manifest = {
+          frames: frames,
+          focus: null,
+          echo_coverage_pct: null,
+          archive: { date: date, hour: hour, key: key },
+          source: { id: "imerg", name: "GPM IMERG Early Run", provider: "NASA / JAXA", step_min: 30 },
+          nowcast: { method: "archive", members: 0, steps: 0, step_min: 30, skill: {} },
+          probe: { step: 0.1 },
+          region: { name: "Республика Саха (Якутия)", bounds: [[54.0, 104.0], [74.0, 166.0]], grid_step_deg: 0.03, size: [668, 2068] },
+          stations: [],
+          coverage_pct: 100.0,
+          generated_at: new Date().toISOString()
+        };
+        applyManifest(manifest, "archive");
+        archStatus.textContent = "Архив GIBS: " + date + ", " + String(hour).padStart(2, "0") + ":00 (сырые тайлы).";
+        setArchiveOpen(false);
       } else {
-        const avail = st && st.dates ? st.dates.map((d) => d.date + " " + String(d.hour).padStart(2, "0") + ":00").join(", ") : null;
-        archStatus.textContent = avail
-          ? "На статике доступно: " + avail + ". Остальные — при запущенном сервере."
-          : "На статике дат нет. Остальные — при запущенном сервере.";
+        archStatus.textContent = "Архив доступен с 2020 года.";
       }
     }
   });
