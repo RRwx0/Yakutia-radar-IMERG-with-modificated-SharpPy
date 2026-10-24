@@ -11,6 +11,7 @@
   const P = DATA.probe;
   const TZ = "Asia/Yakutsk";
   const IS_FILE = location.protocol === "file:";
+  const IS_WINTER = document.body.classList.contains("winter");
 
   const STOPS = [
     [5, "#c9f2e5"], [8, "#9fdbe0"], [12, "#7cc4d8"], [16, "#5da8c6"],
@@ -221,6 +222,21 @@
     if (el('hudMax')) el('hudMax').textContent = s.max_dbz != null ? Math.round(s.max_dbz) + ' дБЗ' : '—';
     if (el('hudArea')) el('hudArea').textContent = s.area_30_km2 ? Math.round(s.area_30_km2 / 1000) + ' тыс. км²' : '0';
     if (el('hudEcho')) el('hudEcho').textContent = s.echo_pct != null ? s.echo_pct.toFixed(1) + ' %' : '—';
+    if (IS_WINTER) {
+      if (el('hudStorms')) el('hudStorms').textContent = s.snow_fraction != null ? Math.round(s.snow_fraction * 100) + ' %' : '—';
+      if (el('hudSnow')) el('hudSnow').textContent = s.mixed_fraction != null ? Math.round(s.mixed_fraction * 100) + ' %' : '—';
+      if (el('hudSevere')) {
+        const sev = s.severe;
+        el('hudSevere').textContent = sev && sev.level ? sev.level : '—';
+      }
+    } else {
+      if (el('hudStorms')) el('hudStorms').textContent = s.thunder_cells != null ? String(s.thunder_cells) : '—';
+      if (el('hudSnow')) el('hudSnow').textContent = s.snow_fraction != null ? Math.round(s.snow_fraction * 100) + ' %' : '—';
+      if (el('hudSevere')) {
+        const sev = s.severe;
+        el('hudSevere').textContent = sev && sev.level ? sev.level : '—';
+      }
+    }
   }
 
   function updateMeta() {
@@ -945,9 +961,10 @@
     cellsLayer.clearLayers();
     const cells = FRAMES[state.index].cells || [];
     cells.forEach((c) => {
-      const color = c.color || "#ff2d55";
+      const color = c.color || (IS_WINTER ? "#d5605a" : "#ff2d55");
+      const label = IS_WINTER ? (c.label === "гроза" ? "снеговая ячейка" : c.label) : (c.label || "ячейка");
       const tip =
-        "<b>" + (c.label || "ячейка") + "</b> · " + Math.round((c.confidence || 0) * 100) + " %<br>" +
+        "<b>" + (label || "ячейка") + "</b> · " + Math.round((c.confidence || 0) * 100) + " %<br>" +
         c.max_dbz + " дБЗ · " + c.area_km2 + " км²" +
         (c.growth_dbz != null ? " · рост " + c.growth_dbz + " дБЗ" : "") +
         (c.reasons && c.reasons.length ? "<br><span style='opacity:.65'>" + c.reasons.join(" · ") + "</span>" : "");
@@ -1299,8 +1316,9 @@
     cells.forEach((c) => {
       const item = document.createElement("div");
       item.className = "cell-item";
-      item.innerHTML = '<i style="background:' + (c.color || "#ff2d55") + '"></i><b>' +
-        (c.label || "ячейка") + "</b><span>" + Math.round((c.confidence || 0) * 100) + "% · " +
+      const label = IS_WINTER ? (c.label === "гроза" ? "снеговая ячейка" : c.label) : (c.label || "ячейка");
+      item.innerHTML = '<i style="background:' + (c.color || (IS_WINTER ? "#d5605a" : "#ff2d55")) + '"></i><b>' +
+        (label || "ячейка") + "</b><span>" + Math.round((c.confidence || 0) * 100) + "% · " +
         c.max_dbz + " дБЗ · " + c.area_km2 + " км²</span>";
       (() => {
         const c2 = c;

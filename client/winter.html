@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Зимний радар Якутии — снег и метели, ноябрь–март</title>
+<meta name="description" content="Зимняя версия радиолокационных наблюдений над Якутией: снег, смешанные осадки и метели с ноября по март, IMERG каждые 30 минут, живой слой и архив.">
+<meta name="theme-color" content="#0a1422">
+<link rel="stylesheet" href="vendor/leaflet.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="winter">
+
+<header class="topbar">
+  <a class="brand" href="#top" aria-label="К карте">
+    <span class="brand__mark" aria-hidden="true">
+      <svg viewBox="0 0 40 40" role="presentation">
+        <circle cx="20" cy="20" r="17.5" class="mk-ring"></circle>
+        <circle cx="20" cy="20" r="11" class="mk-ring mk-ring--faint"></circle>
+        <circle cx="20" cy="20" r="4.5" class="mk-ring mk-ring--faint"></circle>
+        <path d="M20 20 L34 8" class="mk-sweep"></path>
+        <circle cx="20" cy="20" r="2" class="mk-dot"></circle>
+      </svg>
+    </span>
+    <span class="brand__text">
+      <strong>ЯКУТГИДРОМЕТ · ЗИМНИЙ РАДАР</strong>
+      <span>Снег и метели · ноябрь–март · Республика Саха (Якутия)</span>
+    </span>
+  </a>
+
+  <span class="badge-demo" id="modeBadge" title="GPM IMERG Early Run, NASA / JAXA">ЗИМА</span>
+
+  <div class="status" id="status">
+    <span class="status__dot"></span>
+    <span class="status__text" id="statusText">загрузка кадров…</span>
+  </div>
+
+  <div class="topbar__right">
+    <div class="clock">
+      <span class="clock__label">Якутск</span>
+      <span class="clock__value" id="clock">--:--:--</span>
+    </div>
+    <a class="ghost-btn" href="index.html">Летний радар</a>
+    <a class="ghost-btn" href="sharppy.html" target="_blank" rel="noopener">SharpPy</a>
+    <button class="ghost-btn" id="modesBtn" type="button" aria-expanded="false" aria-controls="modesPanel">Режимы</button>
+    <button class="ghost-btn" id="archiveBtn" type="button" aria-expanded="false" aria-controls="archivePanel">Архив</button>
+    <a class="ghost-btn" href="#pipeline">Методика</a>
+  </div>
+</header>
+
+<aside class="archive" id="archivePanel" hidden aria-label="Поиск по датам">
+  <div class="archive__head">
+    <h2>Архив наблюдений</h2>
+    <button class="icon-btn" id="archiveClose" aria-label="Закрыть архив">×</button>
+  </div>
+  <p class="archive__hint">Доступны даты с 1 января 2025 года. Собирается 6 часов наблюдений — 12 кадров по 30 минут. На статике (без сервера) доступна дата 2025-01-15 12:00, остальные — при запущенном сервере.</p>
+  <label class="archive__field">
+    <span>Дата</span>
+    <input type="date" id="archiveDate" min="2025-01-01" max="2026-10-17" value="2025-01-15">
+  </label>
+  <label class="archive__field">
+    <span>Час (UTC+9)</span>
+    <select id="archiveHour">
+      <option value="3">03:00</option>
+      <option value="6">06:00</option>
+      <option value="9">09:00</option>
+      <option value="12" selected>12:00</option>
+      <option value="15">15:00</option>
+      <option value="18">18:00</option>
+      <option value="21">21:00</option>
+    </select>
+  </label>
+  <div class="archive__actions">
+    <button class="btn-primary" id="archiveLoad" type="button">Показать</button>
+    <button class="ghost-btn ghost-btn--sm" id="archiveLive" type="button">К текущим данным</button>
+  </div>
+  <p class="archive__status" id="archiveStatus">—</p>
+</aside>
+
+<aside class="modes" id="modesPanel" hidden aria-label="Режимы радара">
+  <div class="modes__head">
+    <h2>Режимы</h2>
+    <button class="icon-btn" id="modesClose" aria-label="Закрыть режимы">×</button>
+  </div>
+
+  <div class="mode">
+    <div class="mode__top"><strong>Спутник Himawari-9</strong><span class="tag tag--on">GIBS</span></div>
+    <p>Геостационарный спутник Himawari-9 (JMA), инфракрасный канал 10,4 мкм: облачность и температура верхней границы, снимок обновляется каждые 10 минут. Зимой хорошо видны фронтальные системы и метелевые облака.</p>
+    <label class="switch">
+      <input type="checkbox" id="himToggle">
+      <span class="switch__ui"></span>
+      <span class="switch__text"><strong>Спутник</strong><em>Himawari-9 · ИК 10,4 мкм</em></span>
+    </label>
+    <div class="mode__row"><span>Снимок</span><strong id="himStat">—</strong></div>
+    <div class="mode__row"><span>Обновление</span><strong id="himCountdown">—</strong></div>
+    <button class="ghost-btn ghost-btn--sm" id="himNow" type="button">Обновить сейчас</button>
+  </div>
+
+  <div class="mode">
+    <div class="mode__top"><strong>Direct-to-sensor</strong><span class="tag tag--on">GIBS</span></div>
+    <p>Сырые тайлы IMERG прямо с NASA GIBS — без Z–R, фазы и сглаживания. Это то, что отдаёт источник.</p>
+    <label class="switch">
+      <input type="checkbox" id="gibsToggle">
+      <span class="switch__ui"></span>
+      <span class="switch__text"><strong>Сырые тайлы</strong><em>IMERG Precipitation Rate</em></span>
+    </label>
+    <p class="mode__stat" id="gibsStat">—</p>
+  </div>
+
+  <div class="mode">
+    <div class="mode__top"><strong>Вертикальный профиль</strong><span class="tag tag--on">GFS</span></div>
+    <p>Вертикальный профиль температуры и ветра по давлениям 850–300 гПа в точке зонда или в центре карты. Зимой показывает температурную инверсию и мощность метелевого слоя.</p>
+    <canvas id="profileChart" width="600" height="240" aria-label="Профиль температуры и ветра"></canvas>
+    <p class="mode__stat" id="profileStat">—</p>
+  </div>
+
+  <div class="mode">
+    <div class="mode__top"><strong>Сдвиг и годограф</strong><span class="tag tag--on">GFS</span></div>
+    <p>Векторы ветра по уровням и сдвиг 0–6 км. Мезоциклон не детектируется: для вращения нужна доплеровская радиальная скорость.</p>
+    <canvas id="hodoChart" width="600" height="240" aria-label="Годограф ветра"></canvas>
+    <p class="mode__stat" id="hodoStat">—</p>
+  </div>
+
+  <div class="mode">
+    <div class="mode__top"><strong>Автообновление</strong><span class="tag tag--on" id="latencyTag">—</span></div>
+    <p>Проверка новых данных каждые 30 минут и обратный отсчёт. Задержка источника показывается честно: IMERG публикуется примерно через 7 часов.</p>
+    <div class="mode__row"><span>Следующая проверка</span><strong id="refreshCountdown">—</strong></div>
+    <button class="ghost-btn ghost-btn--sm" id="refreshNow" type="button">Проверить сейчас</button>
+    <p class="mode__stat" id="refreshStat">—</p>
+  </div>
+
+  <div class="mode">
+    <div class="mode__top"><strong>IMERG в реальном времени</strong><span class="tag tag--on">GIBS</span></div>
+    <p>Живой слой сырых тайлов IMERG: обновляется каждые 30 минут из открытого каталога NASA GIBS, без сервера. Показывает последний доступный снимок.</p>
+    <label class="switch">
+      <input type="checkbox" id="liveToggle">
+      <span class="switch__ui"></span>
+      <span class="switch__text"><strong>Живой слой</strong><em>IMERG Precipitation Rate</em></span>
+    </label>
+    <div class="mode__row"><span>Последнее обновление</span><strong id="liveStat">—</strong></div>
+    <div class="mode__row"><span>До следующего</span><strong id="liveCountdown">—</strong></div>
+    <button class="ghost-btn ghost-btn--sm" id="liveNowBtn" type="button">Обновить сейчас</button>
+  </div>
+
+  <div class="mode">
+    <div class="mode__top"><strong>Beam-rise</strong><span class="tag tag--on">расчёт</span></div>
+    <p>Высота луча над Землёй с поправкой 4/3 радиуса: чем дальше цель, тем выше луч и тем выше слой, который видит радар.</p>
+    <label class="mode__row">Угол места
+      <select id="beamAngle">
+        <option value="0.5">0,5°</option>
+        <option value="1.5">1,5°</option>
+        <option value="2.4">2,4°</option>
+      </select>
+    </label>
+    <canvas id="beamChart" width="600" height="220" aria-label="Высота луча от дальности"></canvas>
+    <div class="beam__stats" id="beamStats"></div>
+  </div>
+
+  <div class="mode">
+    <div class="mode__top"><strong>Накопление эха за 3 часа</strong><span class="tag tag--on">расчёт</span></div>
+    <p>Сводка по последним 6 наблюдениям: суммарная площадь сигнала ≥30 дБЗ, максимум снежных ячеек и пик отражаемости. Считается на клиенте из готовых кадров — без бэкенда.</p>
+    <div class="mode__row"><span>Площадь ≥30 (сумма)</span><strong id="accumArea">—</strong></div>
+    <div class="mode__row"><span>Снежных ячеек (макс)</span><strong id="accumStorm">—</strong></div>
+    <div class="mode__row"><span>Пик отражаемости</span><strong id="accumPeak">—</strong></div>
+  </div>
+
+  <div class="mode">
+    <div class="mode__top"><strong>Грозопотенциал</strong><span class="tag tag--on">GFS</span></div>
+    <p>Оценка потенциала сильного снега и метелей по полям GFS: CAPE и сдвиг 0–6 км. Зимой конвекция слабая, но сдвиг ветра — главный фактор метелевой опасности.</p>
+    <div class="mode__row"><span>CAPE (макс в регионе)</span><strong id="capMax">—</strong></div>
+    <div class="mode__row"><span>Сдвиг 0–6 км (макс)</span><strong id="shearMax">—</strong></div>
+    <div class="mode__row"><span>Оценка</span><strong id="thunderEst">—</strong></div>
+  </div>
+
+  <div class="mode">
+    <div class="mode__top"><strong>Тренд за 3 часа</strong><span class="tag tag--on">расчёт</span></div>
+    <p>Изменение площади ≥30 дБЗ и пиковой отражаемости между первым и последним наблюдением.</p>
+    <div class="mode__row"><span>Площадь ≥30</span><strong id="trendArea">—</strong></div>
+    <div class="mode__row"><span>Пик дБЗ</span><strong id="trendPeak">—</strong></div>
+    <div class="mode__row"><span>Вывод</span><strong id="trendVerdict">—</strong></div>
+  </div>
+
+  <div class="mode">
+    <div class="mode__top"><strong>Эфирный интерфейс</strong><span class="tag tag--on">доступно</span></div>
+    <p>Высококонтрастная палитра для прямых включений: чёрный фон, яркие акценты, крупные подписи.</p>
+    <label class="switch">
+      <input type="checkbox" id="broadcastToggle">
+      <span class="switch__ui"></span>
+      <span class="switch__text"><strong>Эфирный режим</strong><em>broadcast style</em></span>
+    </label>
+  </div>
+</aside>
+
+<main id="top">
+  <h1 class="sr-only">Зимние наблюдения осадков над Республикой Саха (Якутия): снег, метели и архив с 2025 года</h1>
+
+  <section class="stage" id="mapShell">
+    <div id="map" class="map" aria-label="Карта осадков над Якутией"></div>
+    <div class="cursor-readout" id="cursorReadout" hidden></div>
+
+    <aside class="panel panel--layers" id="layersPanel" aria-label="Слои карты">
+      <div class="panel__head">
+        <h2>Слои</h2>
+        <button class="icon-btn panel__close" id="layersClose" aria-label="Закрыть панель">×</button>
+      </div>
+
+      <label class="switch">
+        <input type="checkbox" id="mosaicToggle" checked>
+        <span class="switch__ui"></span>
+        <span class="switch__text"><strong>Осадки · IMERG</strong><em>спутник, 30 мин, 11 км</em></span>
+      </label>
+      <label class="switch">
+        <input type="checkbox" id="liveToggle">
+        <span class="switch__ui"></span>
+        <span class="switch__text"><strong>В реальном времени</strong><em>живые тайлы IMERG · 30 мин</em></span>
+      </label>
+      <label class="switch">
+        <input type="checkbox" id="citiesToggle" checked>
+        <span class="switch__ui"></span>
+        <span class="switch__text"><strong>Населённые пункты</strong><em>опорные точки</em></span>
+      </label>
+      <label class="switch">
+        <input type="checkbox" id="borderToggle" checked>
+        <span class="switch__ui"></span>
+        <span class="switch__text"><strong>Граница региона</strong><em>Республика Саха</em></span>
+      </label>
+      <label class="switch">
+        <input type="checkbox" id="gridToggle" checked>
+        <span class="switch__ui"></span>
+        <span class="switch__text"><strong>Координатная сетка</strong><em>через 10° / 5°</em></span>
+      </label>
+            <label class="switch">
+        <input type="checkbox" id="modelToggle">
+        <span class="switch__ui"></span>
+        <span class="switch__text"><strong>Модельный радар</strong><em id="modelName">GFS · прогноз</em></span>
+      </label>
+      <label class="mode__row">Модель
+        <select id="modelSelect">
+          <option value="gfs">GFS (NOAA)</option>
+          <option value="ecmwf">ECMWF IFS</option>
+          <option value="icon">ICON (DWD)</option>
+          <option value="msm">MSM (Япония)</option>
+        </select>
+      </label>
+<label class="switch">
+        <input type="checkbox" id="phaseToggle">
+        <span class="switch__ui"></span>
+        <span class="switch__text"><strong>Фаза осадков</strong><em>снег · смесь · дождь</em></span>
+      </label>
+
+      <label class="switch">
+        <input type="checkbox" id="envToggle">
+        <span class="switch__ui"></span>
+        <span class="switch__text"><strong>Атмосфера GFS</strong><em>CAPE · сдвиг · t2m · влажность</em></span>
+      </label>
+      <label class="mode__row">Поле
+        <select id="envSelect">
+          <option value="cape">CAPE, Дж/кг</option>
+          <option value="shear">Сдвиг 0–6 км, м/с</option>
+          <option value="t2m">t2m, °C</option>
+          <option value="rh2m">Влажность, %</option>
+        </select>
+      </label>
+      <label class="switch">
+        <input type="checkbox" id="cellsToggle">
+        <span class="switch__ui"></span>
+        <span class="switch__text"><strong>Ячейки</strong><em>список и детали</em></span>
+      </label>
+
+      <div class="cell-legend" aria-label="Типы ячеек">
+        <span><i style="background:#d5605a"></i>снеговая ячейка</span>
+        <span><i style="background:#ff9810"></i>смешанный снег</span>
+        <span><i style="background:#3f8fd2"></i>снег с дождём</span>
+        <span><i style="background:#a8dcff"></i>слабый снег</span>
+        <span><i style="background:#c9a8ff"></i>смесь</span>
+      </div>
+
+      <div class="cells-panel" id="cellsPanel" hidden>
+        <div class="cells-panel__head">
+          <strong>Ячейки кадра</strong>
+          <span id="cellsCount">—</span>
+        </div>
+        <div id="cellsList" class="cells-list"></div>
+      </div>
+
+      <div class="field">
+        <div class="field__row">
+          <span class="field__label">Непрозрачность</span>
+          <output class="field__out" id="opacityOut">92 %</output>
+        </div>
+        <input type="range" id="opacity" min="20" max="100" step="1" value="92" aria-label="Непрозрачность слоя">
+      </div>
+
+      <div class="legend">
+        <div class="legend__head"><span class="field__label">Отражаемость</span><span class="legend__unit">дБЗ</span></div>
+        <div class="legend__bar" id="legendBar" aria-hidden="true"></div>
+        <div class="legend__ticks" aria-hidden="true"><span>5</span><span>15</span><span>25</span><span>35</span><span>45</span><span>55</span><span>65</span></div>
+        <p class="legend__note">Отражаемость рассчитана из мм/ч по Z = 200·R¹·⁶. Мятный и голубой — следы, зелёный — умеренные, жёлтый и оранжевый — сильные, коралл и сиреневый — град и экстремальное эхо.</p>
+      </div>
+
+      <p class="panel__hint">Клик по карте — зонд точки: дБЗ, вероятность, тренд и накопление за 6 часов.</p>
+    </aside>
+
+    <aside class="panel panel--probe" id="probePanel" aria-label="Зонд точки">
+      <div class="probe__empty" id="probeEmpty">
+        <span class="probe__cross" aria-hidden="true"></span>
+        <h2>Зонд точки</h2>
+        <p>Нажмите на карту: координаты, отражаемость, вероятность сильного эха, тренд и сумма осадков.</p>
+      </div>
+
+      <div class="probe__body" id="probeBody" hidden>
+        <div class="probe__head">
+          <div>
+            <span class="probe__kicker">Точка</span>
+            <strong id="probeCoords">—</strong>
+          </div>
+          <button class="icon-btn" id="probeReset" aria-label="Сбросить точку">×</button>
+        </div>
+
+        <div class="probe__class">
+          <span class="probe__swatch" id="probeSwatch"></span>
+          <div>
+            <strong id="probeClass">—</strong>
+            <span id="probeRange">—</span>
+          </div>
+        </div>
+
+        <dl class="probe__meta">
+          <div><dt>Отражаемость</dt><dd id="probeDbz">—</dd></div>
+          <div><dt>Интенсивность</dt><dd id="probeRate">—</dd></div>
+          <div><dt>Σ за 6 ч</dt><dd id="probeAccum">—</dd></div>
+          <div><dt>Вероятность ≥30 дБЗ</dt><dd id="probeProb">—</dd></div>
+          <div><dt>Тренд за 90 мин</dt><dd id="probeTrend">—</dd></div>
+          <div><dt>Температура</dt><dd id="probeTemp">—</dd></div>
+          <div><dt>CAPE · сдвиг</dt><dd id="probeEnv">—</dd></div>
+          <div><dt>Источник</dt><dd id="probeStation">IMERG</dd></div>
+        </dl>
+
+        <div class="probe__chart">
+          <div class="probe__chart-head">
+            <span class="field__label">Ход по кадрам</span>
+            <span class="probe__chart-note" id="probeSummary">—</span>
+          </div>
+          <canvas id="spark" width="536" height="120" aria-label="Отражаемость по кадрам"></canvas>
+        </div>
+      </div>
+    </aside>
+
+    
+      <div class="hud__item"><span class="hud__label">площадь ≥30</span><b id="hudArea">—</b></div>
+      <div class="hud__item"><span class="hud__label">эхо</span><b id="hudEcho">—</b></div>
+      <div class="hud__item"><span class="hud__label">снег</span><b id="hudStorms">—</b></div>
+      <div class="hud__item"><span class="hud__label">смесь</span><b id="hudSnow">—</b></div>
+      <div class="hud__item"><span class="hud__label">метель</span><b id="hudSevere">—</b></div>
+    </div>
+
+    <aside class="reflect" id="reflect" aria-label="Шкала отражаемости, дБЗ">
+      <span class="reflect__title">дБЗ</span>
+      <div class="reflect__track">
+        <div class="reflect__bar" id="reflectBar"></div>
+        <div class="reflect__ticks" id="reflectTicks"></div>
+      </div>
+      <span class="reflect__foot">IMERG · 30 мин · Якутгидромет</span>
+    </aside>
+
+    <div class="north" aria-hidden="true"><span>С</span><i></i></div>
+
+    <div class="chips" id="chips" aria-label="Быстрый переход к городам"></div>
+
+    <div class="timeline" id="timeline">
+      <button class="play" id="play" aria-label="Воспроизвести" aria-pressed="false">
+        <svg viewBox="0 0 24 24" class="play__icon" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+      </button>
+
+      <div class="timeline__main">
+        <div class="timeline__row">
+          <div class="timeline__time">
+            <strong id="frameTime">--:--</strong>
+            <span id="frameDate">—</span>
+          </div>
+          <div class="timeline__meta">
+            <span id="frameKind" class="kind-badge">—</span>
+            <span class="timeline__sep">·</span>
+            <span id="frameCounter">—</span>
+          </div>
+          <button class="ghost-btn ghost-btn--sm" id="nowBtn" type="button">Сейчас</button>
+        </div>
+        <input type="range" id="scrub" min="0" max="15" step="1" value="11" aria-label="Кадр">
+        <div class="ticks" id="ticks" aria-hidden="true"></div>
+      </div>
+
+      <div class="speed" id="speed" role="group" aria-label="Скорость">
+        <button type="button" data-speed="1500">0,5×</button>
+        <button type="button" data-speed="900" class="is-active">1×</button>
+        <button type="button" data-speed="450">2×</button>
+      </div>
+    </div>
+
+    <button class="sheet-toggle" id="sheetToggle" type="button" aria-expanded="false" aria-controls="layersPanel">Слои</button>
+    <div class="sheet-backdrop" id="sheetBackdrop" hidden></div>
+  </section>
+
+  <section class="content">
+    <div class="metrics" aria-label="Параметры продукта">
+      <div class="metric"><span class="metric__value">30</span><span class="metric__unit">мин</span><span class="metric__label">шаг наблюдений</span></div>
+      <div class="metric"><span class="metric__value">11</span><span class="metric__unit">км</span><span class="metric__label">разрешение IMERG</span></div>
+      <div class="metric"><span class="metric__value">6</span><span class="metric__unit">ч</span><span class="metric__label">окно и накопления</span></div>
+      <div class="metric"><span class="metric__value">120</span><span class="metric__unit">мин</span><span class="metric__label">горизонт прогноза</span></div>
+      <div class="metric"><span class="metric__value" id="metricMethod">—</span><span class="metric__label">метод прогноза</span></div>
+    </div>
+
+    <article class="card card--wide" id="pipeline">
+      <span class="card__tag">Данные и параметры</span>
+      <h2>Что можно посмотреть на карте</h2>
+      <div class="flow" aria-label="Схема конвейера">
+        <div class="flow__node">
+          <span class="flow__stage">Источник</span>
+          <strong>GPM IMERG</strong>
+          <em>NASA / JAXA · 30 мин</em>
+          <p>Реальные наблюдения осадков по всей Якутии, включая Арктику.</p>
+        </div>
+        <div class="flow__arrow" aria-hidden="true">→</div>
+        <div class="flow__node flow__node--accent">
+          <span class="flow__stage">Параметры</span>
+          <strong>Отражаемость и накопления</strong>
+          <em>дБЗ · мм/ч · Σ мм</em>
+          <p>Интенсивность, класс эха, площадь ≥30 дБЗ, сумма осадков за окно и тренд.</p>
+        </div>
+        <div class="flow__arrow" aria-hidden="true">→</div>
+        <div class="flow__node">
+          <span class="flow__stage">Архив</span>
+          <strong>Любая дата с 2025</strong>
+          <em>12 кадров за 6 часов</em>
+          <p>Выбор даты и часа, сборка окна наблюдений и переключение назад к текущим данным.</p>
+        </div>
+      </div>
+      <p class="note">Архив собирается по запросу из открытого архива NASA GIBS: выбираете дату и час — сервер поднимает 6 часов наблюдений, считает накопления и отдаёт готовый набор тайлов.</p>
+    </article>
+
+    <div class="grid2">
+      <article class="card">
+        <h2>Зимние метеорологические параметры</h2>
+        <ul class="bullets">
+          <li><strong>Отражаемость, дБЗ</strong> — пересчёт из интенсивности по Z = 200·R¹·⁶.</li>
+          <li><strong>Интенсивность, мм/ч</strong> — исходная величина IMERG (в снеге — водный эквивалент).</li>
+          <li><strong>Накопление, мм</strong> — сумма по кадрам окна (6 часов).</li>
+          <li><strong>Площадь ≥30 дБЗ</strong> — сколько территории занято интенсивным снегопадом.</li>
+          <li><strong>Тренд</strong> — изменение отражаемости за 90 минут: рост снегопада или его спад.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Методика прогноза и контроль качества</h2>
+        <ul class="bullets">
+          <li><strong>Оптический поток</strong> и полулагранжева адвекция на 4 шага.</li>
+          <li><strong>Ансамбль</strong> из 5 членов: вероятность ≥30 и ≥45 дБЗ.</li>
+          <li><strong>Автовыбор:</strong> если адвекция хуже инерции, прогноз строится по инерции.</li>
+          <li><strong>Метрика:</strong> MAE обоих методов считается в каждом прогоне.</li>
+        </ul>
+      </article>
+    </div>
+
+    <article class="card card--accent">
+      <span class="card__tag card__tag--warn">Метелевая деятельность</span>
+      <h2>Индекс метелевой опасности</h2>
+      <p>Индекс складывается из максимальной отражаемости, площади и роста ячейки, CAPE и сдвига 0–6 км. Зимой тот же прокси характеризует интенсивность снегопада и метелевый перенос.</p>
+      <dl class="probe__meta" id="severeBody">
+        <div><dt>Индекс</dt><dd id="severeScore">—</dd></div>
+        <div><dt>Уровень</dt><dd id="severeLevel">—</dd></div>
+        <div><dt>Мезоциклон</dt><dd id="mesoStatus">нет доплера</dd></div>
+      </dl>
+    </article>
+
+    <article class="card card--accent">
+      <span class="card__tag card__tag--warn">Границы применимости</span>
+      <h2>Ограничения продукта</h2>
+      <p>ДМРЛ в Якутии нет, их данные закрыты, публичные радарные мозаики регион не покрывают. Источник — спутниковые наблюдения IMERG: реальные, но с разрешением около 11 км они сглаживают локальные снегопады и хуже видят слабый снег и позёмок.</p>
+      <p>Отражаемость в дБЗ и накопления рассчитаны из мм/ч и приведены для привычных шкал; абсолютные значения приближённые. Официальные предупреждения — у Росгидромета и Якутского УГМС.</p>
+    </article>
+
+    <article class="card" id="sources">
+      <h2>Источники данных и эксплуатация</h2>
+      <ul class="sources-list">
+        <li><a href="https://gpm.nasa.gov/missions/GPM/IMERG" target="_blank" rel="noopener">GPM IMERG</a> — методика объединения спутниковых измерений осадков.</li>
+        <li><a href="https://gibs.earthdata.nasa.gov/" target="_blank" rel="noopener">NASA GIBS</a> — тайлы IMERG и архив с 2025 года.</li>
+        <li><code>python -m radar.pipeline</code> — сбор свежих кадров и расчёт.</li>
+        <li><code>python -m uvicorn server.app:app --port 8080</code> — API и интерфейс.</li>
+      </ul>
+    </article>
+  </section>
+</main>
+
+<footer class="foot">
+  <span>Якутгидромет · зимние наблюдения за осадками · ноябрь–март · Республика Саха (Якутия)</span>
+  <span id="footMeta">—</span>
+</footer>
+
+<script src="vendor/leaflet.js"></script>
+<script src="sakha.geo.js"></script>
+<script src="config.js"></script>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

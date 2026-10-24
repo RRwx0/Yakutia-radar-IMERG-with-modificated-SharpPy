@@ -13,6 +13,27 @@
   --shadow:0 26px 60px -26px rgba(0,0,0,.95);
 }
 
+/* winter seasonal theme */
+body.winter{
+  --bg:#0b1524;
+  --panel:rgba(17,28,44,.96);
+  --line:rgba(180,215,240,.24);
+  --line-soft:rgba(180,215,240,.14);
+  --text:#f0f7fc;
+  --muted:#a7c2d8;
+  --muted-2:#7895ad;
+  --accent:#9fd4ff;
+  --accent-2:#dff0ff;
+  background:
+    radial-gradient(1100px 640px at 80% -12%,rgba(70,120,170,.2),transparent 60%),
+    radial-gradient(900px 600px at 6% 0%,rgba(50,80,130,.18),transparent 55%),
+    var(--bg);
+}
+body.winter .topbar{background:linear-gradient(180deg,rgba(12,22,36,.98),rgba(12,22,36,.9))}
+body.winter .brand__text strong{color:#eaf6ff}
+body.winter .badge-demo{color:#dff0ff;border-color:rgba(223,240,255,.4);background:rgba(159,212,255,.14)}
+body.winter .ghost-btn:hover{border-color:rgba(159,212,255,.5);background:rgba(159,212,255,.12)}
+
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
 html{scroll-behavior:smooth}
