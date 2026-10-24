@@ -234,6 +234,8 @@
     el("frameTime").textContent = fmtTime(f.time);
     el("frameDate").textContent = fmtDate(f.time);
     el("frameCounter").textContent = "кадр " + (state.index + 1) + " / " + FRAMES.length;
+    renderAccum();
+    if (el("cellsToggle").checked) renderCellsPanel();
     el("scrub").value = String(state.index);
     updateHud(f);
     renderCells();
@@ -1196,6 +1198,93 @@
     if (el("modelToggle").checked) loadModel(modelSelect.value);
   });
 
+  /* ---------- атмосфера GFS (CAPE / сдвиг / t2m / влажность) ---------- */
+  let envOverlay = null;
+  const ENV_RGB = {
+    cape:  [[0, 0, 0, 0], [10, 70, 40, 90], [100, 40, 150, 110], [400, 60, 90, 150], [1000, 220, 180, 60, 180], [2000, 255, 60, 60, 200]],
+    shear: [[0, 0, 0, 0], [10, 40, 90, 120], [20, 90, 160, 150], [30, 255, 190, 60, 180]],
+    t2m:   [[-40, 150, 40, 60, 170], [-20, 60, 90, 170], [0, 90, 160, 190], [10, 250, 200, 60, 180], [25, 240, 90, 40, 170]],
+    rh2m:  [[0, 0, 0, 0], [30, 80, 120, 90], [60, 70, 180, 140], [85, 40, 220, 90, 190]]
+  };
+  function drawEnv() {
+    const field = DATA.env && DATA.env[envSelect.value];
+    if (!field) return;
+    const canvas = document.createElement("canvas");
+    canvas.width = DATA.env.nx;
+    canvas.height = DATA.env.ny;
+    const ctx = canvas.getContext("2d");
+    const img = ctx.createImageData(DATA.env.nx, DATA.env.ny);
+    const stops = ENV_RGB[envSelect.value] || ENV_RGB.cape;
+    for (let i = 0; i < field.length && i < img.data.length / 4; i++) {
+      const v = field[i];
+      if (v == null || !Number.isFinite(v)) continue;
+      let rgba = null;
+      for (const [lim, r, g, b, a] of stops) {
+        if (v >= lim) rgba = [r, g, b, a == null ? 140 : a];
+      }
+      if (!rgba) continue;
+      const o = i * 4;
+      img.data[o] = rgba[0]; img.data[o + 1] = rgba[1]; img.data[o + 2] = rgba[2]; img.data[o + 3] = rgba[3];
+    }
+    ctx.putImageData(img, 0, 0);
+    const bounds = [[DATA.env.lat0, DATA.env.lon0], [DATA.env.lat0 + DATA.env.step * DATA.env.ny, DATA.env.lon0 + DATA.env.step * DATA.env.nx]];
+    if (!envOverlay) {
+      envOverlay = L.imageOverlay(canvas.toDataURL(), bounds, { opacity: 0.65, interactive: false, pane: "gibs" }).addTo(map);
+    } else {
+      envOverlay.setUrl(canvas.toDataURL());
+      envOverlay.setBounds(bounds);
+    }
+  }
+  const envSelect = el("envSelect");
+  el("envToggle").addEventListener("change", (e) => {
+    if (e.target.checked) drawEnv();
+    else if (envOverlay) map.removeLayer(envOverlay), (envOverlay = null);
+  });
+  envSelect.addEventListener("change", () => {
+    if (el("envToggle").checked) drawEnv();
+  });
+
+  /* ---------- ячейки: панель списка ---------- */
+  el("cellsToggle").addEventListener("change", (e) => {
+    el("cellsPanel").hidden = !e.target.checked;
+    if (e.target.checked) renderCellsPanel();
+  });
+  function renderCellsPanel() {
+    const panel = el("cellsPanel");
+    if (!panel || panel.hidden) return;
+    const cells = FRAMES[state.index].cells || [];
+    el("cellsCount").textContent = cells.length ? cells.length + " шт." : "—";
+    const list = el("cellsList");
+    list.innerHTML = "";
+    cells.forEach((c) => {
+      const item = document.createElement("div");
+      item.className = "cell-item";
+      item.innerHTML = '<i style="background:' + (c.color || "#ff2d55") + '"></i><b>' +
+        (c.label || "ячейка") + "</b><span>" + Math.round((c.confidence || 0) * 100) + "% · " +
+        c.max_dbz + " дБЗ · " + c.area_km2 + " км²</span>";
+      (() => {
+        const c2 = c;
+        item.addEventListener("click", () => map.flyTo([c2.lat, c2.lon], 6, { duration: 0.6 }));
+      })();
+      list.appendChild(item);
+    });
+  }
+
+  /* ---------- накопление эха за 3 часа ---------- */
+  function renderAccum() {
+    const obs = FRAMES.filter((f) => f.kind === "obs").slice(-6);
+    if (!obs.length) return;
+    let areaSum = 0, stormMax = 0, peak = 0;
+    obs.forEach((f) => {
+      const s = f.stats || {};
+      areaSum += s.area_30_km2 || 0;
+      stormMax = Math.max(stormMax, s.thunder_cells || 0);
+      peak = Math.max(peak, s.max_dbz || 0);
+    });
+    el("accumArea").textContent = Math.round(areaSum / 1000) + " тыс. км² · " + obs.length + " кадров";
+    el("accumStorm").textContent = stormMax ? String(stormMax) : "0";
+    el("accumPeak").textContent = peak ? Math.round(peak) + " дБЗ" : "—";
+  }
 
   /* ---------- mobile sheet ---------- */
   const sheet = el("layersPanel");

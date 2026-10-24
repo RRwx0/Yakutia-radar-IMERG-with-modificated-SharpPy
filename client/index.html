@@ -23,8 +23,8 @@
       </svg>
     </span>
     <span class="brand__text">
-      <strong>IMERG · САХА</strong>
-      <span>наблюдения осадков · наукастинг · архив</span>
+      <strong>ЯКУТГИДРОМЕТ · РАДАР</strong>
+      <span>Служба наблюдений за осадками · Республика Саха (Якутия)</span>
     </span>
   </a>
 
@@ -43,7 +43,7 @@
     <a class="ghost-btn" href="sharppy.html" target="_blank" rel="noopener">SharpPy</a>
     <button class="ghost-btn" id="modesBtn" type="button" aria-expanded="false" aria-controls="modesPanel">Режимы</button>
     <button class="ghost-btn" id="archiveBtn" type="button" aria-expanded="false" aria-controls="archivePanel">Архив</button>
-    <a class="ghost-btn" href="#pipeline">Конвейер</a>
+    <a class="ghost-btn" href="#pipeline">Методика</a>
   </div>
 </header>
 
@@ -143,6 +143,14 @@
   </div>
 
   <div class="mode">
+    <div class="mode__top"><strong>Накопление эха за 3 часа</strong><span class="tag tag--on">расчёт</span></div>
+    <p>Сводка по последним 6 наблюдениям: суммарная площадь сигнала ≥30 дБЗ, максимум грозовых ячеек и пик отражаемости. Считается на клиенте из готовых кадров — без бэкенда.</p>
+    <div class="mode__row"><span>Площадь ≥30 (сумма)</span><strong id="accumArea">—</strong></div>
+    <div class="mode__row"><span>Грозовых ячеек (макс)</span><strong id="accumStorm">—</strong></div>
+    <div class="mode__row"><span>Пик отражаемости</span><strong id="accumPeak">—</strong></div>
+  </div>
+
+  <div class="mode">
     <div class="mode__top"><strong>Эфирный интерфейс</strong><span class="tag tag--on">доступно</span></div>
     <p>Высококонтрастная палитра для прямых включений: чёрный фон, яркие акценты, крупные подписи.</p>
     <label class="switch">
@@ -205,12 +213,39 @@
         <span class="switch__text"><strong>Фаза осадков</strong><em>снег · смесь · дождь</em></span>
       </label>
 
+      <label class="switch">
+        <input type="checkbox" id="envToggle">
+        <span class="switch__ui"></span>
+        <span class="switch__text"><strong>Атмосфера GFS</strong><em>CAPE · сдвиг · t2m · влажность</em></span>
+      </label>
+      <label class="mode__row">Поле
+        <select id="envSelect">
+          <option value="cape">CAPE, Дж/кг</option>
+          <option value="shear">Сдвиг 0–6 км, м/с</option>
+          <option value="t2m">t2m, °C</option>
+          <option value="rh2m">Влажность, %</option>
+        </select>
+      </label>
+      <label class="switch">
+        <input type="checkbox" id="cellsToggle">
+        <span class="switch__ui"></span>
+        <span class="switch__text"><strong>Ячейки</strong><em>список и детали</em></span>
+      </label>
+
       <div class="cell-legend" aria-label="Типы ячеек">
         <span><i style="background:#ff2d55"></i>гроза</span>
         <span><i style="background:#ff9810"></i>ливень</span>
         <span><i style="background:#3f8fd2"></i>дождь</span>
         <span><i style="background:#a8dcff"></i>снег</span>
         <span><i style="background:#c9a8ff"></i>смесь</span>
+      </div>
+
+      <div class="cells-panel" id="cellsPanel" hidden>
+        <div class="cells-panel__head">
+          <strong>Ячейки кадра</strong>
+          <span id="cellsCount">—</span>
+        </div>
+        <div id="cellsList" class="cells-list"></div>
       </div>
 
       <div class="field">
@@ -290,7 +325,7 @@
         <div class="reflect__bar" id="reflectBar"></div>
         <div class="reflect__ticks" id="reflectTicks"></div>
       </div>
-      <span class="reflect__foot">IMERG · 30 мин</span>
+      <span class="reflect__foot">IMERG · 30 мин · Якутгидромет</span>
     </aside>
 
     <div class="north" aria-hidden="true"><span>С</span><i></i></div>
@@ -380,7 +415,7 @@
       </article>
 
       <article class="card">
-        <h2>Наукастинг и проверка</h2>
+        <h2>Методика прогноза и контроль качества</h2>
         <ul class="bullets">
           <li><strong>Оптический поток</strong> и полулагранжева адвекция на 4 шага.</li>
           <li><strong>Ансамбль</strong> из 5 членов: вероятность ≥30 и ≥45 дБЗ.</li>
@@ -391,8 +426,8 @@
     </div>
 
     <article class="card card--accent">
-      <span class="card__tag card__tag--warn">Опасная гроза</span>
-      <h2>Индекс опасности</h2>
+      <span class="card__tag card__tag--warn">Грозовая деятельность</span>
+      <h2>Индекс грозовой опасности</h2>
       <p>Индекс складывается из максимальной отражаемости, площади и роста ячейки, CAPE и сдвига 0–6 км. Это прокси: он оценивает условия опасной грозы, а не обнаруживает мезоциклон.</p>
       <dl class="probe__meta" id="severeBody">
         <div><dt>Индекс</dt><dd id="severeScore">—</dd></div>
@@ -403,25 +438,25 @@
 
     <article class="card card--accent">
       <span class="card__tag card__tag--warn">Границы применимости</span>
-      <h2>Это не радар и не официальный прогноз</h2>
+      <h2>Ограничения продукта</h2>
       <p>ДМРЛ в Якутии нет, их данные закрыты, публичные радарные мозаики регион не покрывают. Источник — спутниковые наблюдения IMERG: реальные, но с разрешением около 11 км они сглаживают локальные ливни и хуже видят слабый снег.</p>
       <p>Отражаемость в дБЗ и накопления рассчитаны из мм/ч и приведены для привычных шкал; абсолютные значения приближённые. Официальные предупреждения — у Росгидромета и Якутского УГМС.</p>
     </article>
 
     <article class="card" id="sources">
-      <h2>Источники и запуск</h2>
+      <h2>Источники данных и эксплуатация</h2>
       <ul class="sources-list">
         <li><a href="https://gpm.nasa.gov/missions/GPM/IMERG" target="_blank" rel="noopener">GPM IMERG</a> — методика объединения спутниковых измерений осадков.</li>
         <li><a href="https://gibs.earthdata.nasa.gov/" target="_blank" rel="noopener">NASA GIBS</a> — тайлы IMERG и архив с 2025 года.</li>
-        <li><code>python -m radar.pipeline</code> — свежие кадры, прогноз и тайлы.</li>
-        <li><code>python -m uvicorn server.app:app --port 8080</code> — API, архив и интерфейс.</li>
+        <li><code>python -m radar.pipeline</code> — сбор свежих кадров и расчёт.</li>
+        <li><code>python -m uvicorn server.app:app --port 8080</code> — API и интерфейс.</li>
       </ul>
     </article>
   </section>
 </main>
 
 <footer class="foot">
-  <span>IMERG · Саха — наблюдения, параметры и архив</span>
+  <span>Якутгидромет · оперативные наблюдения за осадками · Республика Саха (Якутия)</span>
   <span id="footMeta">—</span>
 </footer>
 
