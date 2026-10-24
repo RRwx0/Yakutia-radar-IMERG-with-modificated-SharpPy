@@ -96,6 +96,7 @@
 </div>
 
 <script src="config.js"></script>
+<script src="snd_data.js"></script>
 <script>
 (() => {
   "use strict";
@@ -116,69 +117,108 @@
   const qYear = params.get("year");
   const qTime = params.get("time");
 
-  fetch(API + "/api/sounding/stations").then(r => r.json()).then(items => {
+  function apiOrStatic(url) {
+    return fetch(API + url).then((r) => {
+      const ct = r.headers.get("content-type") || "";
+      if (!r.ok || ct.indexOf("json") < 0) throw new Error("API недоступен (статика)");
+      return r.json();
+    });
+  }
+
+  function stationsFromStatic() {
+    const s = window.RADAR_SND;
+    if (s && s.stations && s.stations.length) return s.stations;
+    return [{ wmo: "24959", name: "Якутск", lat: 62.02, lon: 129.72 }];
+  }
+
+  function initStations(items) {
     stationSel.innerHTML = "";
-    items.forEach(s => {
+    items.forEach((s) => {
       const o = document.createElement("option");
       o.value = s.wmo; o.textContent = s.name + " (" + s.wmo + ")";
       stationSel.appendChild(o);
     });
-    if (qStation && items.some(s => s.wmo === qStation)) stationSel.value = qStation;
+    if (qStation && items.some((s) => s.wmo === qStation)) stationSel.value = qStation;
     if (qYear) yearSel.value = qYear;
     if (qStation || qYear) $("find").click();
     if (qTime) load(qStation || stationSel.value, qTime);
-  }).catch(() => {
-    stationSel.innerHTML = '<option value="24959">Якутск (24959)</option>';
-    if (qYear) yearSel.value = qYear;
-    if (qTime) load(qStation || "24959", qTime);
+  }
+
+  apiOrStatic("/api/sounding/stations").then(initStations).catch(() => {
+    initStations(stationsFromStatic());
   });
 
   $("find").addEventListener("click", () => {
     const st = stationSel.value, yr = yearSel.value;
     $("timesHint").textContent = "Загружаю архив станции…";
     $("times").innerHTML = "";
-    fetch(`${API}/api/sounding/times?station=${st}&year=${yr}`)
-      .then(r => r.json().then(j => ({ ok: r.ok, j })))
-      .then(({ ok, j }) => {
-        if (!ok) throw new Error(j.detail || "ошибка");
+    const tryApi = () => apiOrStatic(`/api/sounding/times?station=${st}&year=${yr}`)
+      .then((j) => {
         const list = j.times || [];
-        $("timesHint").textContent = list.length ? `Доступно сроков: ${list.length}` : "За этот год сроков нет.";
-        list.forEach(t => {
-          const d = document.createElement("div");
-          d.className = "time";
-          d.textContent = t.replace("T", " ").replace("Z", " UTC");
-          d.addEventListener("click", () => load(st, t, d));
-          $("times").appendChild(d);
-        });
+        if (!list.length) throw new Error("нет сроков");
+        return list;
       })
-      .catch(e => { $("timesHint").innerHTML = '<span class="err">' + e.message + "</span>"; });
+      .catch(() => null);
+    const fromStatic = () => {
+      const s = window.RADAR_SND;
+      if (!s || !s.times || !s.times[st]) return null;
+      let list = s.times[st];
+      if (yr) list = list.filter((t) => t.startsWith(String(yr)));
+      return list;
+    };
+    tryApi().then((list) => {
+      if (!list) list = fromStatic();
+      if (!list) {
+        $("timesHint").innerHTML = '<span class="err">Для этой станции нет встроенных данных. Доступны: ' +
+          Object.keys((window.RADAR_SND || {}).times || {}).join(", ") + "</span>";
+        return;
+      }
+      $("timesHint").textContent = list.length ? `Доступно сроков: ${list.length}` : "За этот год сроков нет.";
+      list.forEach((t) => {
+        const d = document.createElement("div");
+        d.className = "time";
+        d.textContent = t.replace("T", " ").replace("Z", " UTC");
+        d.addEventListener("click", () => load(st, t, d));
+        $("times").appendChild(d);
+      });
+    });
   });
 
   function load(st, time, node) {
     document.querySelectorAll(".time.is-active").forEach(x => x.classList.remove("is-active"));
     if (node) node.classList.add("is-active");
     $("profTitle").textContent = "Загружаю…";
-    fetch(`${API}/api/sounding/profile?station=${st}&time=${encodeURIComponent(time)}`)
-      .then(r => r.json().then(j => ({ ok: r.ok, j })))
-      .then(({ ok, j }) => {
-        if (!ok) throw new Error(j.detail || "нет данных");
-        current = j;
-        $("profTitle").textContent = j.name + " · " + time.replace("T", " ").replace("Z", " UTC");
-        $("profSource").textContent = j.source;
-        drawSkew(j);
-        drawHodo(j);
-        showIndices(j);
-        $("snd").style.display = "inline-flex";
-        $("snd").href = `${API}/api/sounding/snd?station=${st}&time=${encodeURIComponent(time)}`;
-        try {
-          const u = new URL(location.href);
-          u.searchParams.set("station", st);
-          u.searchParams.set("time", time);
-          if (yearSel.value) u.searchParams.set("year", yearSel.value);
-          history.replaceState(null, "", u);
-        } catch (e) { /* file: */ }
+    const tryApi = () => apiOrStatic(`/api/sounding/profile?station=${st}&time=${encodeURIComponent(time)}`)
+      .then((j) => {
+        if (!j || !j.levels) throw new Error("нет данных");
+        return j;
       })
-      .catch(e => { $("profTitle").textContent = "Ошибка"; alert(e.message); });
+      .catch(() => null);
+    const fromStatic = () => {
+      const s = window.RADAR_SND;
+      if (!s || !s.profiles) return null;
+      const hit = s.profiles.find((p) => p.station === st && p.time === time);
+      return hit || null;
+    };
+    tryApi().then((j) => {
+      if (!j) j = fromStatic();
+      if (!j) { $("profTitle").textContent = "Нет данных для этого срока (в статике доступны пока 2 профиля Якутска)."; return; }
+      current = j;
+      $("profTitle").textContent = j.name + " · " + time.replace("T", " ").replace("Z", " UTC");
+      $("profSource").textContent = j.source || "Росгидромет · IGRA";
+      drawSkew(j);
+      drawHodo(j);
+      showIndices(j);
+      $("snd").style.display = "inline-flex";
+      $("snd").href = `${API}/api/sounding/snd?station=${st}&time=${encodeURIComponent(time)}`;
+      try {
+        const u = new URL(location.href);
+        u.searchParams.set("station", st);
+        u.searchParams.set("time", time);
+        if (yearSel.value) u.searchParams.set("year", yearSel.value);
+        history.replaceState(null, "", u);
+      } catch (e) { /* file: */ }
+    });
   }
 
   function showIndices(p) {

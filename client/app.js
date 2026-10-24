@@ -678,15 +678,16 @@
     const date = el("archiveDate").value;
     const hour = Number(el("archiveHour").value);
     if (!date) return;
+    const key = date + "_" + String(hour).padStart(2, "0");
     archStatus.textContent = "Собираю " + date + " " + String(hour).padStart(2, "0") + ":00 — это до минуты…";
     try {
       let r = await fetch("/api/archive?date=" + date + "&hour=" + hour);
       let j = await r.json();
       if (j.status === "building") {
-        const key = j.key;
+        const bkey = j.key;
         for (let i = 0; i < 60; i++) {
           await new Promise((res) => setTimeout(res, 3000));
-          const s = await fetch("/api/archive/status?key=" + encodeURIComponent(key)).then((x) => x.json());
+          const s = await fetch("/api/archive/status?key=" + encodeURIComponent(bkey)).then((x) => x.json());
           if (s.status === "done") { j = s; break; }
           if (s.status === "error") throw new Error(s.error || "build failed");
           archStatus.textContent = "Собираю кадры… " + (i + 1) * 3 + " с";
@@ -700,7 +701,28 @@
         archStatus.textContent = "Сборка не завершилась, попробуйте ещё раз.";
       }
     } catch (e) {
-      archStatus.textContent = "Ошибка: " + e.message;
+      const st = window.RADAR_STATIC && window.RADAR_STATIC.archive;
+      const hit = st && st.dates && st.dates.find((d) => d.key === key);
+      if (hit) {
+        const manifest = {
+          frames: hit.frames,
+          focus: hit.focus,
+          echo_coverage_pct: hit.echo_coverage_pct,
+          archive: { date: hit.date, hour: hit.hour, key: hit.key },
+          source: hit.source,
+          nowcast: { method: "archive", members: 0, steps: 0, step_min: 30, skill: {} },
+          probe: { step: 0.1 },
+          region: { name: "Республика Саха (Якутия)", bounds: [[54.0, 104.0], [74.0, 166.0]], grid_step_deg: 0.03, size: [668, 2068] },
+          stations: [],
+          coverage_pct: 100.0,
+          generated_at: new Date().toISOString()
+        };
+        applyManifest(manifest, "archive");
+        archStatus.textContent = "Встроенные данные: " + date + ", " + String(hour).padStart(2, "0") + ":00.";
+        setArchiveOpen(false);
+      } else {
+        archStatus.textContent = "На статике доступна только дата 2025-07-15 12:00. Остальные — при запущенном сервере.";
+      }
     }
   });
 

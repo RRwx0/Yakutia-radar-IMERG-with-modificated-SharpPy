@@ -1,23 +1,19 @@
-import io
-import urllib.request as u
-import zipfile
+import re
+import urllib.request
 
-base = "http://127.0.0.1:8080/"
-paths = [
-    "sharppy.html",
-    "sharppy/files/wx_launcher.py",
-    "sharppy/files/sharppy_core.py",
-    "sharppy/sharpy-hen1ch.zip",
-]
-for p in paths:
-    r = u.urlopen(base + p, timeout=8)
-    print(p, r.status, r.headers.get("Content-Length"))
-    r.read()
+base = "https://rrwx0.github.io/Yakutia-radar-IMERG-with-modificated-SharpPy/"
 
-b = u.urlopen(base + "sharppy/sharpy-hen1ch.zip", timeout=8).read()
-z = zipfile.ZipFile(io.BytesIO(b))
-print("zip names", z.namelist())
-print("zip test", z.testzip())
+sh = urllib.request.urlopen(base + "sharppy.html", timeout=60).read().decode("utf-8", "replace")
+print("sharppy.html size:", len(sh))
+# какие fetch к API делает sharppy
+for m in re.findall(r'fetch\((["\'])([^"\']+)\1', sh):
+    print("  fetch:", m[1])
+print("inline scripts:", sh.count("<script"))
 
-h = u.urlopen(base, timeout=8).read().decode("utf-8")
-print("button", "sharppy.html" in h, "blank", 'target="_blank"' in h)
+idx = urllib.request.urlopen(base + "index.html", timeout=60).read().decode("utf-8", "replace")
+print()
+print("index API_BASE:", re.findall(r'API_BASE\s*=\s*["\']?([^"\';\s]*)', idx))
+print("fetch api/archive in app.js:")
+app = urllib.request.urlopen(base + "app.js", timeout=60).read().decode("utf-8", "replace")
+for m in re.findall(r'fetch\((["\'])([^"\']+)\1', app):
+    print("  ", m[1])
