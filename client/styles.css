@@ -486,3 +486,13 @@ body.broadcast .sat-panel{background:rgba(0,0,0,.9)}
 .cell-item i{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
 .cell-item b{font-weight:600}
 .cell-item span{color:var(--muted);font-size:11.5px}
+
+.weather-panel{margin:6px 0 2px;border:1px solid var(--line);border-radius:12px;background:rgba(10,18,28,.6);padding:8px 10px;max-height:240px;overflow:auto;display:flex;flex-direction:column;gap:6px}
+.wind-chip{display:inline-flex;align-items:center;gap:6px;font-variant-numeric:tabular-nums}
+.wind-arrow{width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-bottom:10px solid var(--accent);display:inline-block;transform-origin:50% 100%}
+.weather-item{display:flex;gap:8px;align-items:center;padding:6px 8px;border:1px solid var(--line-soft);border-radius:9px;font-size:12.5px;color:#dceaf2;background:rgba(18,30,44,.45)}
+.weather-item:hover{border-color:rgba(159,212,255,.4)}
+.weather-item b{font-weight:600;min-width:88px}
+.weather-item span{color:var(--muted);font-size:11.5px}
+.wind-marker{display:flex;align-items:center;justify-content:center}
+.wind-marker .wind-arrow{transform-origin:50% 100%;filter:drop-shadow(0 0 3px rgba(159,212,255,.6))}

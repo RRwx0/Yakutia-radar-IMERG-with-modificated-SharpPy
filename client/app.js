@@ -253,6 +253,7 @@
     renderAccum();
     renderThunder();
     renderTrend();
+    renderSnow();
     if (el("cellsToggle").checked) renderCellsPanel();
     el("scrub").value = String(state.index);
     updateHud(f);
@@ -741,7 +742,10 @@
         archStatus.textContent = "Встроенные данные: " + date + ", " + String(hour).padStart(2, "0") + ":00.";
         setArchiveOpen(false);
       } else {
-        archStatus.textContent = "На статике доступна только дата 2025-07-15 12:00. Остальные — при запущенном сервере.";
+        const avail = st && st.dates ? st.dates.map((d) => d.date + " " + String(d.hour).padStart(2, "0") + ":00").join(", ") : null;
+        archStatus.textContent = avail
+          ? "На статике доступно: " + avail + ". Остальные — при запущенном сервере."
+          : "На статике дат нет. Остальные — при запущенном сервере.";
       }
     }
   });
@@ -1374,6 +1378,153 @@
     el("trendPeak").textContent = (dp >= 0 ? "+" : "") + Math.round(dp) + " дБЗ";
     el("trendVerdict").textContent = da > 0 ? "усиление" : (da < 0 ? "ослабление" : "без изменений");
   }
+
+  /* ---------- ветер метеостанций (Open-Meteo, зимняя страница) ---------- */
+  const WIND_CITIES = [
+    ["Якутск", 62.0355, 129.6755], ["Оймякон", 63.4629, 142.7906],
+    ["Верхоянск", 67.5539, 133.3898], ["Тикси", 71.6390, 128.8694],
+    ["Мирный", 62.5353, 113.9611], ["Нерюнгри", 56.6584, 124.7250],
+    ["Ленск", 60.7253, 114.9277], ["Вилюйск", 63.7517, 121.6241],
+    ["Среднеколымск", 67.4570, 153.7107], ["Черский", 68.7530, 161.3310],
+    ["Алдан", 58.6031, 125.3894], ["Усть-Нера", 64.5665, 143.2370]
+  ];
+  let windLayer = null;
+  let windTimer = null;
+  const windEl = {
+    toggle: el("weatherToggle"), panel: el("weatherPanel"),
+    list: el("weatherList"), updated: el("weatherUpdated")
+  };
+  function windArrowHtml(deg, size) {
+    return '<span class="wind-arrow" style="transform:rotate(' + (deg || 0) + 'deg);border-bottom-width:' + (size || 10) + 'px"></span>';
+  }
+  async function loadWind() {
+    if (!windEl.toggle) return;
+    const list = windEl.list, updated = windEl.updated;
+    list.innerHTML = '<span class="weather-item">загружаю метеостанции…</span>';
+    try {
+      const qs = WIND_CITIES.map(([n, la, lo]) => "latitude=" + la + "&longitude=" + lo).join("&");
+      const url = "https://api.open-meteo.com/v1/forecast?" + qs +
+        "&current=temperature_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m,weather_code&wind_speed_unit=ms&timezone=Asia/Yakutsk";
+      const r = await fetch(url, { cache: "no-store" });
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      const j = await r.json();
+      const rows = [];
+      j.forEach((city, i) => {
+        const [name, lat, lon] = WIND_CITIES[i];
+        const c = city.current || {};
+        const spd = c.wind_speed_10m, dir = c.wind_direction_10m, gust = c.wind_gusts_10m;
+        const t = c.temperature_2m;
+        if (spd == null) return;
+        rows.push({ name, lat, lon, spd, dir, gust, t });
+      });
+      if (!windLayer) {
+        windLayer = L.layerGroup();
+        windLayer.addTo(map);
+      }
+      windLayer.clearLayers();
+      rows.forEach((w) => {
+        const icon = L.divIcon({
+          className: "wind-marker", html: windArrowHtml(w.dir, 14),
+          iconSize: [14, 14], iconAnchor: [7, 7]
+        });
+        L.marker([w.lat, w.lon], { icon, keyboard: false, title: w.name })
+          .bindTooltip(w.name + " · " + Math.round(w.spd) + " м/с" + (w.gust ? " · порыв " + Math.round(w.gust) + " м/с" : ""))
+          .addTo(windLayer);
+        const row = document.createElement("div");
+        row.className = "weather-item";
+        row.innerHTML = windArrowHtml(w.dir, 8) + "<b>" + w.name + "</b><span>" +
+          Math.round(w.spd) + " м/с" + (w.gust ? " · порыв " + Math.round(w.gust) : "") +
+          (w.t != null ? " · " + Math.round(w.t) + "°C" : "") + "</span>";
+        row.addEventListener("click", () => map.flyTo([w.lat, w.lon], 6, { duration: 0.6 }));
+        list.appendChild(row);
+      });
+      updated.textContent = "обновлено " + clockFmt.format(new Date());
+    } catch (e) {
+      list.innerHTML = '<span class="weather-item">ветер недоступен: ' + e.message + "</span>";
+    }
+  }
+  windEl.toggle && windEl.toggle.addEventListener("change", (e) => {
+    if (e.target.checked) {
+      windEl.panel.hidden = false;
+      loadWind();
+    } else {
+      windEl.panel.hidden = true;
+      if (windLayer) map.removeLayer(windLayer), windLayer = null;
+    }
+  });
+  function scheduleWind() {
+    if (windTimer) clearTimeout(windTimer);
+    const next = Math.ceil(Date.now() / 1800000) * 1800000;
+    windTimer = setTimeout(() => {
+      if (windEl.toggle && windEl.toggle.checked) loadWind();
+      scheduleWind();
+    }, Math.max(15000, next - Date.now()));
+  }
+  if (windEl.toggle && windEl.toggle.checked) {
+    windEl.panel.hidden = false;
+    loadWind();
+    scheduleWind();
+  }
+
+  /* ---------- снежный слой (зима): маска «только снег» по фазе ---------- */
+  let snowOverlay = null;
+  const SNOW_PALETTE = [
+    [0, [230, 245, 255, 150]], [10, [200, 230, 255, 170]], [20, [160, 210, 250, 190]],
+    [30, [120, 185, 245, 200]], [40, [80, 155, 235, 210]], [50, [55, 120, 225, 215]],
+    [1e9, [70, 90, 220, 220]]
+  ];
+  function renderSnow() {
+    if (!IS_WINTER || !el("snowOnlyToggle")) return;
+    if (!el("snowOnlyToggle").checked) {
+      if (snowOverlay) map.removeLayer(snowOverlay), snowOverlay = null;
+      return;
+    }
+    const f = FRAMES[state.index];
+    const vals = P.frames[f.id] || [];
+    const ph = P.phase[f.id] || [];
+    const canvas = document.createElement("canvas");
+    canvas.width = P.nx;
+    canvas.height = P.ny;
+    const ctx = canvas.getContext("2d");
+    const img = ctx.createImageData(P.nx, P.ny);
+    for (let i = 0; i < img.data.length / 4; i++) {
+      const v = vals[i], code = ph[i];
+      if (v == null || code !== 1) continue;
+      let rgba = null;
+      for (const [lim, rgb] of SNOW_PALETTE) {
+        if (v >= lim) rgba = rgb;
+      }
+      if (!rgba) continue;
+      const o = i * 4;
+      img.data[o] = rgba[0]; img.data[o + 1] = rgba[1];
+      img.data[o + 2] = rgba[2]; img.data[o + 3] = rgba[3];
+    }
+    ctx.putImageData(img, 0, 0);
+    const bounds = [[P.lat0, P.lon0], [P.lat0 + P.step * P.ny, P.lon0 + P.step * P.nx]];
+    if (!snowOverlay) {
+      snowOverlay = L.imageOverlay(canvas.toDataURL(), bounds, { opacity: 0.95, interactive: false, pane: "radar" }).addTo(map);
+    } else {
+      snowOverlay.setUrl(canvas.toDataURL());
+      snowOverlay.setBounds(bounds);
+    }
+  }
+  if (el("snowOnlyToggle")) {
+    el("snowOnlyToggle").addEventListener("change", renderSnow);
+  }
+
+  /* ---------- полноэкранный режим ---------- */
+  function toggleFullscreen() {
+    const el0 = document.documentElement;
+    if (!document.fullscreenElement) {
+      (el0.requestFullscreen && el0.requestFullscreen()) || (el0.webkitRequestFullscreen && el0.webkitRequestFullscreen());
+    } else if (document.exitFullscreen) {
+      document.exitFullscreen();
+    }
+  }
+  if (el("fullscreenBtn")) el("fullscreenBtn").addEventListener("click", toggleFullscreen);
+  document.addEventListener("fullscreenchange", () => {
+    if (el("fullscreenBtn")) el("fullscreenBtn").classList.toggle("is-active", !!document.fullscreenElement);
+  });
 
   /* ---------- mobile sheet ---------- */
   const sheet = el("layersPanel");

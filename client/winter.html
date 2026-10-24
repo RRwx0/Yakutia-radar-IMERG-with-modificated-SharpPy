@@ -45,6 +45,7 @@
     <button class="ghost-btn" id="modesBtn" type="button" aria-expanded="false" aria-controls="modesPanel">Режимы</button>
     <button class="ghost-btn" id="archiveBtn" type="button" aria-expanded="false" aria-controls="archivePanel">Архив</button>
     <a class="ghost-btn" href="#pipeline">Методика</a>
+    <button class="ghost-btn" id="fullscreenBtn" type="button" title="Во весь экран">⛶</button>
   </div>
 </header>
 
@@ -53,10 +54,10 @@
     <h2>Архив наблюдений</h2>
     <button class="icon-btn" id="archiveClose" aria-label="Закрыть архив">×</button>
   </div>
-  <p class="archive__hint">Доступны даты с 1 января 2025 года. Собирается 6 часов наблюдений — 12 кадров по 30 минут. На статике (без сервера) доступна дата 2025-01-15 12:00, остальные — при запущенном сервере.</p>
+  <p class="archive__hint">Доступны даты с 1 января 2025 года. Собирается 6 часов наблюдений — 12 кадров по 30 минут. На статике (без сервера) доступна дата 2025-12-25 12:00, остальные — при запущенном сервере.</p>
   <label class="archive__field">
     <span>Дата</span>
-    <input type="date" id="archiveDate" min="2025-01-01" max="2026-10-17" value="2025-01-15">
+    <input type="date" id="archiveDate" min="2025-01-01" max="2026-10-17" value="2025-12-25">
   </label>
   <label class="archive__field">
     <span>Час (UTC+9)</span>
@@ -229,6 +230,25 @@
         <span class="switch__ui"></span>
         <span class="switch__text"><strong>Координатная сетка</strong><em>через 10° / 5°</em></span>
       </label>
+      <label class="switch">
+        <input type="checkbox" id="weatherToggle" checked>
+        <span class="switch__ui"></span>
+        <span class="switch__text"><strong>Ветер метеостанций</strong><em>Open-Meteo · сейчас</em></span>
+      </label>
+
+      <label class="switch">
+        <input type="checkbox" id="snowOnlyToggle" checked>
+        <span class="switch__ui"></span>
+        <span class="switch__text"><strong>Только снег</strong><em>маска по фазе осадков</em></span>
+      </label>
+
+      <div class="weather-panel" id="weatherPanel">
+        <div class="cells-panel__head">
+          <strong>Ветер по городам</strong>
+          <span id="weatherUpdated">—</span>
+        </div>
+        <div id="weatherList" class="cells-list"></div>
+      </div>
             <label class="switch">
         <input type="checkbox" id="modelToggle">
         <span class="switch__ui"></span>
@@ -498,7 +518,7 @@
 <script src="vendor/leaflet.js"></script>
 <script src="sakha.geo.js"></script>
 <script src="config.js"></script>
-<script src="data.js"></script>
+<script src="winter_data.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
