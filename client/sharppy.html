@@ -161,16 +161,18 @@
       .catch(() => null);
     const fromStatic = () => {
       const s = window.RADAR_SND;
-      if (!s || !s.times || !s.times[st]) return null;
-      let list = s.times[st];
+      if (!s) return null;
+      let rec = s.recent || [];
+      if (st) rec = rec.filter((r) => r.wmo === st);
+      let list = rec.map((r) => r.time);
       if (yr) list = list.filter((t) => t.startsWith(String(yr)));
-      return list;
+      return list.length ? list : null;
     };
     tryApi().then((list) => {
       if (!list) list = fromStatic();
       if (!list) {
         $("timesHint").innerHTML = '<span class="err">Для этой станции нет встроенных данных. Доступны: ' +
-          Object.keys((window.RADAR_SND || {}).times || {}).join(", ") + "</span>";
+          Object.keys((window.RADAR_SND || {}).city_stations || {}).map((c) => c + " (" + (window.RADAR_SND.city_stations[c]) + ")").join(", ") + "</span>";
         return;
       }
       $("timesHint").textContent = list.length ? `Доступно сроков: ${list.length}` : "За этот год сроков нет.";
@@ -196,9 +198,9 @@
       .catch(() => null);
     const fromStatic = () => {
       const s = window.RADAR_SND;
-      if (!s || !s.profiles) return null;
-      const hit = s.profiles.find((p) => p.station === st && p.time === time);
-      return hit || null;
+      if (!s || !s.recent) return null;
+      const hit = s.recent.find((r) => r.wmo === st && r.time === time);
+      return hit ? hit.profile : null;
     };
     tryApi().then((j) => {
       if (!j) j = fromStatic();

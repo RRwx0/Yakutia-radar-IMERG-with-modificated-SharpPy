@@ -344,6 +344,21 @@
           </div>
           <canvas id="spark" width="536" height="120" aria-label="Отражаемость по кадрам"></canvas>
         </div>
+
+        <div class="probe__sounding" id="probeSounding" hidden>
+          <div class="probe__chart-head">
+            <span class="field__label">Зондирование ГМЦ</span>
+            <span class="probe__chart-note" id="sndMeta">—</span>
+          </div>
+          <canvas id="sndSkew" width="536" height="300" aria-label="Аэрологическая диаграмма"></canvas>
+          <dl class="probe__meta" id="sndIdx">
+            <div><dt>CAPE</dt><dd id="sndCape">—</dd></div>
+            <div><dt>LI</dt><dd id="sndLi">—</dd></div>
+            <div><dt>PW</dt><dd id="sndPw">—</dd></div>
+            <div><dt>Сдвиг 0–6</dt><dd id="sndShear">—</dd></div>
+            <div><dt>SRH 0–3</dt><dd id="sndSrh">—</dd></div>
+          </dl>
+        </div>
       </div>
     </aside>
 
@@ -499,6 +514,7 @@
 <script src="vendor/leaflet.js"></script>
 <script src="sakha.geo.js"></script>
 <script src="config.js"></script>
+<script src="snd_data.js"></script>
 <script src="data.js"></script>
 <script src="app.js"></script>
 </body>

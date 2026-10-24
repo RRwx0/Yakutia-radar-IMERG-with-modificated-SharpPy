@@ -39,8 +39,9 @@ html,body{margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
   background:
-    radial-gradient(1100px 640px at 80% -12%,rgba(38,90,140,.18),transparent 60%),
-    radial-gradient(900px 600px at 6% 0%,rgba(24,52,96,.16),transparent 55%),
+    radial-gradient(1200px 700px at 82% -14%,rgba(46,108,168,.22),transparent 62%),
+    radial-gradient(1000px 620px at 4% 2%,rgba(28,60,110,.2),transparent 58%),
+    radial-gradient(800px 500px at 50% 110%,rgba(36,86,140,.12),transparent 60%),
     var(--bg);
   color:var(--text);
   font:15px/1.55 var(--sans);
@@ -57,6 +58,7 @@ a:hover{text-decoration:underline}
   height:68px;padding:0 22px;
   background:linear-gradient(180deg,rgba(10,20,34,.98),rgba(10,20,34,.9));
   border-bottom:1px solid var(--line-soft);backdrop-filter:blur(16px);
+  box-shadow:inset 0 2px 0 rgba(127,184,230,.22),0 8px 24px -18px rgba(0,0,0,.8);
 }
 .brand{display:flex;align-items:center;gap:12px;color:inherit}
 .brand:hover{text-decoration:none}
@@ -110,8 +112,8 @@ a:hover{text-decoration:underline}
 
 /* panels */
 .panel{position:absolute;z-index:520;width:296px;padding:16px;border:1px solid var(--line);
-  border-radius:16px;background:linear-gradient(180deg,rgba(13,21,34,.95),rgba(8,13,22,.93));
-  box-shadow:var(--shadow);backdrop-filter:blur(18px)}
+  border-radius:16px;background:linear-gradient(180deg,rgba(14,24,38,.97),rgba(8,14,24,.95));
+  box-shadow:0 22px 48px -20px rgba(0,0,0,.85);backdrop-filter:blur(18px)}
 .panel--layers{left:18px;top:18px;max-height:calc(100% - 150px);overflow:auto}
 .panel--probe{right:118px;top:18px;width:330px;max-height:calc(100% - 150px);overflow:auto}
 .panel__head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
@@ -196,6 +198,8 @@ input[type="range"]:focus-visible{outline:2px solid var(--accent);outline-offset
 .probe__chart{margin-top:16px;padding-top:13px;border-top:1px solid var(--line-soft)}
 .probe__chart-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:8px}
 .probe__chart-note{font-size:11.5px;color:var(--muted)}
+.probe__sounding{margin-top:16px;padding-top:13px;border-top:1px solid var(--line-soft)}
+.probe__sounding canvas{width:100%;border:1px solid var(--line-soft);border-radius:10px;background:#060c13;margin-bottom:10px}
 #spark{width:100%;height:60px;display:block}
 
 /* chips and timeline */
@@ -248,7 +252,8 @@ input[type="range"]:focus-visible{outline:2px solid var(--accent);outline-offset
 .metric__label{display:block;margin-top:2px;font-size:11.5px;color:var(--muted-2)}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .card{padding:26px 28px;border:1px solid var(--line-soft);border-radius:18px;margin-bottom:16px;
-  background:linear-gradient(180deg,rgba(11,18,29,.8),rgba(7,12,20,.62))}
+  background:linear-gradient(180deg,rgba(15,26,41,.85),rgba(9,15,26,.68));
+  box-shadow:0 14px 40px -22px rgba(0,0,0,.7)}
 .card h2{margin:0 0 12px;font-size:19px;font-weight:600;letter-spacing:-.01em}
 .card p{margin:0 0 12px;color:#c3d3e2;font-size:14.5px;line-height:1.65}
 .card p:last-child{margin-bottom:0}

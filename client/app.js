@@ -165,7 +165,12 @@
       html: '<span class="city' + (main ? "" : " city--minor") + '"><i></i>' + name + "</span>",
       iconSize: [0, 0], iconAnchor: [3, 3]
     });
-    L.marker([lat, lon], { icon, keyboard: false, title: name }).addTo(placesLayer);
+    const mk = L.marker([lat, lon], { icon, keyboard: false, title: name });
+    mk.on("click", () => {
+      map.flyTo([lat, lon], 6, { duration: 0.6 });
+      openProbe(lat, lon);
+    });
+    mk.addTo(placesLayer);
   });
 
   const gridLayer = L.layerGroup();
@@ -1162,6 +1167,115 @@
       "сдвиг 850→300: " + Math.round(bulk) + " м/с · 0–6 км: " +
       (Number.isFinite(low) ? Math.round(low) : "—") + " м/с · мезоциклон не детектируется";
   }
+
+  /* ---------- зондирование ГМЦ: свежайший профиль по городу ---------- */
+  function drawSndProfile(p) {
+    const canvas = el("sndSkew");
+    if (!canvas || !p) return;
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    const w = canvas.clientWidth || 320, h = 300;
+    canvas.width = Math.floor(w * dpr);
+    canvas.height = Math.floor(h * dpr);
+    const ctx = canvas.getContext("2d");
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+
+    const padL = 30, padR = 12, padT = 14, padB = 18;
+    const x0 = padL, x1 = w - padR, y0 = h - padB, y1 = padT;
+    const levels = p.levels || [];
+    const temps = levels.map((r) => r.t).filter((v) => v != null);
+    const tMin = Math.min(...temps) - 5, tMax = Math.max(...temps) + 5;
+    const pMax = 1050, pMin = 100;
+    const X = (t) => x0 + ((t - tMin) / (tMax - tMin)) * (x1 - x0);
+    const Y = (pr) => y0 - ((Math.log(pMax) - Math.log(pr)) / (Math.log(pMax) - Math.log(pMin))) * (y0 - y1);
+
+    // изобары
+    ctx.font = "9px ui-monospace, monospace";
+    ctx.lineWidth = 1;
+    for (let pv = 1000; pv >= 100; pv -= 100) {
+      const y = Y(pv);
+      ctx.strokeStyle = "rgba(120,170,195,.18)";
+      ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x1, y); ctx.stroke();
+      ctx.fillStyle = "rgba(140,170,190,.7)";
+      ctx.fillText(String(pv), 4, y + 3);
+    }
+    const line = (key, color) => {
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      let started = false;
+      levels.forEach((r) => {
+        const v = r[key];
+        if (v == null) { started = false; return; }
+        const px = X(v), py = Y(r.p);
+        if (started) ctx.lineTo(px, py); else ctx.moveTo(px, py);
+        started = true;
+      });
+      ctx.stroke();
+    };
+    line("t", "#ff6b5e");
+    line("td", "#4fd98a");
+    // ветер
+    ctx.strokeStyle = "#9fd8ff";
+    ctx.lineWidth = 1.4;
+    ctx.beginPath();
+    let sw = false;
+    levels.forEach((r) => {
+      const u = -r.ws * Math.sin(r.wd * Math.PI / 180);
+      const v = -r.ws * Math.cos(r.wd * Math.PI / 180);
+      if (r.ws == null || r.wd == null) { sw = false; return; }
+      const px = X(r.t) + u * 0.6, py = Y(r.p) + v * 0.8;
+      if (sw) ctx.lineTo(px, py); else ctx.moveTo(px, py);
+      sw = true;
+    });
+    ctx.stroke();
+
+    ctx.fillStyle = "#8fa9bd";
+    ctx.font = "10px ui-monospace, monospace";
+    ctx.fillText("T", x1 - 90, 12);
+    ctx.fillStyle = "#ff6b5e"; ctx.fillText("—", x1 - 78, 12);
+    ctx.fillStyle = "#8fa9bd"; ctx.fillText("Td", x1 - 58, 12);
+    ctx.fillStyle = "#4fd98a"; ctx.fillText("—", x1 - 42, 12);
+  }
+
+  function showSounding(cityName) {
+    const box = el("probeSounding");
+    if (!box) return;
+    const snd = window.RADAR_SND;
+    if (!snd || !snd.latest || !snd.city_stations) { box.hidden = true; return; }
+    const wmo = snd.city_stations[cityName];
+    const p = wmo && snd.latest[wmo];
+    if (!p) {
+      box.hidden = true;
+      return;
+    }
+    box.hidden = false;
+    el("sndMeta").textContent = p.name + " · " + String(p.time).replace("T", " ").replace("Z", " UTC") + " · " + (p.source || "Росгидромет · IGRA");
+    drawSndProfile(p);
+    const i = p.indices || {};
+    el("sndCape").textContent = i.cape != null ? Math.round(i.cape) + " Дж/кг" : "—";
+    el("sndLi").textContent = i.li != null ? i.li + " °C" : "—";
+    el("sndPw").textContent = i.pw != null ? i.pw + " мм" : "—";
+    el("sndShear").textContent = i.shear06 != null ? i.shear06 + " м/с" : "—";
+    el("sndSrh").textContent = i.srh03 != null ? Math.round(i.srh03) + " м²/с²" : "—";
+  }
+
+  function cityForPoint(lat, lon) {
+    let best = null, bd = 1e9;
+    CITIES.forEach(([name, clat, clon]) => {
+      const d = (clat - lat) * (clat - lat) + (clon - lon) * (clon - lon);
+      if (d < bd) { bd = d; best = name; }
+    });
+    return bd < 4 ? best : null;
+  }
+
+  const _openProbeBase = openProbe;
+  openProbe = function (lat, lon) {
+    _openProbeBase(lat, lon);
+    el("probeSounding").hidden = true;
+    const city = cityForPoint(lat, lon);
+    if (city) showSounding(city);
+  };
 
   el("phaseToggle").addEventListener("change", (e) => {
     if (e.target.checked) renderPhase();
