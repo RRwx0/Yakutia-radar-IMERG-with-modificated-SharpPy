@@ -235,6 +235,8 @@
     el("frameDate").textContent = fmtDate(f.time);
     el("frameCounter").textContent = "кадр " + (state.index + 1) + " / " + FRAMES.length;
     renderAccum();
+    renderThunder();
+    renderTrend();
     if (el("cellsToggle").checked) renderCellsPanel();
     el("scrub").value = String(state.index);
     updateHud(f);
@@ -812,7 +814,45 @@
   }
   updateLatency();
 
-  const REFRESH_MS = 5 * 60 * 1000;
+  /* ---------- живой IMERG: обновление каждые 30 минут ---------- */
+  const LIVE_URL = "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/IMERG_Precipitation_Rate_30min/default/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png";
+  const liveLayer = L.tileLayer(LIVE_URL, {
+    pane: "radar", opacity: 0.92, maxZoom: 6, minZoom: 3,
+    attribution: "IMERG live · NASA/JAXA · GIBS"
+  }).addTo(map);
+  let liveTimer = null;
+  let liveOn = false;
+
+  function liveNow(manual) {
+    if (!liveOn) return;
+    liveLayer.setUrl(LIVE_URL + "?v=" + Date.now());
+    liveLayer.redraw();
+    el("liveStat").textContent = (manual ? "обновлено " : "автообновление ") + fmtTime(new Date());
+    scheduleLive();
+  }
+  function scheduleLive() {
+    if (liveTimer) clearTimeout(liveTimer);
+    const now = Date.now();
+    const next = Math.ceil(now / 1800000) * 1800000; // следующее 30-мин окно
+    const ms = Math.max(15000, next - now);
+    el("liveCountdown").textContent = "через " + fmtCountdown(ms);
+    liveTimer = setTimeout(() => liveNow(false), ms);
+  }
+  el("liveToggle").addEventListener("change", (e) => {
+    liveOn = e.target.checked;
+    if (liveOn) {
+      liveLayer.addTo(map);
+      liveNow(true);
+    } else {
+      liveLayer.remove();
+      if (liveTimer) clearTimeout(liveTimer), liveTimer = null;
+      el("liveStat").textContent = "—";
+      el("liveCountdown").textContent = "—";
+    }
+  });
+  el("liveNowBtn").addEventListener("click", () => liveNow(true));
+
+  const REFRESH_MS = 30 * 60 * 1000;
   let refreshAt = Date.now() + REFRESH_MS;
   let refreshing = false;
 
@@ -1284,6 +1324,37 @@
     el("accumArea").textContent = Math.round(areaSum / 1000) + " тыс. км² · " + obs.length + " кадров";
     el("accumStorm").textContent = stormMax ? String(stormMax) : "0";
     el("accumPeak").textContent = peak ? Math.round(peak) + " дБЗ" : "—";
+  }
+
+  /* ---------- грозопотенциал по GFS ---------- */
+  function renderThunder() {
+    if (!ENV || !ENV.cape || !ENV.shear) return;
+    const cMax = Math.max.apply(null, ENV.cape.filter((v) => v != null && Number.isFinite(v)));
+    const sMax = Math.max.apply(null, ENV.shear.filter((v) => v != null && Number.isFinite(v)));
+    el("capMax").textContent = cMax != null ? Math.round(cMax) + " Дж/кг" : "—";
+    el("shearMax").textContent = sMax != null ? Math.round(sMax) + " м/с" : "—";
+    let est = "неустойчивость слабая";
+    if (cMax > 800 && sMax > 15) est = "умеренный грозопотенциал";
+    if (cMax > 1500 && sMax > 20) est = "высокий грозопотенциал";
+    if (cMax > 2500 && sMax > 25) est = "экстремальный грозопотенциал";
+    el("thunderEst").textContent = est;
+  }
+
+  /* ---------- тренд за 3 часа ---------- */
+  function renderTrend() {
+    const obs = FRAMES.filter((f) => f.kind === "obs").slice(-6);
+    if (obs.length < 2) {
+      el("trendArea").textContent = "—";
+      el("trendPeak").textContent = "—";
+      el("trendVerdict").textContent = "мало кадров";
+      return;
+    }
+    const first = obs[0].stats || {}, last = obs[obs.length - 1].stats || {};
+    const da = (last.area_30_km2 || 0) - (first.area_30_km2 || 0);
+    const dp = (last.max_dbz || 0) - (first.max_dbz || 0);
+    el("trendArea").textContent = (da >= 0 ? "+" : "") + Math.round(da / 1000) + " тыс. км²";
+    el("trendPeak").textContent = (dp >= 0 ? "+" : "") + Math.round(dp) + " дБЗ";
+    el("trendVerdict").textContent = da > 0 ? "усиление" : (da < 0 ? "ослабление" : "без изменений");
   }
 
   /* ---------- mobile sheet ---------- */

@@ -122,10 +122,23 @@
 
   <div class="mode">
     <div class="mode__top"><strong>Автообновление</strong><span class="tag tag--on" id="latencyTag">—</span></div>
-    <p>Проверка новых данных каждые 5 минут и обратный отсчёт. Задержка источника показывается честно: IMERG публикуется примерно через 7 часов.</p>
+    <p>Проверка новых данных каждые 30 минут и обратный отсчёт. Задержка источника показывается честно: IMERG публикуется примерно через 7 часов.</p>
     <div class="mode__row"><span>Следующая проверка</span><strong id="refreshCountdown">—</strong></div>
     <button class="ghost-btn ghost-btn--sm" id="refreshNow" type="button">Проверить сейчас</button>
     <p class="mode__stat" id="refreshStat">—</p>
+  </div>
+
+  <div class="mode">
+    <div class="mode__top"><strong>IMERG в реальном времени</strong><span class="tag tag--on">GIBS</span></div>
+    <p>Живой слой сырых тайлов IMERG: обновляется каждые 30 минут из открытого каталога NASA GIBS, без сервера. Показывает последний доступный снимок.</p>
+    <label class="switch">
+      <input type="checkbox" id="liveToggle">
+      <span class="switch__ui"></span>
+      <span class="switch__text"><strong>Живой слой</strong><em>IMERG Precipitation Rate</em></span>
+    </label>
+    <div class="mode__row"><span>Последнее обновление</span><strong id="liveStat">—</strong></div>
+    <div class="mode__row"><span>До следующего</span><strong id="liveCountdown">—</strong></div>
+    <button class="ghost-btn ghost-btn--sm" id="liveNowBtn" type="button">Обновить сейчас</button>
   </div>
 
   <div class="mode">
@@ -148,6 +161,22 @@
     <div class="mode__row"><span>Площадь ≥30 (сумма)</span><strong id="accumArea">—</strong></div>
     <div class="mode__row"><span>Грозовых ячеек (макс)</span><strong id="accumStorm">—</strong></div>
     <div class="mode__row"><span>Пик отражаемости</span><strong id="accumPeak">—</strong></div>
+  </div>
+
+  <div class="mode">
+    <div class="mode__top"><strong>Грозопотенциал</strong><span class="tag tag--on">GFS</span></div>
+    <p>Оценка потенциала гроз по полям GFS: CAPE и сдвиг 0–6 км. Качественная модель по всем сеткам — на карте выше включается слой «Атмосфера GFS».</p>
+    <div class="mode__row"><span>CAPE (макс в регионе)</span><strong id="capMax">—</strong></div>
+    <div class="mode__row"><span>Сдвиг 0–6 км (макс)</span><strong id="shearMax">—</strong></div>
+    <div class="mode__row"><span>Оценка</span><strong id="thunderEst">—</strong></div>
+  </div>
+
+  <div class="mode">
+    <div class="mode__top"><strong>Тренд за 3 часа</strong><span class="tag tag--on">расчёт</span></div>
+    <p>Изменение площади ≥30 дБЗ и пиковой отражаемости между первым и последним наблюдением.</p>
+    <div class="mode__row"><span>Площадь ≥30</span><strong id="trendArea">—</strong></div>
+    <div class="mode__row"><span>Пик дБЗ</span><strong id="trendPeak">—</strong></div>
+    <div class="mode__row"><span>Вывод</span><strong id="trendVerdict">—</strong></div>
   </div>
 
   <div class="mode">
@@ -178,6 +207,11 @@
         <input type="checkbox" id="mosaicToggle" checked>
         <span class="switch__ui"></span>
         <span class="switch__text"><strong>Осадки · IMERG</strong><em>спутник, 30 мин, 11 км</em></span>
+      </label>
+      <label class="switch">
+        <input type="checkbox" id="liveToggle">
+        <span class="switch__ui"></span>
+        <span class="switch__text"><strong>В реальном времени</strong><em>живые тайлы IMERG · 30 мин</em></span>
       </label>
       <label class="switch">
         <input type="checkbox" id="citiesToggle" checked>
